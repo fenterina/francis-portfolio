@@ -1,0 +1,31 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Projects from '../components/Projects.astro';
+import Skills from '../components/Skills.astro';
+import Contact from '../components/Contact.astro';
+import { en } from '../i18n/en';
+import '../styles/global.css';
+---
+
+<html lang={en.language}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={en.metadata.description} />
+		<meta name="theme-color" content={en.metadata.themeColor} />
+		<title>{en.metadata.title}</title>
+	</head>
+	<body>
+		<Navigation />
+		<main>
+			<Hero />
+			<About />
+			<Projects />
+			<Skills />
+			<Contact />
+		</main>
+	</body>
+</html>
