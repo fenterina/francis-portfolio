@@ -1,0 +1,19 @@
+---
+import { en } from '../i18n/en';
+---
+
+<section class="section experience-section" id="experience">
+  <div class="container">
+    <div class="experience-heading"><span class="eyebrow">{en.experience.eyebrow}</span><h2 class="section-heading">{en.experience.title}</h2><p class="section-intro">{en.experience.intro}</p></div>
+    <div class="experience-layout">
+      <article class="experience-card work-card">
+        <div class="experience-card-heading"><span class="card-kicker"><span class="card-icon" aria-hidden="true">▥</span>{en.experience.workLabel}</span><span class="role-count">{en.experience.work.length} roles</span></div>
+        <div class="timeline">{en.experience.work.map((role) => <div class="timeline-item"><div class="timeline-marker" aria-hidden="true"></div><div class="timeline-content"><div class="timeline-title-row"><h3>{role.role}</h3><span class="timeline-period">{role.period}</span></div><p class="timeline-org">{role.organization} · {role.employmentType}</p><p class="timeline-location">{role.location}</p>{role.project && <p class="timeline-project">{role.project}</p>}<ul class="timeline-details">{role.details.map((detail) => <li>{detail}</li>)}</ul></div></div>)}</div>
+      </article>
+      <div class="experience-side">
+        <article class="experience-card education-card"><div class="experience-card-heading"><span class="card-kicker"><span class="card-icon" aria-hidden="true">⌂</span>{en.experience.educationLabel}</span></div><div class="education-list">{en.experience.education.map((item) => <div class="education-item"><div><span>{item.period}</span><h3>{item.title}</h3><p>{item.organization}</p></div><img class="education-logo" src={item.logo} alt={item.logoAlt} loading="lazy" /></div>)}</div></article>
+        <article class="experience-card recognition-card"><div class="experience-card-heading"><span class="card-kicker"><span class="card-icon" aria-hidden="true">✦</span>{en.experience.recognitionLabel}</span></div><div class="recognition-list">{en.experience.recognition.map((item) => <div class="recognition-item"><div><h3>{item.title}</h3><p>{item.description}</p></div><span>{item.period}</span></div>)}</div></article>
+      </div>
+    </div>
+  </div>
+</section>

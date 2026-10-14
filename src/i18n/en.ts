@@ -4,9 +4,13 @@ export const en = {
     title: "Francis - Creative frontend developer",
     description:
       "Francis is a creative frontend developer making thoughtful digital experiences.",
-    themeColor: "#7562D8",
+    themeColor: "#4169E1",
   },
   images: {
+    brandMark: "/images/Logo.png",
+    brandMarkAlt: "Francis Enterina logo mark",
+    brandLogo: "/images/Logo_with_name.png",
+    brandLogoAlt: "Francis Enterina logo",
     heroPortrait:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=85",
     aboutPortrait:
@@ -19,9 +23,11 @@ export const en = {
     about: "About",
     projects: "Projects",
     skills: "Skills",
-    contact: "Let's talk",
+    contact: "Let's Connect!",
   },
   hero: {
+    brandTitle: "Francis Enterina",
+    brandPhrase: "Don't be sad, it's such a waste of time",
     eyebrow: "Frontend developer / designer",
     titleStart: "Interfaces with a little",
     titleAccent: "more feeling.",
@@ -49,6 +55,87 @@ export const en = {
       { value: "06+", label: "Years creating" },
       { value: "24", label: "Projects shipped" },
       { value: "04", label: "Time zones worked" },
+    ],
+  },
+  experience: {
+    eyebrow: "03 / Experience",
+    title: "Experience.",
+    intro:
+      "Marketing, product work, and systems thinking shaped by hands-on roles across digital operations and technology.",
+    workLabel: "Work history",
+    educationLabel: "Education",
+    recognitionLabel: "Recognition & leadership",
+    work: [
+      {
+        period: "Jan 2026 - May 2026 · 5 mos",
+        role: "Software Engineer Intern",
+        organization: "Anura Innovations",
+        employmentType: "Internship",
+        location: "Iligan City · Hybrid",
+        project: "Red Carpet",
+        details: [
+          "Built a multi-role mobile marketplace as part of a team with React Native, TypeScript, and Supabase, featuring role-based workflows, vendor bidding, real-time messaging, and integrated booking and payment systems.",
+        ],
+      },
+      {
+        period: "Sep 2023 - Apr 2026 · 2 yrs 8 mos",
+        role: "Social Media Manager",
+        organization: "Hues X Palette",
+        employmentType: "Part-time",
+        location: "Remote",
+        details: [
+          "Managed end-to-end social media operations across Facebook and Instagram, overseeing customer engagement, appointment coordination, and promotional campaigns.",
+          "Handled high-volume customer inquiries via Meta Business Suite, ensuring timely responses and converting inquiries into confirmed bookings.",
+          "Designed and executed targeted ad campaigns using audience segmentation, optimizing delivery through strategic scheduling and budget allocation.",
+          "Coordinated appointment bookings using integrated platform tools and a manual Google Sheets tracking system after feature deprecation.",
+        ],
+      },
+      {
+        period: "Jan 2021 - Jan 2024 · 3 yrs 1 mo",
+        role: "Assistant PPC and BSR Manager",
+        organization: "Maven Agency",
+        employmentType: "Freelance",
+        location: "Remote",
+        details: [
+          "Managed and optimized Amazon PPC campaigns across multiple client accounts, improving ad efficiency and contributing to increased product visibility and sales performance.",
+          "Analyzed keyword performance, bid strategies, and conversion data to refine targeting and maximize return on ad spend (ROAS).",
+          "Assisted in boosting Best Seller Rank (BSR) through data-driven campaign adjustments and competitive market analysis.",
+          "Assisted in implementing campaign improvements, reducing wasted ad spend and improving click-through rates.",
+          "Handled 16 client accounts.",
+        ],
+      },
+    ],
+    education: [
+      {
+        period: "2022 - 2026",
+        title: "Bachelor of Science in Information Systems",
+        organization:
+          "Mindanao State University - Iligan Institute of Technology",
+        logo: "/images/msu-iit.png",
+        logoAlt:
+          "Mindanao State University - Iligan Institute of Technology logo",
+      },
+      {
+        period: "2012 - 2022",
+        title: "Grade School to Senior High",
+        organization: "Lasalle Academy, Iligan City",
+        logo: "/images/lasalle-academy.png",
+        logoAlt: "La Salle Academy Iligan City logo",
+      },
+    ],
+    recognition: [
+      {
+        title: "College of Computer Studies Executive Council",
+        period: "2023 - 2024",
+        description:
+          "Managed organizational assets, inventory records, equipment lending, and resource allocation for council initiatives.",
+      },
+      {
+        title: "Philippine Red Cross, WASAR Trainee",
+        period: "2020",
+        description:
+          "Bronze member trained in survival techniques, CPR, rescue knot-tying, and aquatic emergency response.",
+      },
     ],
   },
   projects: {
@@ -132,21 +219,53 @@ export const en = {
     ],
   },
   contact: {
-    eyebrow: "Have a good idea?",
-    title: "Let's make something people remember.",
+    eyebrow: "05 / Contact",
+    title: "Let's work together.",
     intro:
-      "Tell me what you're working on, where it feels stuck, or what you're excited about. I usually reply within a couple of days.",
+      "Have a project, a role, or a question? Send a message or email me directly.",
     email: "enterinaf@gmail.com",
     emailHref: "mailto:enterinaf@gmail.com",
-    ctaLabel: "Say hello",
+    form: {
+      endpoint: "https://formspree.io/f/xjygaqaa",
+      title: "Send a message",
+      requiredNote: "All fields are required.",
+      nameLabel: "Your name",
+      namePlaceholder: "Your name",
+      emailLabel: "Email address",
+      emailPlaceholder: "you@example.com",
+      messageLabel: "Your message",
+      messageHint:
+        "A few lines is plenty: what you have in mind and when you need it.",
+      messagePlaceholder: "Tell me a little about your project...",
+      submitLabel: "Send message",
+      sendingLabel: "Sending...",
+      successMessage: "Thanks - your message has been sent.",
+      errorMessage:
+        "Something went wrong. Please try again or email me directly.",
+      successTitle: "Thanks, message received.",
+      successBody:
+        "I'll reply to your email as soon as I can. In the meantime, feel free to look through more of the work.",
+      backToWorkLabel: "Back to the work",
+      anotherMessageLabel: "Send another message",
+    },
+    location: "Based in Iligan City, Philippines",
     social: [
-      { label: "LinkedIn", href: "https://www.linkedin.com/in/fenterina/" },
-      { label: "GitHub", href: "https://github.com/fenterina" },
+      {
+        label: "LinkedIn",
+        handle: "/in/fenterina",
+        href: "https://www.linkedin.com/in/fenterina/",
+      },
+      {
+        label: "GitHub",
+        handle: "@fenterina",
+        href: "https://github.com/fenterina",
+      },
     ],
   },
   footer: {
-    copyright: "Designed + built by Francis, 2024",
-    backToTop: "Back to top",
+    location: "ILIGAN CITY, PHILIPPINES - GMT+8",
+    copyright: "FRANCIS RONALD B. ENTERINA © 2026",
+    backToTop: "BACK TO TOP",
   },
 } as const;
 

@@ -2,4 +2,85 @@
 import { en } from '../i18n/en';
 ---
 
-<section class="contact" id="contact"><div class="container section contact-grid"><div><span class="eyebrow">{en.contact.eyebrow}</span><h2 class="section-heading">{en.contact.title}</h2><p class="section-intro">{en.contact.intro}</p><a class="button button-primary" href={en.contact.emailHref}>{en.contact.ctaLabel} <span aria-hidden="true">-></span></a></div><div class="contact-details"><a href={en.contact.emailHref}>{en.contact.email}</a>{en.contact.social.map((social) => <a href={social.href} target="_blank" rel="noreferrer">{social.label} <span aria-hidden="true">-></span></a>)}</div></div><footer class="site-footer"><div class="container footer-inner"><span>{en.footer.copyright}</span><a href="#top">{en.footer.backToTop} ^</a></div></footer></section>
+<section class="contact" id="contact">
+	<div class="container section contact-grid">
+		<div class="contact-copy">
+			<span class="eyebrow">{en.contact.eyebrow}</span>
+			<h2 class="section-heading">{en.contact.title}</h2>
+			<p class="section-intro">{en.contact.intro}</p>
+			<p class="contact-label">Email</p>
+			<a class="contact-email" href={en.contact.emailHref}>{en.contact.email}</a>
+			<div class="contact-details">{en.contact.social.map((social) => <a href={social.href} target="_blank" rel="noreferrer"><span class="contact-social-name"><strong>{social.label}</strong> <span class="contact-handle">{social.handle}</span></span><span aria-hidden="true">-></span></a>)}</div>
+			<p class="contact-location">{en.contact.location}</p>
+		</div>
+		<form class="contact-form" id="contact-form" action={en.contact.form.endpoint} method="POST" aria-describedby="form-status" data-submit-label={en.contact.form.submitLabel} data-sending-label={en.contact.form.sendingLabel} data-success-message={en.contact.form.successMessage} data-error-message={en.contact.form.errorMessage}>
+			<div class="form-fields">
+			<div class="contact-form-heading"><h3>{en.contact.form.title}</h3><p>{en.contact.form.requiredNote}</p></div>
+			<div class="form-row">
+				<label>{en.contact.form.nameLabel}<input name="name" type="text" placeholder={en.contact.form.namePlaceholder} required /></label>
+				<label>{en.contact.form.emailLabel}<input name="email" type="email" placeholder={en.contact.form.emailPlaceholder} required /></label>
+			</div>
+			<label>{en.contact.form.messageLabel}<span class="field-hint">{en.contact.form.messageHint}</span><textarea name="message" placeholder={en.contact.form.messagePlaceholder} required></textarea></label>
+			<button class="form-submit" type="submit">{en.contact.form.submitLabel} <span aria-hidden="true">-></span></button>
+			<p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+			</div>
+			<div class="form-success" aria-live="polite">
+				<div class="success-check" aria-hidden="true">✓</div>
+				<h3>{en.contact.form.successTitle}</h3>
+				<p>{en.contact.form.successBody}</p>
+				<div class="success-actions"><a class="success-primary" href="#projects">{en.contact.form.backToWorkLabel}</a><button class="success-secondary" type="button">{en.contact.form.anotherMessageLabel}</button></div>
+			</div>
+		</form>
+	</div>
+	<footer class="site-footer">
+		<div class="container footer-bar">
+			<span class="footer-item footer-location">{en.footer.location}</span>
+			<span class="footer-item footer-copyright">{en.footer.copyright}</span>
+			<a class="footer-item footer-top" href="#top">{en.footer.backToTop} <span aria-hidden="true">↑</span></a>
+		</div>
+	</footer>
+</section>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>('#contact-form');
+
+	const submitButton = form?.querySelector<HTMLButtonElement>('.form-submit');
+	const status = form?.querySelector<HTMLElement>('#form-status');
+	const anotherMessageButton = form?.querySelector<HTMLButtonElement>('.success-secondary');
+	const submitLabel = form?.dataset.submitLabel ?? 'Send message';
+	const sendingLabel = form?.dataset.sendingLabel ?? 'Sending...';
+	const successMessage = form?.dataset.successMessage ?? 'Thanks - your message has been sent.';
+	const errorMessage = form?.dataset.errorMessage ?? 'Something went wrong. Please try again.';
+
+	form?.addEventListener('submit', async (event) => {
+		event.preventDefault();
+		if (!form.reportValidity() || !submitButton || !status) return;
+
+		const data = new FormData(form);
+		submitButton.disabled = true;
+		submitButton.firstChild!.textContent = sendingLabel;
+		status.textContent = '';
+		status.className = 'form-status';
+
+		try {
+			const response = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+			if (!response.ok) throw new Error('Formspree submission failed');
+			form.reset();
+			status.textContent = successMessage;
+			status.classList.add('is-success');
+			form.classList.add('is-success');
+		} catch {
+			status.textContent = errorMessage;
+			status.classList.add('is-error');
+		} finally {
+			submitButton.disabled = false;
+			submitButton.firstChild!.textContent = submitLabel;
+		}
+	});
+
+	anotherMessageButton?.addEventListener('click', () => {
+		form?.classList.remove('is-success');
+		status && (status.textContent = '');
+		form?.querySelector<HTMLInputElement>('input[name="name"]')?.focus();
+	});
+</script>

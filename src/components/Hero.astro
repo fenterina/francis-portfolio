@@ -5,12 +5,9 @@ import { en } from '../i18n/en';
 <section class="hero" id="top">
   <div class="container hero-grid">
     <div class="hero-copy reveal">
-      <span class="eyebrow">{en.hero.eyebrow}</span>
-      <h1>{en.hero.titleStart} <em>{en.hero.titleAccent}</em></h1>
-      <p class="hero-description">{en.hero.description}</p>
+      <div class="hero-brand"><img class="hero-brand-image" src={en.images.brandLogo} alt={en.images.brandLogoAlt} /></div>
+      <p class="hero-quote">{en.hero.brandPhrase}</p>
       <div class="hero-actions"><a class="button button-primary" href={en.hero.workLink}>{en.hero.workLabel} <span aria-hidden="true">-></span></a><a class="button button-ghost" href={en.hero.contactLink}>{en.hero.contactLabel}</a></div>
-      <p class="hero-note"><span class="status-dot" aria-hidden="true"></span> {en.hero.availability}</p>
     </div>
-    <div class="hero-art reveal delay-1" aria-label={en.hero.portraitLabel}><span class="shape shape-yellow" aria-hidden="true"></span><span class="shape shape-mint" aria-hidden="true"></span><div class="portrait-wrap"><img src={en.images.heroPortrait} alt={en.hero.portraitAlt} /></div></div>
   </div>
 </section>
