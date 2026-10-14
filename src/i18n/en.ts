@@ -136,12 +136,12 @@ export const en = {
     title: "Let's make something people remember.",
     intro:
       "Tell me what you're working on, where it feels stuck, or what you're excited about. I usually reply within a couple of days.",
-    email: "hello@francis.design",
-    emailHref: "mailto:hello@francis.design",
+    email: "enterinaf@gmail.com",
+    emailHref: "mailto:enterinaf@gmail.com",
     ctaLabel: "Say hello",
     social: [
-      { label: "LinkedIn", href: "https://www.linkedin.com" },
-      { label: "GitHub", href: "https://github.com" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/fenterina/" },
+      { label: "GitHub", href: "https://github.com/fenterina" },
     ],
   },
   footer: {
