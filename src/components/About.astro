@@ -4,7 +4,7 @@ import { en } from '../i18n/en';
 
 <section class="section section-white" id="about">
   <div class="container about-grid">
-    <div class="about-visual reveal"><div class="about-portrait"><img src={en.images.aboutPortrait} alt={en.about.portraitAlt} loading="lazy" /></div><div class="about-badge">{en.about.badge[0]}<br />{en.about.badge[1]}</div></div>
-    <div class="about-copy reveal delay-1"><span class="eyebrow">{en.about.eyebrow}</span><h2 class="section-heading">{en.about.title}</h2>{en.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}<ul class="fact-list" aria-label={en.about.factsLabel}>{en.about.facts.map((fact) => <li><strong>{fact.value}</strong><span>{fact.label}</span></li>)}</ul></div>
+    <div class="about-visual reveal"><div class="about-portrait"><img src={en.images.aboutPortrait} alt={en.about.portraitAlt} loading="lazy" /></div></div>
+    <div class="about-copy reveal delay-1"><span class="eyebrow">{en.about.eyebrow}</span><h2 class="section-heading">{en.about.title}</h2>{en.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</div>
   </div>
 </section>

@@ -11,10 +11,8 @@ export const en = {
     brandMarkAlt: "Francis Enterina logo mark",
     brandLogo: "/images/Logo_with_name.png",
     brandLogoAlt: "Francis Enterina logo",
-    heroPortrait:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=85",
-    aboutPortrait:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=85",
+    heroPortrait: "/images/picture%20bilyard.png",
+    aboutPortrait: "/images/picture%20bilyard.png",
   },
   nav: {
     homeLabel: "Francis home",
@@ -48,14 +46,7 @@ export const en = {
       "I care about the details that make a product feel obvious: the rhythm of a page, the weight of a button, the quiet confidence of a well-made system. My practice brings together frontend craft, visual design, and a healthy curiosity about how people move through the web.",
       "When I'm away from the screen, you'll usually find me collecting print magazines, walking unfamiliar streets, or making a very strong case for one more typeface.",
     ],
-    badge: ["Curious", "by default"],
     portraitAlt: "Francis working as a creative developer",
-    factsLabel: "Professional facts",
-    facts: [
-      { value: "06+", label: "Years creating" },
-      { value: "24", label: "Projects shipped" },
-      { value: "04", label: "Time zones worked" },
-    ],
   },
   experience: {
     eyebrow: "03 / Experience",
