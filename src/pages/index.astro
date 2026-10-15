@@ -48,6 +48,11 @@ import '../styles/global.css';
 				document.body.setAttribute('style', lockedBodyStyles);
 				window.scrollTo(0, lockedScrollY);
 			};
+			const openDialog = (dialog: HTMLDialogElement) => {
+				if (dialog.open) return;
+				lockPageScroll();
+				dialog.showModal();
+			};
 
 			if (!prefersReducedMotion) {
 				sections.forEach((section) => section.classList.add('section-reveal'));
@@ -68,19 +73,18 @@ import '../styles/global.css';
 					window.setTimeout(() => card.classList.remove('is-pressed'), 220);
 				};
 				const dialogId = card.dataset.projectTrigger ?? card.dataset.dialogTrigger;
-				const projectDialog = dialogId ? document.getElementById(dialogId) as HTMLDialogElement : null;
+				const dialogElement = dialogId ? document.getElementById(dialogId) : null;
+				const projectDialog = dialogElement instanceof HTMLDialogElement ? dialogElement : null;
 				const openProject = (event: Event) => {
 					event.preventDefault();
-					lockPageScroll();
-					projectDialog?.showModal();
+					if (projectDialog) openDialog(projectDialog);
 				};
 				if (projectDialog) {
 					card.addEventListener('click', openProject);
 					card.querySelector('a')?.addEventListener('click', (event) => {
 						event.preventDefault();
 						event.stopPropagation();
-						lockPageScroll();
-						projectDialog.showModal();
+						openDialog(projectDialog);
 					});
 				}
 				card.addEventListener('click', press);
@@ -89,8 +93,7 @@ import '../styles/global.css';
 						event.preventDefault();
 						press();
 						if (projectDialog) {
-							lockPageScroll();
-							projectDialog.showModal();
+							openDialog(projectDialog);
 						}
 					}
 				});
@@ -99,12 +102,10 @@ import '../styles/global.css';
 			document.querySelectorAll<HTMLDialogElement>('.project-dialog').forEach((dialog) => {
 				dialog.querySelector<HTMLButtonElement>('.project-dialog-close')?.addEventListener('click', () => {
 					dialog.close();
-					unlockPageScroll();
 				});
 				dialog.addEventListener('click', (event) => {
 					if (event.target === dialog) {
 						dialog.close();
-						unlockPageScroll();
 					}
 				});
 				dialog.addEventListener('close', unlockPageScroll);
@@ -149,9 +150,9 @@ import '../styles/global.css';
 			certificatePreview?.addEventListener('click', (event) => {
 				if (event.target === certificatePreview) {
 					certificatePreview.close();
-					restoreCertificateScroll();
 				}
 			});
+			certificatePreview?.addEventListener('close', restoreCertificateScroll);
 		</script>
 	</body>
 </html>
