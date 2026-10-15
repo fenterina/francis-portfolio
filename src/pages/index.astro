@@ -25,14 +25,29 @@ import '../styles/global.css';
 			<Hero />
 			<About />
 			<Experience />
-			<Projects />
 			<Skills />
+			<Projects />
 			<Contact />
 		</main>
 		<script>
 			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const sections = document.querySelectorAll<HTMLElement>('.section');
 			const cards = document.querySelectorAll<HTMLElement>('[data-interactive-card]');
+			let lockedScrollY = 0;
+			let lockedBodyStyles = '';
+			const lockPageScroll = () => {
+				lockedScrollY = window.scrollY;
+				lockedBodyStyles = document.body.getAttribute('style') ?? '';
+				document.body.style.position = 'fixed';
+				document.body.style.top = `-${lockedScrollY}px`;
+				document.body.style.left = '0';
+				document.body.style.right = '0';
+				document.body.style.width = '100%';
+			};
+			const unlockPageScroll = () => {
+				document.body.setAttribute('style', lockedBodyStyles);
+				window.scrollTo(0, lockedScrollY);
+			};
 
 			if (!prefersReducedMotion) {
 				sections.forEach((section) => section.classList.add('section-reveal'));
@@ -52,13 +67,77 @@ import '../styles/global.css';
 					card.classList.add('is-pressed');
 					window.setTimeout(() => card.classList.remove('is-pressed'), 220);
 				};
+				const dialogId = card.dataset.projectTrigger ?? card.dataset.dialogTrigger;
+				const projectDialog = dialogId ? document.getElementById(dialogId) as HTMLDialogElement : null;
+				const openProject = (event: Event) => {
+					event.preventDefault();
+					if (projectDialog?.id === 'certificates-dialog') lockPageScroll();
+					projectDialog?.showModal();
+				};
+				if (projectDialog) {
+					card.addEventListener('click', openProject);
+					card.querySelector('a')?.addEventListener('click', (event) => {
+						event.preventDefault();
+						event.stopPropagation();
+						projectDialog.showModal();
+					});
+				}
 				card.addEventListener('click', press);
 				card.addEventListener('keydown', (event) => {
 					if (event.key === 'Enter' || event.key === ' ') {
 						event.preventDefault();
 						press();
+						if (projectDialog) {
+							if (projectDialog.id === 'certificates-dialog') lockPageScroll();
+							projectDialog.showModal();
+						}
 					}
 				});
+			});
+
+			document.querySelectorAll<HTMLDialogElement>('.project-dialog').forEach((dialog) => {
+				dialog.querySelector<HTMLButtonElement>('.project-dialog-close')?.addEventListener('click', () => {
+					dialog.close();
+					if (dialog.id === 'certificates-dialog') unlockPageScroll();
+				});
+				dialog.addEventListener('click', (event) => {
+					if (event.target === dialog) {
+						dialog.close();
+						if (dialog.id === 'certificates-dialog') unlockPageScroll();
+					}
+				});
+				if (dialog.id === 'certificates-dialog') {
+					dialog.addEventListener('close', unlockPageScroll);
+				}
+			});
+
+			const certificatePreview = document.querySelector<HTMLDialogElement>('#certificate-preview');
+			const certificatePreviewImage = document.querySelector<HTMLImageElement>('#certificate-preview-image');
+			const certificatePreviewTitle = document.querySelector<HTMLElement>('#certificate-preview-title');
+			let certificateScrollY = 0;
+			const restoreCertificateScroll = () => {
+				window.requestAnimationFrame(() => window.scrollTo(0, certificateScrollY));
+			};
+			document.querySelectorAll<HTMLAnchorElement>('.certificate-preview-trigger').forEach((certificate) => {
+				certificate.addEventListener('click', (event) => {
+					event.preventDefault();
+					if (!certificatePreview || !certificatePreviewImage || !certificatePreviewTitle) return;
+					certificateScrollY = window.scrollY;
+					certificatePreviewImage.src = certificate.dataset.previewSrc ?? certificate.href;
+					certificatePreviewImage.alt = certificate.dataset.previewTitle ?? 'Certificate preview';
+					certificatePreviewTitle.textContent = certificate.dataset.previewTitle ?? '';
+					certificatePreview.showModal();
+				});
+			});
+			certificatePreview?.querySelector<HTMLButtonElement>('.certificate-preview-close')?.addEventListener('click', () => {
+				certificatePreview.close();
+				restoreCertificateScroll();
+			});
+			certificatePreview?.addEventListener('click', (event) => {
+				if (event.target === certificatePreview) {
+					certificatePreview.close();
+					restoreCertificateScroll();
+				}
 			});
 		</script>
 	</body>

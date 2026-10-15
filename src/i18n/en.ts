@@ -136,48 +136,15 @@ export const en = {
       "A small selection of collaborations, experiments, and digital products made with thoughtful people.",
     items: [
       {
-        title: "Sonder Finance",
-        category: "Product design + build",
+        title: "Red Carpet",
+        category: "Mobile app + admin dashboard",
         description:
-          "A calmer way for independent teams to understand their money and make their next move.",
-        tags: ["Astro", "TypeScript", "UX"],
-        preview: "preview-purple",
-        year: "2024",
-        href: "https://example.com/sonder-finance",
-        linkLabel: "View project",
-      },
-      {
-        title: "Mori Studio",
-        category: "Brand platform",
-        description:
-          "A warm, editorial home for a small studio making beautiful things with purpose.",
-        tags: ["Webflow", "Art direction"],
-        preview: "preview-mint",
-        year: "2024",
-        href: "https://example.com/mori-studio",
-        linkLabel: "View project",
-      },
-      {
-        title: "Field Notes",
-        category: "Editorial experience",
-        description:
-          "A flexible reading experience for stories about place, process, and the people behind both.",
-        tags: ["Next.js", "CMS", "Motion"],
-        preview: "preview-yellow",
-        year: "2023",
-        href: "https://example.com/field-notes",
-        linkLabel: "View project",
-      },
-      {
-        title: "Orbit OS",
-        category: "Design system",
-        description:
-          "A practical visual language that helped a growing product team move with more confidence.",
-        tags: ["Figma", "Systems", "React"],
-        preview: "preview-coral",
-        year: "2023",
-        href: "https://example.com/orbit-os",
-        linkLabel: "View project",
+          "An all-in-one wedding marketplace connecting couples, planners, and vendors in one clear, coordinated experience.",
+        tags: ["React Native", "TypeScript", "Supabase"],
+        preview: "preview-red-carpet",
+        year: "2026",
+        href: "#redcarpet-case-study",
+        linkLabel: "View case study",
       },
     ],
   },
@@ -207,6 +174,67 @@ export const en = {
         description:
           "Clear communication, kind critique, documentation, and calm momentum.",
       },
+    ],
+    certificates: [
+      {
+        title: "AI Mastery",
+        file: "AI Mastery Cert.png",
+        credentialUrl:
+          "https://tixu.ai/certificate/5d8df00b-2a960c-4f6b-40000005-7b57b76937ac?type=roadmap&name=AI+Mastery&fn=Francis+Ronald&ln=Enterina&date=6+October+2026&cl=17",
+      },
+      {
+        title: "Lovable",
+        file: "Lovable Cert.png",
+        credentialUrl:
+          "https://tixu.ai/certificate/fbfb99da-2a960c-bad0-53-00e203ac01ce",
+      },
+      {
+        title: "Kling",
+        file: "Kling Cert.png",
+        credentialUrl:
+          "https://tixu.ai/certificate/f4baea88-2a960c-6cbb-54-86076a5d2be0",
+      },
+      {
+        title: "Nano Banana",
+        file: "Nano Banana Cert.png",
+        credentialUrl:
+          "https://tixu.ai/certificate/e4f70c15-2a960c-ef87-51-1077da3c8c8f",
+      },
+      {
+        title: "ChatGPT",
+        file: "ChatGPT Cert.png",
+        credentialUrl:
+          "https://tixu.ai/certificate/17bea2c7-2a960c-28ab-4f-9c942ca4a3f7",
+      },
+      {
+        title: "Claude",
+        file: "Claude Cert.png",
+        credentialUrl:
+          "https://tixu.ai/certificate/15edc35d-2a960c-c8c2-50-74d73cd0bd31",
+      },
+      {
+        title: "Claude Advanced Workflows",
+        file: "Claude Advanced Workflows Cert.png",
+        credentialUrl:
+          "https://tixu.ai/certificate/9765b494-2a960c-c076-55-0eb88f3d69b4",
+      },
+      { title: "BSIS Diploma", file: "BSIS-Diploma.png" },
+      { title: "CCS Executive Council", file: "CCS-EC-Cert.png" },
+      { title: "Anura Innovations", file: "AnuraInnovations-Cert.png" },
+      { title: "Hues X Palette", file: "Hues X Palette-Cert.png" },
+      { title: "PPC Manager", file: "PPC Manager-Cert.png" },
+      { title: "CCS Research Week", file: "CCS-ResearchWeek-Cert.png" },
+      { title: "Final Pitch", file: "FinalPitch-Cert.png" },
+    ],
+    additionalCertificates: [
+      { title: "Elementary Diploma", file: "Elementary-Diploma.png" },
+      { title: "Football", file: "Football-Cert.png" },
+      { title: "JHS Diploma", file: "JHS-Diploma.png" },
+      { title: "Kiddie Crew", file: "KiddieCrew-Cert.png" },
+      { title: "Living Way Gospel", file: "LivingWayGospel-Cert.png" },
+      { title: "SHS Diploma", file: "SHS-Diploma.png" },
+      { title: "WASAR", file: "WASAR-Cert_1.png" },
+      { title: "WASAR", file: "WASAR-Cert_2.png" },
     ],
   },
   contact: {
