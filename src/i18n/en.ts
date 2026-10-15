@@ -28,6 +28,7 @@ export const en = {
     projects: "Projects",
     skills: "Skills",
     contact: "Let's Connect!",
+    downloadCv: "Download CV",
   },
   hero: {
     brandTitle: "Francis Enterina",

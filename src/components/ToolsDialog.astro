@@ -1,0 +1,24 @@
+---
+import { tools } from '../data/tools';
+import ToolChip from './ToolChip.astro';
+
+const categories = [...new Set(tools.map((tool) => tool.category))];
+---
+
+<dialog class="tools-dialog project-dialog" id="tools-dialog" aria-labelledby="tools-dialog-title">
+  <div class="tools-dialog-inner">
+    <button class="project-dialog-close tools-dialog-close" type="button" aria-label="Close tools dialog">Close <span aria-hidden="true">×</span></button>
+    <h2 id="tools-dialog-title">Everything I work with</h2>
+    <p class="project-dialog-lede">A complete look at the tools, platforms, and technologies I use to bring ideas to life.</p>
+    <div class="tools-modal-groups">
+      {categories.map((category) => (
+        <section class="tools-modal-category" aria-labelledby={`tools-category-${category.toLowerCase().replaceAll(' ', '-')}`}>
+          <h3 id={`tools-category-${category.toLowerCase().replaceAll(' ', '-')}`}>{category}</h3>
+          <div class="tools-modal-grid">
+            {tools.filter((tool) => tool.category === category).map((tool) => <ToolChip tool={tool} />)}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</dialog>

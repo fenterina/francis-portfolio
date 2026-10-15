@@ -125,6 +125,34 @@ import '../styles/global.css';
 				});
 			});
 
+			const toolsDialog = document.querySelector<HTMLDialogElement>('#tools-dialog');
+			const toolsDialogClose = toolsDialog?.querySelector<HTMLButtonElement>('.tools-dialog-close');
+			let toolsDialogTrigger: HTMLElement | null = null;
+			const openToolsDialog = (trigger: HTMLElement, toolName?: string) => {
+				if (!toolsDialog) return;
+				toolsDialogTrigger = trigger;
+				openDialog(toolsDialog);
+				window.requestAnimationFrame(() => {
+					toolsDialogClose?.focus();
+					if (!toolName) return;
+					const matchingChip = Array.from(toolsDialog.querySelectorAll<HTMLButtonElement>('.tool-chip')).find((chip) => chip.dataset.toolName === toolName);
+					if (!matchingChip) return;
+					matchingChip.classList.add('is-highlighted');
+					matchingChip.scrollIntoView({ block: 'center', behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+					window.setTimeout(() => matchingChip.classList.remove('is-highlighted'), 1200);
+				});
+			};
+			document.querySelectorAll<HTMLButtonElement>('.tools-column .tool-chip').forEach((chip) => {
+				chip.addEventListener('click', () => openToolsDialog(chip, chip.dataset.toolName));
+			});
+			document.querySelector<HTMLButtonElement>('[data-tools-dialog-trigger]')?.addEventListener('click', (event) => {
+				openToolsDialog(event.currentTarget as HTMLElement);
+			});
+			toolsDialog?.addEventListener('close', () => {
+				toolsDialogTrigger?.focus();
+				toolsDialogTrigger = null;
+			});
+
 			const certificatePreview = document.querySelector<HTMLDialogElement>('#certificate-preview');
 			const certificatePreviewImage = document.querySelector<HTMLImageElement>('#certificate-preview-image');
 			const certificatePreviewTitle = document.querySelector<HTMLElement>('#certificate-preview-title');

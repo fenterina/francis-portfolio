@@ -8,9 +8,9 @@ interface Props {
 const { tool } = Astro.props;
 ---
 
-<div class="tool-chip">
+<button class="tool-chip" type="button" data-tool-name={tool.name} aria-label={`View ${tool.name} details`}>
   <span class="tool-chip-badge" style={`--tool-color: ${tool.color}`}>
     {tool.logo ? <img src={tool.logo} alt="" /> : <span>{tool.short}</span>}
   </span>
   <span>{tool.name}</span>
-</div>
+</button>

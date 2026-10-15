@@ -1,6 +1,7 @@
 ---
 import { en } from '../i18n/en';
 import ToolChip from './ToolChip.astro';
+import ToolsDialog from './ToolsDialog.astro';
 import { tools } from '../data/tools';
 
 const leftTools = tools.filter((_, index) => index % 2 === 0);
@@ -24,6 +25,7 @@ const rightTools = tools.filter((_, index) => index % 2 === 1);
       <span class="eyebrow">{en.skills.eyebrow}</span>
       <h2 class="section-heading">{en.skills.title}</h2>
       <p class="section-intro">{en.skills.intro}</p>
+      <button class="tools-view-all" type="button" data-tools-dialog-trigger>View all tools <span aria-hidden="true">-&gt;</span></button>
     </div>
     <div class="skill-groups">
       <article
@@ -83,3 +85,4 @@ const rightTools = tools.filter((_, index) => index % 2 === 1);
     <figcaption id="certificate-preview-title"></figcaption>
   </figure>
 </dialog>
+<ToolsDialog />
