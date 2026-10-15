@@ -1,3 +1,9 @@
+export type Certificate = {
+  title: string;
+  file: string;
+  credentialUrl?: string;
+};
+
 export const en = {
   language: "en",
   metadata: {
@@ -25,7 +31,7 @@ export const en = {
   },
   hero: {
     brandTitle: "Francis Enterina",
-    brandPhrase: "Don't be sad, it's such a waste of time",
+    brandPhrase: "Welcome to the portfolio of Francis Enterina.",
     eyebrow: "Frontend developer / designer",
     titleStart: "Interfaces with a little",
     titleAccent: "more feeling.",
@@ -40,8 +46,8 @@ export const en = {
     portraitAlt: "Portrait of Francis smiling",
   },
   about: {
-    eyebrow: "A bit about me",
-    title: "Good work lives where logic meets wonder.",
+    eyebrow: "A bit about Francis Enterina",
+    title: "Don't be sad, it's such a waste of time.",
     paragraphs: [
       "I’m an Information Systems graduate at MSU-IIT. My path started in e-commerce and social media, where I managed Amazon PPC and BSR for clients and their brands, and handled marketing for a Salon Business based in Cebu. Those years taught me how people actually decide what to click, buy, and trust.",
       "Now I’m pairing that with a technical side: building projects, working with data, and learning how to make tools that are useful and not just functional. Based in the Philippines, open to remote roles, and always up for a good problem to untangle.",
@@ -225,7 +231,7 @@ export const en = {
       { title: "PPC Manager", file: "PPC Manager-Cert.png" },
       { title: "CCS Research Week", file: "CCS-ResearchWeek-Cert.png" },
       { title: "Final Pitch", file: "FinalPitch-Cert.png" },
-    ],
+    ] satisfies Certificate[],
     additionalCertificates: [
       { title: "Elementary Diploma", file: "Elementary-Diploma.png" },
       { title: "Football", file: "Football-Cert.png" },
@@ -235,7 +241,7 @@ export const en = {
       { title: "SHS Diploma", file: "SHS-Diploma.png" },
       { title: "WASAR", file: "WASAR-Cert_1.png" },
       { title: "WASAR", file: "WASAR-Cert_2.png" },
-    ],
+    ] satisfies Certificate[],
   },
   contact: {
     eyebrow: "05 / Contact",

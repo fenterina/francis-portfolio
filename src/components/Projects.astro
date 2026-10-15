@@ -1,10 +1,18 @@
 ---
 import { en } from '../i18n/en';
 
+type CaseStudyScreen = {
+  image: string;
+  alt: string;
+  number: string;
+  caption: string;
+};
+
 const projectCaseStudies = {
   redcarpet: {
     title: 'Red Carpet',
-    tagline: "An all-in-one wedding planning app that connects couples, wedding planners, and vendors, plus an admin analytics dashboard.",
+    tagline:
+      'An all-in-one wedding planning app that connects couples, wedding planners, and vendors, plus an admin analytics dashboard.',
     meta: [
       ['Company', 'Anura Innovations'],
       ['Role', 'Frontend & Backend Developer Intern'],
@@ -12,23 +20,55 @@ const projectCaseStudies = {
       ['Focus', 'Mobile product, Marketplace, and Dashboard'],
     ],
     heroImage: '/Projects/redCarpetFrontPage.png',
-    brief: 'Wedding planning is spread across many people and tools. Red Carpet brings couples, planners, and vendors into one marketplace for tasks, vendor booking, guests, and event coordination.',
-    did: "I created the app's frontend and backend components following user experience principles: the couple dashboard, vendor marketplace, activity planner, bookings, guests, and payments. I worked with developers to implement features and ran UI/UX testing and QA on the flows.",
-    result: 'A mobile app for three roles, plus a companion web dashboard showing real-time app status, and end to end user messaging feature and metrics such as revenue, retention, and monthly active users.',
+    brief:
+      'Wedding planning is spread across many people and tools. Red Carpet brings couples, planners, and vendors into one marketplace for tasks, vendor booking, guests, and event coordination.',
+    did:
+      "I created the app's frontend and backend components following user experience principles: the couple dashboard, vendor marketplace, activity planner, bookings, guests, and payments. I worked with developers to implement features and ran UI/UX testing and QA on the flows.",
+    result:
+      'A mobile app for three roles, plus a companion web dashboard showing real-time app status, and end to end user messaging feature and metrics such as revenue, retention, and monthly active users.',
     roles: [
-      ['Couple / Client', 'Plans and organizes their wedding, books vendors, manages guests, and tracks progress.'],
-      ['Wedding Planner', 'Oversees wedding projects, coordinates vendors, and manages execution.'],
-      ['Vendor', 'Offers wedding services, manages bookings, and fulfills assigned tasks.'],
+      [
+        'Couple / Client',
+        'Plans and organizes their wedding, books vendors, manages guests, and tracks progress.',
+      ],
+      [
+        'Wedding Planner',
+        'Oversees wedding projects, coordinates vendors, and manages execution.',
+      ],
+      [
+        'Vendor',
+        'Offers wedding services, manages bookings, and fulfills assigned tasks.',
+      ],
     ],
     features: [
-      ['01', 'Centralized Wedding Dashboard', 'Set preferences, view curated vendors, request quotations.'],
-      ['02', 'Integrated Vendor Marketplace', 'Search, filter, compare, and book vendors.'],
+      [
+        '01',
+        'Centralized Wedding Dashboard',
+        'Set preferences, view curated vendors, request quotations.',
+      ],
+      [
+        '02',
+        'Integrated Vendor Marketplace',
+        'Search, filter, compare, and book vendors.',
+      ],
       ['03', 'Activity Planner', 'Shared tasks, assignments, and deadline tracking.'],
-      ['04', 'Booking & Project Management', 'Confirmations, workflows, and leads.'],
-      ['05', 'Guest & Invitation Management', 'Guest lists, roles, and RSVP tracking.'],
-      ['06', 'Profile, Notifications & Payments', 'Real-time alerts, payouts, and security controls.'],
+      [
+        '04',
+        'Booking & Project Management',
+        'Confirmations, workflows, and leads.',
+      ],
+      [
+        '05',
+        'Guest & Invitation Management',
+        'Guest lists, roles, and RSVP tracking.',
+      ],
+      [
+        '06',
+        'Profile, Notifications & Payments',
+        'Real-time alerts, payouts, and security controls.',
+      ],
     ],
-    screens: [],
+    screens: [] as CaseStudyScreen[],
     tags: ['React Native', 'TypeScript', 'Supabase'],
     links: { github: '', demo: '' },
   },
@@ -36,20 +76,161 @@ const projectCaseStudies = {
 
 const redcarpet = projectCaseStudies.redcarpet;
 ---
-<section class="section projects" id="projects"><div class="container"><div class="projects-top"><div><h2 class="section-heading">{en.projects.title}</h2></div></div><div class="project-grid">{en.projects.items.map((project) => (<article class="project-card interactive-card" data-interactive-card data-project-trigger={project.preview === 'preview-red-carpet' ? 'redcarpet-case-study' : undefined} tabindex="0"><div class={`project-preview ${project.preview}`} aria-hidden="true">{project.preview === 'preview-red-carpet' ? <img class="red-carpet-card-image" src={redcarpet.heroImage} alt="" /> : <div class="preview-window"><div class="window-dots"><i></i><i></i><i></i></div><div class="preview-layout"><div class="preview-sidebar"></div><div class="preview-content"><span></span><span></span><span></span></div></div></div>}</div><div class="project-body"><div class="project-meta"><span>{project.category}</span><a href={project.href} target={project.href.startsWith('#') ? undefined : '_blank'} rel={project.href.startsWith('#') ? undefined : 'noreferrer'}>{project.linkLabel} <span aria-hidden="true">-></span></a></div><h3>{project.title}</h3><p>{project.description}</p><div class="tag-row">{project.tags.map((tag) => <span class="tag">{tag}</span>)}</div></div></article>))}</div></div></section>
-<dialog class="project-dialog" id="redcarpet-case-study" aria-labelledby="redcarpet-dialog-title">
+
+<section class="section projects" id="projects">
+  <div class="container">
+    <div class="projects-top">
+      <div>
+        <h2 class="section-heading">{en.projects.title}</h2>
+      </div>
+    </div>
+    <div class="project-grid">
+      {
+        en.projects.items.map((project) => (
+          <article
+            class="project-card interactive-card"
+            data-interactive-card
+            data-project-trigger={
+              project.preview === 'preview-red-carpet'
+                ? 'redcarpet-case-study'
+                : undefined
+            }
+            tabindex="0"
+          >
+            <div class={`project-preview ${project.preview}`} aria-hidden="true">
+              {project.preview === 'preview-red-carpet' ? (
+                <img
+                  class="red-carpet-card-image"
+                  src={redcarpet.heroImage}
+                  alt=""
+                />
+              ) : (
+                <div class="preview-window">
+                  <div class="window-dots"><i></i><i></i><i></i></div>
+                  <div class="preview-layout">
+                    <div class="preview-sidebar"></div>
+                    <div class="preview-content">
+                      <span></span><span></span><span></span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div class="project-body">
+              <div class="project-meta">
+                <span>{project.category}</span>
+                <a
+                  href={project.href}
+                  target={project.href.startsWith('#') ? undefined : '_blank'}
+                  rel={project.href.startsWith('#') ? undefined : 'noreferrer'}
+                >
+                  {project.linkLabel} <span aria-hidden="true">-&gt;</span>
+                </a>
+              </div>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <div class="tag-row">
+                {project.tags.map((tag) => <span class="tag">{tag}</span>)}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<dialog
+  class="project-dialog"
+  id="redcarpet-case-study"
+  aria-labelledby="redcarpet-dialog-title"
+>
   <div class="project-dialog-inner">
-    <button class="project-dialog-close" type="button" aria-label="Close Red Carpet case study">×</button>
+    <button
+      class="project-dialog-close"
+      type="button"
+      aria-label="Close Red Carpet case study"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
     <div class="case-study-content">
       <h2 id="redcarpet-dialog-title">{redcarpet.title}</h2>
       <p class="project-dialog-lede">{redcarpet.tagline}</p>
-      <div class="project-dialog-facts">{redcarpet.meta.map(([label, value]) => <div><span>{label}</span><strong>{value}</strong></div>)}</div>
-      <img class="case-study-hero" src={redcarpet.heroImage} alt="Red Carpet mobile app and admin dashboard interface" />
-      <div class="case-study-columns">{[['The brief', redcarpet.brief], ['What I did', redcarpet.did], ['The result', redcarpet.result]].map(([label, text]) => <div><span>{label}</span><p>{text}</p></div>)}</div>
-      <section class="case-study-section"><div class="case-study-section-heading"><h3>Three roles, one platform</h3></div><div class="case-study-role-grid">{redcarpet.roles.map(([title, description]) => <article><h4>{title}</h4><p>{description}</p></article>)}</div></section>
-      <section class="case-study-section"><div class="case-study-section-heading"><h3>Key features</h3></div><div class="case-study-feature-grid">{redcarpet.features.map(([number, title, description]) => <article><b>{number}</b><div><h4>{title}</h4><p>{description}</p></div></article>)}</div></section>
-      {redcarpet.screens.length > 0 && <section class="case-study-section"><div class="case-study-section-heading"><span>03 / Interface exploration</span><h3>Screens &amp; flows</h3></div><div class="case-study-screen-grid">{redcarpet.screens.map((screen) => <figure><img src={screen.image} alt={screen.alt} /><figcaption>{screen.number} {screen.caption}</figcaption></figure>)}</div></section>}
-      <footer class="case-study-footer"><div class="tag-row">{redcarpet.tags.map((tag) => <span class="tag">{tag}</span>)}</div><div class="case-study-links">{redcarpet.links.github && <a href={redcarpet.links.github} target="_blank" rel="noreferrer">View GitHub <span aria-hidden="true">↗</span></a>}{redcarpet.links.demo && <a href={redcarpet.links.demo} target="_blank" rel="noreferrer">Live demo <span aria-hidden="true">↗</span></a>}</div></footer>
+      <div class="project-dialog-facts">
+        {redcarpet.meta.map(([label, value]) => (
+          <div><span>{label}</span><strong>{value}</strong></div>
+        ))}
+      </div>
+      <img
+        class="case-study-hero"
+        src={redcarpet.heroImage}
+        alt="Red Carpet mobile app and admin dashboard interface"
+      />
+      <div class="case-study-columns">
+        {[
+          ['The brief', redcarpet.brief],
+          ['What I did', redcarpet.did],
+          ['The result', redcarpet.result],
+        ].map(([label, text]) => (
+          <div><span>{label}</span><p>{text}</p></div>
+        ))}
+      </div>
+      <section class="case-study-section">
+        <div class="case-study-section-heading">
+          <h3>Three roles, one platform</h3>
+        </div>
+        <div class="case-study-role-grid">
+          {redcarpet.roles.map(([title, description]) => (
+            <article><h4>{title}</h4><p>{description}</p></article>
+          ))}
+        </div>
+      </section>
+      <section class="case-study-section">
+        <div class="case-study-section-heading">
+          <h3>Key features</h3>
+        </div>
+        <div class="case-study-feature-grid">
+          {redcarpet.features.map(([number, title, description]) => (
+            <article>
+              <b>{number}</b>
+              <div><h4>{title}</h4><p>{description}</p></div>
+            </article>
+          ))}
+        </div>
+      </section>
+      {redcarpet.screens.length > 0 && (
+        <section class="case-study-section">
+          <div class="case-study-section-heading">
+            <span>03 / Interface exploration</span>
+            <h3>Screens &amp; flows</h3>
+          </div>
+          <div class="case-study-screen-grid">
+            {redcarpet.screens.map((screen) => (
+              <figure>
+                <img src={screen.image} alt={screen.alt} />
+                <figcaption>{screen.number} {screen.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
+      <footer class="case-study-footer">
+        <div class="tag-row">
+          {redcarpet.tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+        <div class="case-study-links">
+          {redcarpet.links.github && (
+            <a href={redcarpet.links.github} target="_blank" rel="noreferrer">
+              View GitHub <span aria-hidden="true">&rarr;</span>
+            </a>
+          )}
+          {redcarpet.links.demo && (
+            <a href={redcarpet.links.demo} target="_blank" rel="noreferrer">
+              Live demo <span aria-hidden="true">&rarr;</span>
+            </a>
+          )}
+        </div>
+      </footer>
     </div>
   </div>
 </dialog>

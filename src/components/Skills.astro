@@ -7,7 +7,60 @@ const leftTools = tools.filter((_, index) => index % 2 === 0);
 const rightTools = tools.filter((_, index) => index % 2 === 1);
 ---
 
-<section class="section section-white" id="skills"><div class="container skills-grid"><div class="tools-loop tools-loop-left" aria-label="Tools I use"><div class="tools-column tools-column-down" style={`--tool-count: ${leftTools.length}`}><div class="tools-column-track">{leftTools.map((tool) => <ToolChip tool={tool} />)}{leftTools.map((tool) => <ToolChip tool={tool} />)}</div></div></div><div class="skills-copy"><span class="eyebrow">{en.skills.eyebrow}</span><h2 class="section-heading">{en.skills.title}</h2><p class="section-intro">{en.skills.intro}</p></div><div class="skill-groups"><article class="skill-group certificate-card interactive-card" data-interactive-card data-dialog-trigger="certificates-dialog" tabindex="0"><div class="certificate-card-showcase"><img src="/certificates/AI Mastery Cert.png" alt="AI Mastery certificate" loading="lazy" /><div class="certificate-card-content"><h3>Certificates</h3><p>Certificates, Diplomas, and Additional training</p><span class="certificate-card-link">View all Certificates <span aria-hidden="true">-></span></span></div></div></article></div><div class="tools-loop tools-loop-right" aria-label="Tools I use"><div class="tools-column tools-column-up" style={`--tool-count: ${rightTools.length}`}><div class="tools-column-track">{rightTools.map((tool) => <ToolChip tool={tool} />)}{rightTools.map((tool) => <ToolChip tool={tool} />)}</div></div></div></div></section>
+<section class="section section-white" id="skills">
+  <div class="container skills-grid">
+    <div class="tools-loop tools-loop-left" aria-label="Tools I use">
+      <div
+        class="tools-column tools-column-down"
+        style={`--tool-count: ${leftTools.length}`}
+      >
+        <div class="tools-column-track">
+          {leftTools.map((tool) => <ToolChip tool={tool} />)}
+          {leftTools.map((tool) => <ToolChip tool={tool} />)}
+        </div>
+      </div>
+    </div>
+    <div class="skills-copy">
+      <span class="eyebrow">{en.skills.eyebrow}</span>
+      <h2 class="section-heading">{en.skills.title}</h2>
+      <p class="section-intro">{en.skills.intro}</p>
+    </div>
+    <div class="skill-groups">
+      <article
+        class="skill-group certificate-card interactive-card"
+        data-interactive-card
+        data-dialog-trigger="certificates-dialog"
+        tabindex="0"
+      >
+        <div class="certificate-card-showcase">
+          <img
+            src="/certificates/AI Mastery Cert.png"
+            alt="AI Mastery certificate"
+            loading="lazy"
+          />
+          <div class="certificate-card-content">
+            <h3>Certificates</h3>
+            <p>Certificates, Diplomas, and Additional training</p>
+            <span class="certificate-card-link">
+              View all Certificates <span aria-hidden="true">-&gt;</span>
+            </span>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="tools-loop tools-loop-right" aria-label="Tools I use">
+      <div
+        class="tools-column tools-column-up"
+        style={`--tool-count: ${rightTools.length}`}
+      >
+        <div class="tools-column-track">
+          {rightTools.map((tool) => <ToolChip tool={tool} />)}
+          {rightTools.map((tool) => <ToolChip tool={tool} />)}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <dialog class="certificate-dialog project-dialog" id="certificates-dialog" aria-labelledby="certificates-dialog-title">
   <div class="project-dialog-inner">
     <button class="project-dialog-close" type="button" aria-label="Close certificates">Close <span aria-hidden="true">×</span></button>
