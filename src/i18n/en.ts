@@ -43,8 +43,8 @@ export const en = {
     eyebrow: "A bit about me",
     title: "Good work lives where logic meets wonder.",
     paragraphs: [
-      "I care about the details that make a product feel obvious: the rhythm of a page, the weight of a button, the quiet confidence of a well-made system. My practice brings together frontend craft, visual design, and a healthy curiosity about how people move through the web.",
-      "When I'm away from the screen, you'll usually find me collecting print magazines, walking unfamiliar streets, or making a very strong case for one more typeface.",
+      "I’m an Information Systems graduate at MSU-IIT. My path started in e-commerce and social media, where I managed Amazon PPC and BSR for clients and their brands, and handled marketing for a Salon Business based in Cebu. Those years taught me how people actually decide what to click, buy, and trust.",
+      "Now I’m pairing that with a technical side: building projects, working with data, and learning how to make tools that are useful and not just functional. Based in the Philippines, open to remote roles, and always up for a good problem to untangle.",
     ],
     portraitAlt: "Francis working as a creative developer",
   },
@@ -131,7 +131,7 @@ export const en = {
   },
   projects: {
     eyebrow: "Selected work",
-    title: "A few things I've helped bring to life.",
+    title: "What I did",
     intro:
       "A small selection of collaborations, experiments, and digital products made with thoughtful people.",
     items: [
@@ -144,13 +144,13 @@ export const en = {
         preview: "preview-red-carpet",
         year: "2026",
         href: "#redcarpet-case-study",
-        linkLabel: "View case study",
+        linkLabel: "View more details",
       },
     ],
   },
   skills: {
     eyebrow: "How I work",
-    title: "A flexible toolkit for thoughtful digital work.",
+    title: "Tools I use.",
     intro:
       "The tools change. The intention doesn't: make it clear, make it useful, make it feel like someone cared.",
     groups: [
@@ -239,9 +239,9 @@ export const en = {
   },
   contact: {
     eyebrow: "05 / Contact",
-    title: "Let's work together.",
+    title: "Have a vision? Let’s make it happen!",
     intro:
-      "Have a project, a role, or a question? Send a message or email me directly.",
+      "Looking to collaborate, hire, or ask a question? Send me a message or reach out via email.",
     email: "enterinaf@gmail.com",
     emailHref: "mailto:enterinaf@gmail.com",
     form: {
@@ -283,7 +283,7 @@ export const en = {
   },
   footer: {
     location: "ILIGAN CITY, PHILIPPINES - GMT+8",
-    copyright: "FRANCIS RONALD B. ENTERINA © 2026",
+    copyright: "FRANCIS RONALD BORJA ENTERINA © 2026",
     backToTop: "BACK TO TOP",
   },
 } as const;

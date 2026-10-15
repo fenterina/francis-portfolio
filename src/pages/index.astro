@@ -71,7 +71,7 @@ import '../styles/global.css';
 				const projectDialog = dialogId ? document.getElementById(dialogId) as HTMLDialogElement : null;
 				const openProject = (event: Event) => {
 					event.preventDefault();
-					if (projectDialog?.id === 'certificates-dialog') lockPageScroll();
+					lockPageScroll();
 					projectDialog?.showModal();
 				};
 				if (projectDialog) {
@@ -79,6 +79,7 @@ import '../styles/global.css';
 					card.querySelector('a')?.addEventListener('click', (event) => {
 						event.preventDefault();
 						event.stopPropagation();
+						lockPageScroll();
 						projectDialog.showModal();
 					});
 				}
@@ -88,7 +89,7 @@ import '../styles/global.css';
 						event.preventDefault();
 						press();
 						if (projectDialog) {
-							if (projectDialog.id === 'certificates-dialog') lockPageScroll();
+							lockPageScroll();
 							projectDialog.showModal();
 						}
 					}
@@ -98,17 +99,29 @@ import '../styles/global.css';
 			document.querySelectorAll<HTMLDialogElement>('.project-dialog').forEach((dialog) => {
 				dialog.querySelector<HTMLButtonElement>('.project-dialog-close')?.addEventListener('click', () => {
 					dialog.close();
-					if (dialog.id === 'certificates-dialog') unlockPageScroll();
+					unlockPageScroll();
 				});
 				dialog.addEventListener('click', (event) => {
 					if (event.target === dialog) {
 						dialog.close();
-						if (dialog.id === 'certificates-dialog') unlockPageScroll();
+						unlockPageScroll();
 					}
 				});
-				if (dialog.id === 'certificates-dialog') {
-					dialog.addEventListener('close', unlockPageScroll);
-				}
+				dialog.addEventListener('close', unlockPageScroll);
+				dialog.addEventListener('keydown', (event) => {
+					if (event.key !== 'Tab') return;
+					const focusable = Array.from(dialog.querySelectorAll<HTMLElement>('button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((element) => !element.hasAttribute('disabled'));
+					if (!focusable.length) return;
+					const first = focusable[0];
+					const last = focusable[focusable.length - 1];
+					if (event.shiftKey && document.activeElement === first) {
+						event.preventDefault();
+						last.focus();
+					} else if (!event.shiftKey && document.activeElement === last) {
+						event.preventDefault();
+						first.focus();
+					}
+				});
 			});
 
 			const certificatePreview = document.querySelector<HTMLDialogElement>('#certificate-preview');

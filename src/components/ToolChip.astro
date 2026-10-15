@@ -1,0 +1,16 @@
+---
+import type { Tool } from '../data/tools';
+
+interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+---
+
+<div class="tool-chip">
+  <span class="tool-chip-badge" style={`--tool-color: ${tool.color}`}>
+    {tool.logo ? <img src={tool.logo} alt="" /> : <span>{tool.short}</span>}
+  </span>
+  <span>{tool.name}</span>
+</div>
