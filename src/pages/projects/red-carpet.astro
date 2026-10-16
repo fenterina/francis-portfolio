@@ -1,0 +1,70 @@
+---
+import '../../styles/global.css';
+
+const title = 'Red Carpet | Wedding Planning App Case Study';
+const description =
+	'Red Carpet is a multi-role wedding planning marketplace built with React Native, TypeScript and Supabase by Francis Enterina.';
+const image = '/Projects/redCarpetFrontPage.png';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="/images/logo-white.png" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<link rel="canonical" href="https://francisenterina.work/projects/red-carpet" />
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://francisenterina.work/projects/red-carpet" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={`https://francisenterina.work${image}`} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<main class="case-study-page">
+			<div class="container case-study-content">
+				<a class="button button-ghost" href="/#projects">← Back to projects</a>
+				<p class="eyebrow">01 / Case study</p>
+				<h1>Red Carpet</h1>
+				<p class="project-dialog-lede">
+					An all-in-one wedding planning app that connects couples, wedding planners,
+					and vendors, plus an admin analytics dashboard.
+				</p>
+				<div class="project-dialog-facts">
+					<div><span>Company</span><strong>Anura Innovations</strong></div>
+					<div><span>Role</span><strong>Frontend &amp; Backend Developer Intern</strong></div>
+					<div><span>Year</span><strong>2026</strong></div>
+					<div><span>Focus</span><strong>Mobile product, marketplace, and dashboard</strong></div>
+				</div>
+				<img class="case-study-hero" src={image} alt="Red Carpet mobile app and admin dashboard interface" />
+				<div class="project-dialog-columns">
+					<div>
+						<span>The brief</span>
+						<p>Wedding planning is spread across many people and tools. Red Carpet brings couples, planners, and vendors into one marketplace for tasks, vendor booking, guests, and event coordination.</p>
+					</div>
+					<div>
+						<span>What I did</span>
+						<p>I created frontend and backend components for the couple dashboard, vendor marketplace, activity planner, bookings, guests, and payments. I also worked with developers on implementation and ran UI/UX testing and QA.</p>
+					</div>
+					<div>
+						<span>The result</span>
+						<p>A mobile app for three roles and a companion web dashboard showing real-time app status, user messaging, and metrics such as revenue, retention, and monthly active users.</p>
+					</div>
+				</div>
+				<section class="case-study-section">
+					<div class="case-study-section-heading"><h2>Key features</h2></div>
+					<div class="case-study-feature-grid">
+						<article><b>01</b><div><h3>Centralized Wedding Dashboard</h3><p>Set preferences, view curated vendors, and request quotations.</p></div></article>
+						<article><b>02</b><div><h3>Integrated Vendor Marketplace</h3><p>Search, filter, compare, and book vendors.</p></div></article>
+						<article><b>03</b><div><h3>Activity Planner</h3><p>Shared tasks, assignments, and deadline tracking.</p></div></article>
+						<article><b>04</b><div><h3>Booking &amp; Project Management</h3><p>Confirmations, workflows, and leads.</p></div></article>
+						<article><b>05</b><div><h3>Guest &amp; Invitation Management</h3><p>Guest lists, roles, and RSVP tracking.</p></div></article>
+						<article><b>06</b><div><h3>Profile, Notifications &amp; Payments</h3><p>Real-time alerts, payouts, and security controls.</p></div></article>
+					</div>
+				</section>
+				<div class="tag-row"><span class="tag">React Native</span><span class="tag">TypeScript</span><span class="tag">Supabase</span></div>
+			</div>
+		</main>
+	</body>
+</html>

@@ -7,9 +7,9 @@ export type Certificate = {
 export const en = {
   language: "en",
   metadata: {
-    title: "Francis Ronald Borja Enterina",
+    title: "Francis Enterina | Information Systems Graduate & Software Developer",
     description:
-      "Francis Enterina is looking for a job. I am a passionate and dedicated professional seeking to contribute my skills and experience to a dynamic team.",
+      "Portfolio of Francis Enterina, an Information Systems graduate from MSU-IIT building mobile apps with React Native, TypeScript and Supabase. Based in Iligan City, Philippines.",
     themeColor: "#4169E1",
   },
   images: {
@@ -150,7 +150,7 @@ export const en = {
         tags: ["React Native", "TypeScript", "Supabase"],
         preview: "preview-red-carpet",
         year: "2026",
-        href: "#redcarpet-case-study",
+        href: "/projects/red-carpet",
         linkLabel: "View more details",
       },
     ],

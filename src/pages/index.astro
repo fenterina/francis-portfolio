@@ -8,17 +8,48 @@ import Skills from '../components/Skills.astro';
 import Contact from '../components/Contact.astro';
 import { en } from '../i18n/en';
 import '../styles/global.css';
+
+const personSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: 'Francis Enterina',
+	alternateName: 'Francis Ronald Borja Enterina',
+	url: 'https://francisenterina.work/',
+	jobTitle: 'Software Developer',
+	alumniOf: 'Mindanao State University - Iligan Institute of Technology',
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Iligan City',
+		addressCountry: 'PH'
+	},
+	sameAs: [
+		'https://www.linkedin.com/in/fenterina/',
+		'https://github.com/fenterina',
+		'https://www.youtube.com/@francisenterina4097',
+		'https://www.instagram.com/f.enterina/'
+	]
+};
 ---
 
 <html lang={en.language}>
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/png" href="/images/logo-white.png" />
+		<link rel="apple-touch-icon" href="/images/logo-white.png" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="description" content={en.metadata.description} />
+		<link rel="canonical" href="https://francisenterina.work/" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://francisenterina.work/" />
+		<meta property="og:title" content={en.metadata.title} />
+		<meta property="og:description" content={en.metadata.description} />
+		<meta property="og:image" content="https://francisenterina.work/images/Logo_with_name.png" />
+		<meta property="og:image:alt" content="Francis Enterina logo" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="google-site-verification" content="M2nUoE72IQRMfIMna9vfpk-IdyZtdXDjzvl3WGyyCuA" />
 		<meta name="theme-color" content={en.metadata.themeColor} />
 		<title>{en.metadata.title}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 	</head>
 	<body>
 		<Navigation />
@@ -136,6 +167,7 @@ import '../styles/global.css';
 				if (projectDialog) {
 					card.addEventListener('click', openProject);
 					card.querySelector('a')?.addEventListener('click', (event) => {
+						if (!card.querySelector('a')?.getAttribute('href')?.startsWith('#')) return;
 						event.preventDefault();
 						event.stopPropagation();
 						openDialog(projectDialog);
