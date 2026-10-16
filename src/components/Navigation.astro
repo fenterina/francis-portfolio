@@ -17,6 +17,18 @@ import { en } from '../i18n/en';
   const links = navigation?.querySelectorAll('a');
   const openLabel = toggle?.dataset.openLabel ?? 'Open navigation';
   const closeLabel = toggle?.dataset.closeLabel ?? 'Close navigation';
+  const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.logo, #primary-navigation a[href^="#"]'));
+  const setActiveLink = (activeId: string) => {
+    sectionLinks.forEach((link) => {
+      const isActive = link.getAttribute('href') === `#${activeId}`;
+      link.classList.toggle('is-active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'true');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
   toggle?.addEventListener('click', () => {
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!isOpen));
@@ -30,4 +42,15 @@ import { en } from '../i18n/en';
     if (toggle) toggle.textContent = '+';
     navigation?.classList.remove('is-open');
   }));
+  sectionLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const targetId = link.getAttribute('href')?.slice(1);
+      const target = targetId ? document.getElementById(targetId) : null;
+      if (!target) return;
+      event.preventDefault();
+      setActiveLink(targetId);
+      history.pushState(null, '', `#${targetId}`);
+      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+  });
 </script>

@@ -67,6 +67,59 @@ import '../styles/global.css';
 				sections.forEach((section) => sectionObserver.observe(section));
 			}
 
+			const navigationLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.logo, #primary-navigation a[href^="#"]'));
+			const navigationSections = navigationLinks
+				.map((link) => document.getElementById(link.getAttribute('href')?.slice(1) ?? ''))
+				.filter((section): section is HTMLElement => section instanceof HTMLElement);
+			const setActiveNavigation = (sectionId: string) => {
+				navigationLinks.forEach((link) => {
+					const isActive = link.getAttribute('href') === `#${sectionId}`;
+					link.classList.toggle('is-active', isActive);
+					if (isActive) {
+						link.setAttribute('aria-current', 'true');
+					} else {
+						link.removeAttribute('aria-current');
+					}
+				});
+			};
+			const initialHash = window.location.hash.slice(1);
+			const initialSection = navigationSections.find((section) => section.id === initialHash);
+			if (initialSection) setActiveNavigation(initialSection.id);
+
+			const navigationHeader = document.querySelector<HTMLElement>('.site-nav');
+			const headerHeight = navigationHeader?.getBoundingClientRect().height ?? 0;
+			const sectionVisibility = new Map<HTMLElement, IntersectionObserverEntry>();
+			const sectionSpy = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					const section = entry.target instanceof HTMLElement ? entry.target : null;
+					if (!section) return;
+					if (entry.isIntersecting) {
+						sectionVisibility.set(section, entry);
+					} else {
+						sectionVisibility.delete(section);
+					}
+				});
+				const visibleSections = Array.from(sectionVisibility.values())
+					.sort((a, b) => Math.abs(a.boundingClientRect.top - window.innerHeight * 0.45) - Math.abs(b.boundingClientRect.top - window.innerHeight * 0.45));
+				const activeSection = visibleSections[0]?.target;
+				if (activeSection instanceof HTMLElement) setActiveNavigation(activeSection.id);
+			}, {
+				rootMargin: `-${Math.max(headerHeight, Math.round(window.innerHeight * 0.4))}px 0px -55% 0px`,
+				threshold: 0
+			});
+			navigationSections.forEach((section) => sectionSpy.observe(section));
+
+			const lastNavigationSection = navigationSections.at(-1);
+			if (lastNavigationSection) {
+				const bottomObserver = new IntersectionObserver((entries) => {
+					const atPageBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+					if (atPageBottom && entries.some((entry) => entry.isIntersecting)) {
+						setActiveNavigation(lastNavigationSection.id);
+					}
+				});
+				bottomObserver.observe(lastNavigationSection);
+			}
+
 			cards.forEach((card) => {
 				const press = () => {
 					card.classList.add('is-pressed');

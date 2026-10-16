@@ -135,9 +135,13 @@ button {
     opacity 180ms,
     color 180ms;
 }
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.is-active {
   color: var(--royal-blue);
   opacity: 1;
+}
+.logo.is-active {
+  color: var(--royal-blue);
 }
 .nav-cta {
   padding: 10px 17px;
@@ -159,6 +163,7 @@ button {
   position: relative;
   min-height: 760px;
   padding: 168px 0 110px;
+  scroll-margin-top: 76px;
   overflow: hidden;
   color: var(--night-blue);
   background: #eef4ff;
@@ -368,6 +373,7 @@ button {
 }
 .section {
   padding: 120px 0;
+  scroll-margin-top: 76px;
 }
 .section-reveal {
   opacity: 0;
@@ -1493,6 +1499,7 @@ button {
 }
 .contact {
   position: relative;
+  scroll-margin-top: 76px;
   overflow: hidden;
   color: var(--white);
   background: var(--night-blue);
