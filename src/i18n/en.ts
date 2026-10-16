@@ -7,9 +7,9 @@ export type Certificate = {
 export const en = {
   language: "en",
   metadata: {
-    title: "Francis - Creative frontend developer",
+    title: "Francis Ronald Borja Enterina",
     description:
-      "Francis is a creative frontend developer making thoughtful digital experiences.",
+      "Francis Enterina is looking for a job. I am a passionate and dedicated professional seeking to contribute my skills and experience to a dynamic team.",
     themeColor: "#4169E1",
   },
   images: {
