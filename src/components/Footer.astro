@@ -1,0 +1,57 @@
+---
+import { en } from '../i18n/en';
+---
+
+<footer class="site-footer" id="footer">
+  <div class="container footer-inner">
+    <div class="footer-grid">
+      <!-- Left Column: Brand & Taglines -->
+      <div class="footer-brand">
+        <a class="footer-logo-row" href="#top" aria-label="Francis Enterina - Back to top">
+          <img class="footer-logo-mark" src={en.footer.brandLogo} alt={en.footer.brandLogoAlt} />
+          <span class="footer-brand-title">{en.footer.brandName}</span>
+        </a>
+        <p class="footer-bio">{en.footer.tagline}</p>
+        <p class="footer-motto">{en.footer.motto}</p>
+      </div>
+
+      <!-- Right Column: 3 Editorial Navigation Columns -->
+      <div class="footer-columns">
+        {en.footer.columns.map((col) => (
+          <div class="footer-column">
+            <h3 class="footer-col-title">{col.title}</h3>
+            <ul class="footer-links">
+              {col.links.map((link) => (
+                <li>
+                  {'download' in link && link.download ? (
+                    <a href={link.href} download={link.download}>{link.label}</a>
+                  ) : 'isToolsTrigger' in link && link.isToolsTrigger ? (
+                    <button type="button" class="footer-tools-btn" data-tools-dialog-trigger>{link.label}</button>
+                  ) : 'external' in link && link.external ? (
+                    <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+                  ) : (
+                    <a href={link.href}>{link.label}</a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Blue Ink Architectural & Landscape Illustration -->
+  <div class="footer-art" aria-hidden="true">
+    <img
+      class="footer-art-image"
+      src="/images/footer-illustration.png"
+      srcset="/images/footer-illustration.png 1x, /images/footer-illustration@2x.png 2x"
+      alt=""
+      width="1024"
+      height="601"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+</footer>
