@@ -5,21 +5,6 @@ import { en } from '../i18n/en';
 <section id="hero" class="hero-stage">
   <span id="top" class="visually-hidden" aria-hidden="true"></span>
   <div class="hero-main-grid">
-    <!-- Left Vertical Quick-Dock -->
-    <aside class="hero-left-dock" aria-label="Quick Links">
-      {en.hero.dockLinks.map((item) => (
-        item.isToolsTrigger ? (
-          <button type="button" class="dock-icon" data-tools-dialog-trigger aria-label={item.label} title={item.label}>
-            <span aria-hidden="true">{item.icon}</span>
-          </button>
-        ) : (
-          <a href={item.href} class={`dock-icon ${item.id === 'top' ? 'is-active' : ''}`} aria-label={item.label} title={item.label}>
-            <span aria-hidden="true">{item.icon}</span>
-          </a>
-        )
-      ))}
-    </aside>
-
     <!-- Editorial Headline & Primary CTAs -->
     <div class="hero-editorial">
       <p class="hero-eyebrow">
@@ -48,13 +33,6 @@ import { en } from '../i18n/en';
         </a>
       </div>
     </div>
-
-    <!-- Right-side Vertical Keywords -->
-    <ul class="hero-keywords" aria-label="Core Principles">
-      {en.hero.keywords.map((kw) => (
-        <li>{kw}</li>
-      ))}
-    </ul>
   </div>
 
   <!-- Bottom Translucent Bento Row -->
