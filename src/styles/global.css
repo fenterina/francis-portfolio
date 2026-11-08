@@ -2402,10 +2402,12 @@ button {
   flex-direction: column;
   justify-content: space-between;
   padding: 1.5rem 1.5rem 2.25rem;
-  background-color: #fdf3e9;
-  background-image: url("/images/footer-illustration@2x.png");
-  background-size: cover;
-  background-position: center bottom;
+  background-color: #faf3e3;
+  background-image:
+    radial-gradient(ellipse 700px 480px at 20% 36%, rgba(250, 243, 227, 0.88) 0%, rgba(250, 243, 227, 0.45) 60%, transparent 100%),
+    url("/images/hero-cityscape@2x.webp");
+  background-size: auto, 100% auto;
+  background-position: center, center bottom;
   background-repeat: no-repeat;
   overflow: hidden;
 }
@@ -2785,6 +2787,8 @@ button {
   }
   .hero-stage {
     padding: 1.25rem 1rem 2rem;
+    background-size: auto, max(100%, 820px) auto;
+    background-position: center, 50% bottom;
   }
   .hero-brand-bar {
     min-height: 40px;
