@@ -1956,7 +1956,6 @@ dialog::backdrop,
   margin: 0;
   pointer-events: none;
   user-select: none;
-  opacity: 0.22;
 }
 
 .footer-overlay-bar {
@@ -1969,8 +1968,8 @@ dialog::backdrop,
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    rgba(250, 243, 227, 0.45) 0%,
-    rgba(250, 243, 227, 0.15) 60%,
+    rgba(250, 243, 227, 0.75) 0%,
+    rgba(250, 243, 227, 0.35) 60%,
     transparent 100%
   );
 }
@@ -2054,9 +2053,9 @@ dialog::backdrop,
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 25%;
     pointer-events: none;
-    opacity: 0.22;
+    opacity: 0.18; /* Very low opacity watermark (mobile only): subtle & not noticeable, but design is visible */
   }
 
   /* 2. Compact container with subtle soft glow so low-opacity mountain design is visible */
