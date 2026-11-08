@@ -73,25 +73,27 @@ const personSchema = {
 			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const sections = document.querySelectorAll<HTMLElement>('.section');
 			const cards = document.querySelectorAll<HTMLElement>('[data-interactive-card]');
-			let lockedScrollY = 0;
-			let lockedBodyStyles = '';
 			const lockPageScroll = () => {
-				lockedScrollY = window.scrollY;
-				lockedBodyStyles = document.body.getAttribute('style') ?? '';
-				document.body.style.position = 'fixed';
-				document.body.style.top = `-${lockedScrollY}px`;
-				document.body.style.left = '0';
-				document.body.style.right = '0';
-				document.body.style.width = '100%';
+				document.documentElement.classList.add('modal-open');
+				document.body.classList.add('modal-open');
 			};
 			const unlockPageScroll = () => {
-				document.body.setAttribute('style', lockedBodyStyles);
-				window.scrollTo(0, lockedScrollY);
+				const anyOpen = document.querySelectorAll('dialog[open]').length > 0;
+				if (!anyOpen) {
+					document.documentElement.classList.remove('modal-open');
+					document.body.classList.remove('modal-open');
+				}
 			};
-			const openDialog = (dialog: HTMLDialogElement) => {
-				if (dialog.open) return;
+			const openDialog = (dialog: HTMLDialogElement, onOpened?: () => void) => {
+				if (dialog.open) {
+					onOpened?.();
+					return;
+				}
 				lockPageScroll();
-				dialog.showModal();
+				window.requestAnimationFrame(() => {
+					dialog.showModal();
+					onOpened?.();
+				});
 			};
 
 			if (!prefersReducedMotion) {
@@ -167,7 +169,9 @@ const personSchema = {
 					window.setTimeout(() => card.classList.remove('is-pressed'), 220);
 				};
 				const dialogId = card.dataset.projectTrigger ?? card.dataset.dialogTrigger;
-				const dialogElement = dialogId ? document.getElementById(dialogId) : null;
+				const dialogElement = dialogId
+					? (document.getElementById(dialogId) || (dialogId === 'redcarpet-dialog' ? document.getElementById('redcarpet-case-study') : null))
+					: null;
 				const projectDialog = dialogElement instanceof HTMLDialogElement ? dialogElement : null;
 				const openProject = (event: Event) => {
 					event.preventDefault();
@@ -194,8 +198,8 @@ const personSchema = {
 				});
 			});
 
-			document.querySelectorAll<HTMLDialogElement>('.project-dialog').forEach((dialog) => {
-				dialog.querySelector<HTMLButtonElement>('.project-dialog-close')?.addEventListener('click', () => {
+			document.querySelectorAll<HTMLDialogElement>('.project-dialog, .certificate-preview').forEach((dialog) => {
+				dialog.querySelector<HTMLButtonElement>('.project-dialog-close, .certificate-preview-close')?.addEventListener('click', () => {
 					dialog.close();
 				});
 				dialog.addEventListener('click', (event) => {
@@ -226,8 +230,7 @@ const personSchema = {
 			const openToolsDialog = (trigger: HTMLElement, toolName?: string) => {
 				if (!toolsDialog) return;
 				toolsDialogTrigger = trigger;
-				openDialog(toolsDialog);
-				window.requestAnimationFrame(() => {
+				openDialog(toolsDialog, () => {
 					toolsDialogClose?.focus();
 					if (!toolName) return;
 					const matchingChip = Array.from(toolsDialog.querySelectorAll<HTMLButtonElement>('.tool-chip')).find((chip) => chip.dataset.toolName === toolName);
@@ -253,31 +256,68 @@ const personSchema = {
 			const certificatePreview = document.querySelector<HTMLDialogElement>('#certificate-preview');
 			const certificatePreviewImage = document.querySelector<HTMLImageElement>('#certificate-preview-image');
 			const certificatePreviewTitle = document.querySelector<HTMLElement>('#certificate-preview-title');
-			let certificateScrollY = 0;
-			const restoreCertificateScroll = () => {
-				window.requestAnimationFrame(() => window.scrollTo(0, certificateScrollY));
-			};
 			document.querySelectorAll<HTMLAnchorElement>('.certificate-preview-trigger').forEach((certificate) => {
 				certificate.addEventListener('click', (event) => {
 					event.preventDefault();
 					if (!certificatePreview || !certificatePreviewImage || !certificatePreviewTitle) return;
-					certificateScrollY = window.scrollY;
 					certificatePreviewImage.src = certificate.dataset.previewSrc ?? certificate.href;
 					certificatePreviewImage.alt = certificate.dataset.previewTitle ?? 'Certificate preview';
 					certificatePreviewTitle.textContent = certificate.dataset.previewTitle ?? '';
-					certificatePreview.showModal();
+					openDialog(certificatePreview);
 				});
 			});
 			certificatePreview?.querySelector<HTMLButtonElement>('.certificate-preview-close')?.addEventListener('click', () => {
 				certificatePreview.close();
-				restoreCertificateScroll();
 			});
 			certificatePreview?.addEventListener('click', (event) => {
 				if (event.target === certificatePreview) {
 					certificatePreview.close();
 				}
 			});
-			certificatePreview?.addEventListener('close', restoreCertificateScroll);
+			certificatePreview?.addEventListener('close', unlockPageScroll);
+
+			function initFastModals() {
+				const triggers = document.querySelectorAll<HTMLElement>(
+					'[data-dialog-target], [data-modal-target], [data-dialog-trigger], [data-project-trigger], [data-tools-dialog-trigger], .tools-view-all, .certificate-card'
+				);
+
+				triggers.forEach((btn) => {
+					btn.addEventListener('mouseenter', () => {
+						let targetId = btn.getAttribute('data-dialog-target') ||
+							btn.getAttribute('data-modal-target') ||
+							btn.getAttribute('data-dialog-trigger') ||
+							btn.getAttribute('data-project-trigger');
+						if (!targetId && (btn.hasAttribute('data-tools-dialog-trigger') || btn.classList.contains('tools-view-all'))) {
+							targetId = 'tools-dialog';
+						}
+						if (!targetId && btn.classList.contains('certificate-card')) {
+							targetId = 'certificates-dialog';
+						}
+						if (!targetId) return;
+						const dialog = document.getElementById(targetId) || (targetId === 'redcarpet-dialog' ? document.getElementById('redcarpet-case-study') : null);
+						if (!dialog || dialog.dataset.prewarmed === 'true') return;
+
+						// Switch first 8 images to eager decoding while hovering so they are ready before click
+						const firstImages = dialog.querySelectorAll<HTMLImageElement>('img[loading="lazy"]');
+						firstImages.forEach((img, idx) => {
+							if (idx < 8) {
+								img.loading = 'eager';
+								if ('decode' in img) {
+									img.decode().catch(() => {});
+								}
+							}
+						});
+						dialog.dataset.prewarmed = 'true';
+					}, { passive: true });
+				});
+			}
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initFastModals);
+			} else {
+				initFastModals();
+			}
+			document.addEventListener('astro:page-load', initFastModals);
 		</script>
 	</body>
 </html>

@@ -36,9 +36,12 @@ const rightTools = tools.filter((_, index) => index % 2 === 1);
       >
         <div class="certificate-card-showcase">
           <img
-            src="/certificates/AI Mastery Cert.png"
+            src={encodeURI('/certificates/AI Mastery Cert.png')}
             alt="AI Mastery certificate"
+            width="400"
+            height="280"
             loading="lazy"
+            decoding="async"
           />
           <div class="certificate-card-content">
             <h3>Certificates</h3>
@@ -70,11 +73,68 @@ const rightTools = tools.filter((_, index) => index % 2 === 1);
     <p class="project-dialog-lede">A collection of certificates and milestones from professional work, learning, and community involvement.</p>
     <div class="certificate-category">
       <div class="certificate-category-heading"><h3>Certificates</h3><span>{en.skills.certificates.length} items</span></div>
-      <div class="certificate-grid">{en.skills.certificates.map((certificate) => <div class="certificate-item"><span class="certificate-title">{certificate.title}</span><a class="certificate-preview-trigger" href={`/certificates/${certificate.file}`} data-preview-src={`/certificates/${certificate.file}`} data-preview-title={certificate.title}><img src={`/certificates/${certificate.file}`} alt={certificate.title} loading="lazy" /></a>{certificate.credentialUrl && <a class="credential-link" href={certificate.credentialUrl} target="_blank" rel="noreferrer">Show credential <span aria-hidden="true">↗</span></a>}</div>)}</div>
+      <div class="certificate-grid">
+        {en.skills.certificates.map((certificate) => {
+          const imgUrl = encodeURI(certificate.image || `/certificates/${certificate.file}`);
+          return (
+            <div class="certificate-item">
+              <span class="certificate-title">{certificate.title}</span>
+              <a
+                class="certificate-preview-trigger"
+                href={imgUrl}
+                data-preview-src={imgUrl}
+                data-preview-title={certificate.title}
+              >
+                <img
+                  src={imgUrl}
+                  alt={certificate.title}
+                  width="400"
+                  height="280"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  class="certificate-thumb"
+                />
+              </a>
+              {certificate.credentialUrl && (
+                <a class="credential-link" href={certificate.credentialUrl} target="_blank" rel="noreferrer">
+                  Show credential <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
     <div class="certificate-category">
       <div class="certificate-category-heading"><h3>Additional certificates</h3><span>{en.skills.additionalCertificates.length} items</span></div>
-      <div class="certificate-grid">{en.skills.additionalCertificates.map((certificate) => <div class="certificate-item"><span class="certificate-title">{certificate.title}</span><a class="certificate-preview-trigger" href={`/additionalCertificates/${certificate.file}`} data-preview-src={`/additionalCertificates/${certificate.file}`} data-preview-title={certificate.title}><img src={`/additionalCertificates/${certificate.file}`} alt={certificate.title} loading="lazy" /></a></div>)}</div>
+      <div class="certificate-grid">
+        {en.skills.additionalCertificates.map((certificate) => {
+          const imgUrl = encodeURI(certificate.image || `/additionalCertificates/${certificate.file}`);
+          return (
+            <div class="certificate-item">
+              <span class="certificate-title">{certificate.title}</span>
+              <a
+                class="certificate-preview-trigger"
+                href={imgUrl}
+                data-preview-src={imgUrl}
+                data-preview-title={certificate.title}
+              >
+                <img
+                  src={imgUrl}
+                  alt={certificate.title}
+                  width="400"
+                  height="280"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  class="certificate-thumb"
+                />
+              </a>
+            </div>
+          );
+        })}
+      </div>
     </div>
   </div>
 </dialog>
