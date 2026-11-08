@@ -13,7 +13,7 @@ export const en = {
     themeColor: "#4169E1",
   },
   images: {
-    brandMark: "/images/Logo.png",
+    brandMark: "/images/brand-logo-trimmed.png",
     brandMarkAlt: "Francis Enterina logo mark",
     brandLogo: "/images/Logo_with_name.png",
     brandLogoAlt: "Francis Enterina logo",
