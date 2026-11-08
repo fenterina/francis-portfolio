@@ -2404,7 +2404,7 @@ button {
   padding: 1.5rem 1.5rem 2.25rem;
   background-color: #faf3e3;
   background-image:
-    radial-gradient(ellipse 700px 480px at 20% 36%, rgba(250, 243, 227, 0.88) 0%, rgba(250, 243, 227, 0.45) 60%, transparent 100%),
+    radial-gradient(ellipse 750px 520px at 20% 36%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.6) 45%, rgba(255, 255, 255, 0) 80%),
     url("/images/hero-cityscape@2x.webp");
   background-size: auto, 100% auto;
   background-position: center, center bottom;
@@ -2468,7 +2468,29 @@ button {
 
 /* Editorial Headline Block */
 .hero-editorial {
+  position: relative;
   max-width: 620px;
+  z-index: 2;
+}
+
+/* White radial glow to elevate headline legibility against background artwork */
+.hero-editorial::before {
+  content: "";
+  position: absolute;
+  top: -2rem;
+  left: -2.5rem;
+  right: -2.5rem;
+  bottom: -2rem;
+  background: radial-gradient(
+    ellipse at 40% 50%,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.72) 45%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  filter: blur(24px);
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 36px;
 }
 
 .hero-eyebrow {
@@ -2848,6 +2870,13 @@ button {
   .hero-brand-name {
     font-size: 0.88rem;
     letter-spacing: 0.12em;
+  }
+  .hero-editorial::before {
+    left: -1rem;
+    right: -1rem;
+    top: -1.5rem;
+    bottom: -1.5rem;
+    filter: blur(18px);
   }
   .hero-stage {
     padding: 1rem 0.85rem 2rem;
