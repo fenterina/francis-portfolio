@@ -2039,11 +2039,12 @@ dialog::backdrop,
 }
 
 @media (max-width: 850px) {
-  /* 1. Eliminate big empty image space below the back-to-top text */
+  /* 1. Low-opacity 4K mountain illustration as watermark background (mobile only) */
   .footer-stage {
     position: relative;
     width: 100%;
     overflow: hidden;
+    background-color: #faf3e3;
   }
 
   .footer-stage picture,
@@ -2053,20 +2054,19 @@ dialog::backdrop,
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 25%;
+    object-position: center top;
     pointer-events: none;
-    opacity: 0.18; /* Very low opacity watermark (mobile only): subtle & not noticeable, but design is visible */
+    opacity: 0.35; /* Subtle watermark: not overpowering, but mountain design is clearly visible */
   }
 
-  /* 2. Compact container with subtle soft glow so low-opacity mountain design is visible */
+  /* 2. Transparent overlay bar allowing the mountain artwork to clearly show through */
   .footer-overlay-bar {
     position: relative;
     top: auto;
     left: auto;
     right: auto;
-    padding: 1.25rem 1rem 1.15rem;
-    background:
-      radial-gradient(ellipse 460px 120px at 50% 50%, rgba(255, 255, 255, 0.45) 0%, rgba(250, 243, 227, 0.3) 60%, transparent 100%);
+    padding: 1.35rem 1rem 1.25rem;
+    background: transparent;
   }
 
   .footer-bar {
@@ -2105,7 +2105,7 @@ dialog::backdrop,
     justify-content: center;
     padding: 0.25rem 0.85rem;
     margin-top: 0.15rem;
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.25) 50%, transparent 75%);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 50%, transparent 75%);
     border: none;
     border-radius: 999px;
     box-shadow: none;
