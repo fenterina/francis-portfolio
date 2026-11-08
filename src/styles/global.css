@@ -2404,10 +2404,11 @@ button {
   padding: 1.5rem 1.5rem 2.25rem;
   background-color: #faf3e3;
   background-image:
-    radial-gradient(ellipse 750px 520px at 20% 36%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.6) 45%, rgba(255, 255, 255, 0) 80%),
+    radial-gradient(ellipse 950px 600px at 18% 36%, rgba(250, 243, 227, 0.96) 0%, rgba(250, 243, 227, 0.8) 45%, rgba(250, 243, 227, 0) 80%),
+    linear-gradient(rgba(250, 243, 227, 0.42), rgba(250, 243, 227, 0.42)),
     url("/images/hero-cityscape@2x.webp");
-  background-size: auto, 100% auto;
-  background-position: center, center bottom;
+  background-size: auto, auto, 100% auto;
+  background-position: center, center, center bottom;
   background-repeat: no-repeat;
   overflow: hidden;
 }
@@ -2468,29 +2469,7 @@ button {
 
 /* Editorial Headline Block */
 .hero-editorial {
-  position: relative;
   max-width: 620px;
-  z-index: 2;
-}
-
-/* White radial glow to elevate headline legibility against background artwork */
-.hero-editorial::before {
-  content: "";
-  position: absolute;
-  top: -2rem;
-  left: -2.5rem;
-  right: -2.5rem;
-  bottom: -2rem;
-  background: radial-gradient(
-    ellipse at 40% 50%,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(255, 255, 255, 0.72) 45%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  filter: blur(24px);
-  pointer-events: none;
-  z-index: -1;
-  border-radius: 36px;
 }
 
 .hero-eyebrow {
@@ -2809,8 +2788,8 @@ button {
   }
   .hero-stage {
     padding: 1.25rem 1rem 2rem;
-    background-size: auto, max(100%, 820px) auto;
-    background-position: center, 50% bottom;
+    background-size: auto, auto, max(100%, 820px) auto;
+    background-position: center, center, 50% bottom;
   }
   .hero-brand-bar {
     min-height: 40px;
@@ -2871,15 +2850,13 @@ button {
     font-size: 0.88rem;
     letter-spacing: 0.12em;
   }
-  .hero-editorial::before {
-    left: -1rem;
-    right: -1rem;
-    top: -1.5rem;
-    bottom: -1.5rem;
-    filter: blur(18px);
-  }
+  
   .hero-stage {
     padding: 1rem 0.85rem 2rem;
+    background-image:
+      radial-gradient(circle at 40% 28%, rgba(250, 243, 227, 0.98) 0%, rgba(250, 243, 227, 0.82) 48%, rgba(250, 243, 227, 0) 85%),
+      linear-gradient(rgba(250, 243, 227, 0.42), rgba(250, 243, 227, 0.42)),
+      url("/images/hero-cityscape@2x.webp");
   }
   .featured-project-bento {
     grid-template-columns: 1fr;
