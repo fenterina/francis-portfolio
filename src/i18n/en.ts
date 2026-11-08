@@ -13,7 +13,7 @@ export const en = {
     themeColor: "#4169E1",
   },
   images: {
-    brandMark: "/images/Logo.png",
+    brandMark: "/images/brand-logo-trimmed.png",
     brandMarkAlt: "Francis Enterina logo mark",
     brandLogo: "/images/Logo_with_name.png",
     brandLogoAlt: "Francis Enterina logo",
@@ -31,18 +31,65 @@ export const en = {
     downloadCv: "Download CV",
   },
   hero: {
-    brandTitle: "Francis Enterina",
+    brandTitle: "FRANCIS ENTERINA",
     brandPhrase: "Welcome to the portfolio of Francis Enterina.",
-    eyebrow: "Frontend developer / designer",
+    eyebrow: "Software development / Product work / Digital operations",
+    eyebrowSegments: [
+      "SOFTWARE DEVELOPMENT",
+      "PRODUCT WORK",
+      "DIGITAL OPERATIONS",
+    ],
+    titleMain: "Systems",
+    titleSub: "That",
+    titleAccent: "Perform",
     titleStart: "Interfaces with a little",
-    titleAccent: "more feeling.",
     description:
-      "I'm Francis, a creative developer who turns thoughtful ideas into clear, lively digital experiences that people enjoy using.",
+      "Information Systems graduate and software developer building thoughtful web applications, multi-role platforms, and reliable digital workflows.",
+    lead:
+      "Information Systems graduate and software developer building thoughtful web applications, multi-role platforms, and reliable digital workflows.",
+    primaryCta: {
+      label: "Explore My Work",
+      href: "#projects",
+    },
+    secondaryCta: {
+      label: "Download CV",
+      href: "/documents/ENTERINA_CV_PROF.pdf",
+    },
+    dockLinks: [
+      { id: "top", label: "Home", href: "#top", icon: "⌂" },
+      { id: "projects", label: "Projects", href: "#projects", icon: "⊞" },
+      { id: "skills", label: "Tools", href: "#skills", icon: "⚙", isToolsTrigger: true },
+      { id: "contact", label: "Contact", href: "#contact", icon: "✉" },
+    ],
+    keywords: ["SCALABLE", "USER-CENTRIC", "FUNCTIONAL", "RELIABLE"],
+    featuredCard: {
+      badge: "FEATURED PROJECT",
+      count: "01 / 01",
+      title: "Red Carpet",
+      summary:
+        "Multi-role wedding planning marketplace & admin dashboard built with React Native, TypeScript, and Supabase.",
+      image: "/Projects/redCarpetFrontPage.png",
+      href: "/projects/red-carpet",
+      dialogTrigger: "redcarpet-dialog",
+      linkText: "View Case Study →",
+    },
+    metrics: [
+      { value: "4+", label: "Roles & Internships" },
+      { value: "30+", label: "Tools & Technologies" },
+      { value: "Full-Cycle", label: "Product & Ops Execution" },
+    ],
+    contactCard: {
+      avatar: "/images/picture%20bilyard.png",
+      title: "Bring Your Vision To Life",
+      description:
+        "Available for software development, product, and digital operations opportunities.",
+      href: "#contact",
+    },
     workLink: "#projects",
-    workLabel: "See my work",
+    workLabel: "Explore My Work",
     contactLink: "#contact",
     contactLabel: "Start a conversation",
-    availability: "Available for selected freelance projects",
+    availability: "Available for selected opportunities",
     portraitLabel: "Portrait of Francis",
     portraitAlt: "Portrait of Francis smiling",
   },
@@ -289,9 +336,80 @@ export const en = {
     ],
   },
   footer: {
-    location: "ILIGAN CITY, PHILIPPINES - GMT+8",
-    copyright: "FRANCIS RONALD BORJA ENTERINA © 2026",
-    backToTop: "BACK TO TOP",
+    brandName: "Francis Enterina",
+    brandLogo: "/images/Logo.png",
+    brandLogoAlt: "Francis Enterina logo mark",
+    tagline:
+      "Crafting thoughtful digital interfaces with clarity and feeling, from concept and code to every pixel.",
+    motto: "Francis © 2026 – Interfaces, beautifully crafted.",
+    location: "Iligan City, Philippines · GMT+8",
+    copyright: "Francis Ronald Borja Enterina © 2026",
+    backToTop: "Back to top",
+    columns: [
+      {
+        title: "Navigation",
+        links: [
+          { label: "About", href: "#about" },
+          { label: "Experience", href: "#experience" },
+          { label: "Skills", href: "#skills" },
+          { label: "Projects", href: "#projects" },
+          { label: "Contact", href: "#contact" },
+        ],
+      },
+      {
+        title: "Connect",
+        links: [
+          {
+            label: "LinkedIn",
+            href: "https://www.linkedin.com/in/fenterina/",
+            external: true,
+          },
+          {
+            label: "GitHub",
+            href: "https://github.com/fenterina",
+            external: true,
+          },
+          {
+            label: "Instagram",
+            href: "https://www.instagram.com/f.enterina/",
+            external: true,
+          },
+          {
+            label: "YouTube",
+            href: "https://www.youtube.com/@francisenterina4097",
+            external: true,
+          },
+          {
+            label: "Email",
+            href: "mailto:enterinaf@gmail.com",
+            external: false,
+          },
+        ],
+      },
+      {
+        title: "Resources",
+        links: [
+          {
+            label: "Download CV",
+            href: "/documents/ENTERINA_CV_PROF.pdf",
+            download: "ENTERINA_CV_PROF.pdf",
+          },
+          {
+            label: "Case Study",
+            href: "/projects/red-carpet",
+          },
+          {
+            label: "All Tools",
+            href: "#skills",
+            isToolsTrigger: true,
+          },
+          {
+            label: "Back to Top ↑",
+            href: "#top",
+          },
+        ],
+      },
+    ],
   },
 } as const;
 

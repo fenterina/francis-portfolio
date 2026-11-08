@@ -2,13 +2,86 @@
 import { en } from '../i18n/en';
 ---
 
-<section class="hero" id="top">
-  <div class="container hero-grid">
-    <div class="hero-copy reveal">
-      <div class="hero-brand"><img class="hero-brand-image" src={en.images.brandLogo} alt="Francis Enterina logo" /></div>
-      <h1 class="visually-hidden">Francis Enterina</h1>
-      <p class="hero-quote">{en.hero.brandPhrase}</p>
-      <div class="hero-actions"><a class="button button-primary" href={en.hero.workLink}>{en.hero.workLabel} <span aria-hidden="true">-></span></a><a class="button button-ghost" href={en.hero.contactLink}>{en.hero.contactLabel}</a></div>
+<section id="hero" class="hero-stage">
+  <span id="top" class="visually-hidden" aria-hidden="true"></span>
+
+  <!-- 1st Page Brand Identity -->
+  <div class="hero-brand-bar">
+    <a class="hero-brand" href="#top" aria-label={en.nav.homeLabel}>
+      <img class="hero-brand-logo" src={en.images.brandMark} alt="" width="42" height="42" />
+      <span class="hero-brand-name">{en.hero.brandTitle}</span>
+    </a>
+  </div>
+
+  <div class="hero-main-grid">
+    <!-- Editorial Headline & Primary CTAs -->
+    <div class="hero-editorial">
+      <p class="hero-eyebrow">
+        {en.hero.eyebrowSegments.map((segment, idx) => (
+          <Fragment key={segment}>
+            <span>{segment}</span>
+            {idx < en.hero.eyebrowSegments.length - 1 && <span class="eyebrow-dash" aria-hidden="true">—</span>}
+          </Fragment>
+        ))}
+      </p>
+      <h1 class="hero-title">
+        {en.hero.titleMain} <br />
+        {en.hero.titleSub} <em>{en.hero.titleAccent}</em>
+      </h1>
+      <p class="hero-lead">
+        {en.hero.lead}
+      </p>
+      <div class="hero-cta-row">
+        <a href={en.hero.primaryCta.href} class="cta-pill-button hero-primary-cta">
+          <span>{en.hero.primaryCta.label}</span>
+          <span class="cta-pill-icon" aria-hidden="true">→</span>
+        </a>
+        <a href={en.hero.secondaryCta.href} class="secondary-glass-pill" download="ENTERINA_CV_PROF.pdf">
+          <span class="secondary-pill-icon" aria-hidden="true">↓</span>
+          <span>{en.hero.secondaryCta.label}</span>
+        </a>
+      </div>
     </div>
+  </div>
+
+  <!-- Bottom Translucent Bento Row -->
+  <div class="hero-bento-grid">
+    <!-- Card 1: Featured Project -->
+    <article class="bento-card-glass featured-project-bento" data-interactive-card data-project-trigger="redcarpet-dialog">
+      <div class="featured-thumb-wrapper">
+        <span class="featured-badge">{en.hero.featuredCard.badge}</span>
+        <img src={en.hero.featuredCard.image} alt="Red Carpet marketplace interface preview" loading="eager" />
+      </div>
+      <div class="featured-info">
+        <span class="featured-count">{en.hero.featuredCard.count}</span>
+        <h2>{en.hero.featuredCard.title}</h2>
+        <p>{en.hero.featuredCard.summary}</p>
+        <a href={en.hero.featuredCard.href} class="featured-link" data-project-trigger="redcarpet-dialog">
+          {en.hero.featuredCard.linkText}
+        </a>
+      </div>
+    </article>
+
+    <!-- Card 2: Portfolio Metrics -->
+    <div class="bento-card-glass metrics-bento">
+      {en.hero.metrics.map((metric) => (
+        <div class="metric-item">
+          <span class="metric-value">{metric.value}</span>
+          <span class="metric-label">{metric.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Card 3: Dark CTA Card -->
+    <a href={en.hero.contactCard.href} class="bento-card-dark contact-bento">
+      <div class="contact-bento-top">
+        <img src={en.hero.contactCard.avatar} alt="Francis Enterina" class="contact-bento-avatar" />
+        <span class="cta-pill-icon contact-arrow-icon" aria-hidden="true">↗</span>
+      </div>
+      <div class="contact-bento-body">
+        <h2>{en.hero.contactCard.title}</h2>
+        <p>{en.hero.contactCard.description}</p>
+      </div>
+    </a>
   </div>
 </section>

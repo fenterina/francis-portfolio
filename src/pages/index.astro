@@ -6,6 +6,7 @@ import Experience from '../components/Experience.astro';
 import Projects from '../components/Projects.astro';
 import Skills from '../components/Skills.astro';
 import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 import { en } from '../i18n/en';
 import '../styles/global.css';
 
@@ -67,6 +68,7 @@ const personSchema = {
 			<Projects />
 			<Contact />
 		</main>
+		<Footer />
 		<script>
 			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const sections = document.querySelectorAll<HTMLElement>('.section');
@@ -105,7 +107,7 @@ const personSchema = {
 				sections.forEach((section) => sectionObserver.observe(section));
 			}
 
-			const navigationLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.logo, #primary-navigation a[href^="#"]'));
+			const navigationLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.logo, .brand-pill, #primary-navigation a[href^="#"]'));
 			const navigationSections = navigationLinks
 				.map((link) => document.getElementById(link.getAttribute('href')?.slice(1) ?? ''))
 				.filter((section): section is HTMLElement => section instanceof HTMLElement);
@@ -124,7 +126,7 @@ const personSchema = {
 			const initialSection = navigationSections.find((section) => section.id === initialHash);
 			if (initialSection) setActiveNavigation(initialSection.id);
 
-			const navigationHeader = document.querySelector<HTMLElement>('.site-nav');
+			const navigationHeader = document.querySelector<HTMLElement>('.site-nav, .site-header');
 			const headerHeight = navigationHeader?.getBoundingClientRect().height ?? 0;
 			const sectionVisibility = new Map<HTMLElement, IntersectionObserverEntry>();
 			const sectionSpy = new IntersectionObserver((entries) => {
@@ -237,8 +239,10 @@ const personSchema = {
 			document.querySelectorAll<HTMLButtonElement>('.tools-column .tool-chip').forEach((chip) => {
 				chip.addEventListener('click', () => openToolsDialog(chip, chip.dataset.toolName));
 			});
-			document.querySelector<HTMLButtonElement>('[data-tools-dialog-trigger]')?.addEventListener('click', (event) => {
-				openToolsDialog(event.currentTarget as HTMLElement);
+			document.querySelectorAll<HTMLButtonElement>('[data-tools-dialog-trigger]').forEach((trigger) => {
+				trigger.addEventListener('click', (event) => {
+					openToolsDialog(event.currentTarget as HTMLElement);
+				});
 			});
 			toolsDialog?.addEventListener('close', () => {
 				toolsDialogTrigger?.focus();

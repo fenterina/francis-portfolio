@@ -2,55 +2,55 @@
 import { en } from '../i18n/en';
 ---
 
-<header class="site-nav">
-  <div class="container nav-inner">
-    <a class="logo" href="#top" aria-label={en.nav.homeLabel}><img class="nav-logo-image" src={en.images.brandMark} alt={en.images.brandMarkAlt} /><span>FRANCIS RONALD BORJA ENTERINA</span></a>
-    <nav id="primary-navigation" class="nav-links" aria-label="Primary navigation">
-      <a href="#about">{en.nav.about}</a><a href="#experience">Experience</a><a href="#skills">{en.nav.skills}</a><a href="#projects">{en.nav.projects}</a><a class="nav-cta" href="#contact">{en.nav.contact}</a><a class="nav-cta nav-download" href="/documents/ENTERINA_CV_PROF.pdf" download="ENTERINA_CV_PROF.pdf">{en.nav.downloadCv}</a>
+<header class="site-header" id="site-header">
+  <div class="site-header-inner">
+    <nav id="primary-navigation" class="nav-pill-container" aria-label="Primary Navigation">
+      <a href="#hero" class="nav-pill-link is-active">Home</a>
+      <a href="#about" class="nav-pill-link">{en.nav.about}</a>
+      <a href="#experience" class="nav-pill-link">Experience</a>
+      <a href="#skills" class="nav-pill-link">{en.nav.skills}</a>
+      <a href="#projects" class="nav-pill-link">{en.nav.projects}</a>
+      <a href="#contact" class="nav-pill-link">Contact</a>
     </nav>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label={en.nav.openLabel} data-open-label={en.nav.openLabel} data-close-label={en.nav.closeLabel}>+</button>
+
+    <div class="header-actions">
+      <button
+        class="menu-toggle-pill"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+        aria-label={en.nav.openLabel}
+        data-open-label={en.nav.openLabel}
+        data-close-label={en.nav.closeLabel}
+      >
+        <span class="menu-toggle-bar" aria-hidden="true"></span>
+        <span class="menu-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </div>
   </div>
 </header>
+
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle-pill');
   const navigation = document.querySelector<HTMLElement>('#primary-navigation');
-  const links = navigation?.querySelectorAll('a');
+  const links = navigation?.querySelectorAll<HTMLAnchorElement>('a');
   const openLabel = toggle?.dataset.openLabel ?? 'Open navigation';
   const closeLabel = toggle?.dataset.closeLabel ?? 'Close navigation';
-  const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.logo, #primary-navigation a[href^="#"]'));
-  const setActiveLink = (activeId: string) => {
-    sectionLinks.forEach((link) => {
-      const isActive = link.getAttribute('href') === `#${activeId}`;
-      link.classList.toggle('is-active', isActive);
-      if (isActive) {
-        link.setAttribute('aria-current', 'true');
-      } else {
-        link.removeAttribute('aria-current');
-      }
-    });
-  };
+
   toggle?.addEventListener('click', () => {
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!isOpen));
     toggle.setAttribute('aria-label', isOpen ? openLabel : closeLabel);
-    toggle.textContent = isOpen ? '+' : 'x';
+    toggle.classList.toggle('is-open', !isOpen);
     navigation?.classList.toggle('is-open', !isOpen);
   });
-  links?.forEach((link) => link.addEventListener('click', () => {
-    toggle?.setAttribute('aria-expanded', 'false');
-    toggle?.setAttribute('aria-label', openLabel);
-    if (toggle) toggle.textContent = '+';
-    navigation?.classList.remove('is-open');
-  }));
-  sectionLinks.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const targetId = link.getAttribute('href')?.slice(1);
-      const target = targetId ? document.getElementById(targetId) : null;
-      if (!target) return;
-      event.preventDefault();
-      setActiveLink(targetId);
-      history.pushState(null, '', `#${targetId}`);
-      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+
+  links?.forEach((link) => {
+    link.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.setAttribute('aria-label', openLabel);
+      toggle?.classList.remove('is-open');
+      navigation?.classList.remove('is-open');
     });
   });
 </script>
