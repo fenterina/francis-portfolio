@@ -8,6 +8,7 @@ import Skills from '../components/Skills.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import { en } from '../i18n/en';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 const personSchema = {
@@ -35,6 +36,7 @@ const personSchema = {
 <html lang={en.language}>
 	<head>
 		<meta charset="utf-8" />
+		<ClientRouter />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
 		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
@@ -70,7 +72,10 @@ const personSchema = {
 		</main>
 		<Footer />
 		<script>
-			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			function setupIndexPage() {
+				if (!document.getElementById('hero')) return;
+
+				const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const sections = document.querySelectorAll<HTMLElement>('.section');
 			const cards = document.querySelectorAll<HTMLElement>('[data-interactive-card]');
 			const lockPageScroll = () => {
@@ -180,7 +185,11 @@ const personSchema = {
 				if (projectDialog) {
 					card.addEventListener('click', openProject);
 					card.querySelector('a')?.addEventListener('click', (event) => {
-						if (!card.querySelector('a')?.getAttribute('href')?.startsWith('#')) return;
+						const href = (event.currentTarget as HTMLAnchorElement)?.getAttribute('href');
+						if (href && !href.startsWith('#')) {
+							event.stopPropagation();
+							return;
+						}
 						event.preventDefault();
 						event.stopPropagation();
 						openDialog(projectDialog);
@@ -312,12 +321,15 @@ const personSchema = {
 				});
 			}
 
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', initFastModals);
-			} else {
 				initFastModals();
 			}
-			document.addEventListener('astro:page-load', initFastModals);
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', setupIndexPage);
+			} else {
+				setupIndexPage();
+			}
+			document.addEventListener('astro:page-load', setupIndexPage);
 		</script>
 	</body>
 </html>
