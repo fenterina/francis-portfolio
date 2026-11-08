@@ -4,7 +4,14 @@ import { en } from '../i18n/en';
 
 <header class="site-header" id="site-header">
   <div class="site-header-inner">
-    <nav id="primary-navigation" class="nav-pill-container" aria-label="Primary Navigation">
+    <nav class="nav-pill-container" id="morphing-nav" aria-label="Primary Navigation">
+      <!-- Layer 1: Light Hover Shadow Pill (follows cursor across tabs) -->
+      <div class="nav-pill-bg nav-hover-pill" id="nav-hover-pill" aria-hidden="true"></div>
+
+      <!-- Layer 2: Solid Blue Active Pill (steps through intermediate tabs & locks on active section) -->
+      <div class="nav-pill-bg nav-active-pill" id="nav-active-pill" aria-hidden="true"></div>
+
+      <!-- Layer 3: Navigation Links (preserve existing i18n bindings from src/i18n/en.ts if used) -->
       <a href="#hero" class="nav-pill-link is-active">Home</a>
       <a href="#about" class="nav-pill-link">{en.nav.about}</a>
       <a href="#experience" class="nav-pill-link">Experience</a>
@@ -18,7 +25,7 @@ import { en } from '../i18n/en';
         class="menu-toggle-pill"
         type="button"
         aria-expanded="false"
-        aria-controls="primary-navigation"
+        aria-controls="morphing-nav"
         aria-label={en.nav.openLabel}
         data-open-label={en.nav.openLabel}
         data-close-label={en.nav.closeLabel}
@@ -31,26 +38,396 @@ import { en } from '../i18n/en';
 </header>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle-pill');
-  const navigation = document.querySelector<HTMLElement>('#primary-navigation');
-  const links = navigation?.querySelectorAll<HTMLAnchorElement>('a');
-  const openLabel = toggle?.dataset.openLabel ?? 'Open navigation';
-  const closeLabel = toggle?.dataset.closeLabel ?? 'Close navigation';
+  function initMobileMenu() {
+    const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle-pill');
+    const navigation = document.querySelector<HTMLElement>('#morphing-nav, #primary-navigation');
+    const links = navigation?.querySelectorAll<HTMLAnchorElement>('a');
+    const openLabel = toggle?.dataset.openLabel ?? 'Open navigation';
+    const closeLabel = toggle?.dataset.closeLabel ?? 'Close navigation';
 
-  toggle?.addEventListener('click', () => {
-    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!isOpen));
-    toggle.setAttribute('aria-label', isOpen ? openLabel : closeLabel);
-    toggle.classList.toggle('is-open', !isOpen);
-    navigation?.classList.toggle('is-open', !isOpen);
-  });
-
-  links?.forEach((link) => {
-    link.addEventListener('click', () => {
-      toggle?.setAttribute('aria-expanded', 'false');
-      toggle?.setAttribute('aria-label', openLabel);
-      toggle?.classList.remove('is-open');
-      navigation?.classList.remove('is-open');
+    toggle?.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      toggle.setAttribute('aria-label', isOpen ? openLabel : closeLabel);
+      toggle.classList.toggle('is-open', !isOpen);
+      navigation?.classList.toggle('is-open', !isOpen);
     });
-  });
+
+    links?.forEach((link) => {
+      link.addEventListener('click', () => {
+        toggle?.setAttribute('aria-expanded', 'false');
+        toggle?.setAttribute('aria-label', openLabel);
+        toggle?.classList.remove('is-open');
+        navigation?.classList.remove('is-open');
+      });
+    });
+  }
+
+  function initLiquidNav() {
+    const nav = document.getElementById('morphing-nav') || document.getElementById('primary-navigation');
+    const activePill = document.getElementById('nav-active-pill');
+    const hoverPill = document.getElementById('nav-hover-pill');
+    if (!nav || !activePill || !hoverPill) return;
+
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('.nav-pill-link'));
+    if (links.length === 0) return;
+
+    let lastActiveLeft = 0;
+    let lastHoverLeft = 0;
+    let isClickScrolling = false;
+    let journeyAbortId = 0;
+    let scrollRafId = 0;
+    const stretchTimers = new WeakMap<HTMLElement, number>();
+
+    const prefersReducedMotion = () =>
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /**
+     * Moves a pill element to match the target link using directional liquid edge physics.
+     * @param mode 'normal' for full spring settle, 'hop' for rapid pass-through intermediate tabs, 'instant' for no animation
+     */
+    const moveLiquidPill = (
+      pill: HTMLElement,
+      target: HTMLElement,
+      lastLeft: number,
+      mode: 'normal' | 'hop' | 'instant' = 'normal'
+    ): number => {
+      if (window.innerWidth <= 960) return lastLeft;
+
+      const navRect = nav.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      if (navRect.width === 0 || targetRect.width === 0) return lastLeft;
+
+      const newLeft = targetRect.left - navRect.left;
+      const newRight = navRect.right - targetRect.right;
+
+      pill.classList.remove(
+        'liquid-left',
+        'liquid-right',
+        'liquid-hop-left',
+        'liquid-hop-right',
+        'is-stretching'
+      );
+
+      if (mode === 'instant' || prefersReducedMotion()) {
+        pill.style.transition = 'none';
+      } else {
+        pill.style.transition = '';
+        const delta = newLeft - lastLeft;
+
+        if (Math.abs(delta) > 2) {
+          const isRight = delta > 0;
+          if (mode === 'hop') {
+            pill.classList.add(isRight ? 'liquid-hop-right' : 'liquid-hop-left');
+          } else {
+            pill.classList.add(isRight ? 'liquid-right' : 'liquid-left');
+          }
+
+          pill.classList.add('is-stretching');
+          const prevTimer = stretchTimers.get(pill);
+          if (prevTimer) window.clearTimeout(prevTimer);
+
+          const squashDuration = mode === 'hop' ? 70 : 160;
+          const timer = window.setTimeout(() => {
+            pill.classList.remove('is-stretching');
+          }, squashDuration);
+          stretchTimers.set(pill, timer);
+        }
+      }
+
+      pill.style.left = `${newLeft}px`;
+      pill.style.right = `${newRight}px`;
+
+      if (mode === 'instant') {
+        void pill.offsetWidth;
+        pill.style.transition = '';
+      }
+
+      return newLeft;
+    };
+
+    const getActiveIndex = (): number => {
+      const idx = links.findIndex((link) => link.classList.contains('is-active'));
+      return idx >= 0 ? idx : 0;
+    };
+
+    /**
+     * Calculates the target Y scroll coordinate for a given navigation link's section.
+     */
+    const getSectionScrollTop = (link: HTMLAnchorElement): number => {
+      const href = link.getAttribute('href');
+      if (!href || href === '#hero' || href === '#top' || href === '#home') return 0;
+      const targetEl = document.querySelector<HTMLElement>(href);
+      if (!targetEl) return 0;
+
+      const headerOffset = 24;
+      const rect = targetEl.getBoundingClientRect();
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      return Math.min(maxScroll, Math.max(0, window.scrollY + rect.top - headerOffset));
+    };
+
+    /**
+     * Smoothly scrolls the page through intermediate waypoints in lockstep with the sequential pill hops.
+     * Uses piece-wise smoothstep on intermediate sections and smooth cubic ease-out on the final stretch.
+     */
+    const animatePageThroughSections = (
+      waypoints: number[],
+      hopDuration: number,
+      finalDuration: number,
+      onComplete: () => void
+    ) => {
+      if (waypoints.length === 0) {
+        onComplete();
+        return;
+      }
+      window.cancelAnimationFrame(scrollRafId);
+
+      const startY = window.scrollY;
+      const allPoints = [startY, ...waypoints];
+      const segments = allPoints.length - 1;
+      const startTime = performance.now();
+      const totalDuration = (segments - 1) * hopDuration + finalDuration;
+
+      // Temporarily eliminate native smooth scrolling to guarantee 1:1 hardware frame responsiveness
+      document.documentElement.style.scrollBehavior = 'auto';
+
+      const stepScroll = (now: number) => {
+        const elapsed = now - startTime;
+
+        if (elapsed >= totalDuration) {
+          window.scrollTo(0, allPoints[segments]);
+          document.documentElement.style.scrollBehavior = '';
+          onComplete();
+          return;
+        }
+
+        let currentY = startY;
+        const cutoffTime = (segments - 1) * hopDuration;
+
+        if (elapsed < cutoffTime && segments > 1) {
+          const segIndex = Math.min(segments - 2, Math.floor(elapsed / hopDuration));
+          const localT = (elapsed - segIndex * hopDuration) / hopDuration;
+          // Smoothstep curve for seamless acceleration/deceleration across section waypoints
+          const easedLocal = localT * localT * (3 - 2 * localT);
+          const fromY = allPoints[segIndex];
+          const toY = allPoints[segIndex + 1];
+          currentY = fromY + (toY - fromY) * easedLocal;
+        } else {
+          // Final segment: smooth cubic ease-out to a stop
+          const localElapsed = elapsed - cutoffTime;
+          const localT = Math.min(1, localElapsed / finalDuration);
+          const easedLocal = 1 - Math.pow(1 - localT, 3);
+          const fromY = allPoints[segments - 1];
+          const toY = allPoints[segments];
+          currentY = fromY + (toY - fromY) * easedLocal;
+        }
+
+        window.scrollTo(0, currentY);
+        scrollRafId = window.requestAnimationFrame(stepScroll);
+      };
+
+      scrollRafId = window.requestAnimationFrame(stepScroll);
+    };
+
+    /**
+     * Orchestrates the high-speed spring-physics relay pass-through when clicking across tabs.
+     */
+    const runSequentialJourney = (fromIndex: number, toIndex: number) => {
+      journeyAbortId += 1;
+      const currentJourneyId = journeyAbortId;
+
+      // Clear previous passing states
+      links.forEach((l) => l.classList.remove('is-passing'));
+
+      // If clicking the current tab, just ensure scroll alignment
+      if (fromIndex === toIndex) {
+        const targetY = getSectionScrollTop(links[toIndex]);
+        window.scrollTo({ top: targetY, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+        return;
+      }
+
+      isClickScrolling = true;
+      (window as any).__navScrollLocked = true;
+
+      // Ordered list of tab indices to pass through (e.g., [1, 2, 3, 4, 5])
+      const stepDirection = toIndex > fromIndex ? 1 : -1;
+      const pathIndices: number[] = [];
+      for (let i = fromIndex + stepDirection; i !== toIndex + stepDirection; i += stepDirection) {
+        pathIndices.push(i);
+      }
+
+      // Reduced motion fallback: jump immediately
+      if (prefersReducedMotion()) {
+        links.forEach((l) => l.classList.remove('is-active', 'is-passing'));
+        links[toIndex].classList.add('is-active');
+        lastActiveLeft = moveLiquidPill(activePill, links[toIndex], lastActiveLeft, 'instant');
+        const targetY = getSectionScrollTop(links[toIndex]);
+        window.scrollTo(0, targetY);
+        isClickScrolling = false;
+        (window as any).__navScrollLocked = false;
+        return;
+      }
+
+      // High-speed spring-rail timing:
+      // 80ms per intermediate hop (crisp snap & highlight), 320ms for final elastic spring overshoot
+      const HOP_INTERVAL_MS = 80;
+      const FINAL_SETTLE_MS = 320;
+
+      // Collect Y scroll waypoints for each section in sequence
+      const scrollWaypoints = pathIndices.map((idx) => getSectionScrollTop(links[idx]));
+
+      // Remove active class from origin tab as the pill takes off
+      links[fromIndex].classList.remove('is-active');
+
+      // Start synchronized page scroll in lockstep with the pill hops
+      animatePageThroughSections(
+        scrollWaypoints,
+        HOP_INTERVAL_MS,
+        FINAL_SETTLE_MS,
+        () => {
+          if (journeyAbortId === currentJourneyId) {
+            isClickScrolling = false;
+            (window as any).__navScrollLocked = false;
+          }
+        }
+      );
+
+      // Execute each discrete hop across the high-speed spring rail
+      pathIndices.forEach((tabIndex, stepIdx) => {
+        const isFinalDestination = stepIdx === pathIndices.length - 1;
+        const delay = stepIdx * HOP_INTERVAL_MS;
+
+        window.setTimeout(() => {
+          if (journeyAbortId !== currentJourneyId) return;
+
+          // Clear previous intermediate passing highlights
+          links.forEach((l) => l.classList.remove('is-passing'));
+
+          const currentLink = links[tabIndex];
+
+          if (isFinalDestination) {
+            currentLink.classList.add('is-active');
+            lastActiveLeft = moveLiquidPill(activePill, currentLink, lastActiveLeft, 'normal');
+
+            // Update URL hash cleanly
+            const href = currentLink.getAttribute('href');
+            if (href && history.replaceState) {
+              history.replaceState(null, '', href);
+            }
+          } else {
+            // Crisp passing snap: intermediate tab lights up white as the blue pill passes beneath it
+            currentLink.classList.add('is-passing');
+            lastActiveLeft = moveLiquidPill(activePill, currentLink, lastActiveLeft, 'hop');
+          }
+        }, delay);
+      });
+    };
+
+    // Immediate cancellation if user interacts with wheel or touch
+    const abortScroll = () => {
+      if (isClickScrolling) {
+        journeyAbortId += 1;
+        window.cancelAnimationFrame(scrollRafId);
+        document.documentElement.style.scrollBehavior = '';
+        isClickScrolling = false;
+        (window as any).__navScrollLocked = false;
+        links.forEach((l) => l.classList.remove('is-passing'));
+      }
+    };
+    window.addEventListener('wheel', abortScroll, { passive: true });
+    window.addEventListener('touchmove', abortScroll, { passive: true });
+
+    // 1. Initial alignment on page load & after web fonts finish rendering
+    const alignInitialPills = () => {
+      const activeIdx = getActiveIndex();
+      const initialActive = links[activeIdx];
+      lastActiveLeft = moveLiquidPill(activePill, initialActive, 0, 'instant');
+      lastHoverLeft = moveLiquidPill(hoverPill, initialActive, 0, 'instant');
+    };
+
+    alignInitialPills();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(alignInitialPills);
+    }
+
+    // 2. Attach Hover, Focus, and Relay Click listeners to all tabs
+    links.forEach((link, clickedIndex) => {
+      link.addEventListener('mouseenter', () => {
+        const isAlreadyVisible = hoverPill.classList.contains('is-visible');
+        lastHoverLeft = moveLiquidPill(
+          hoverPill,
+          link,
+          lastHoverLeft,
+          isAlreadyVisible ? 'normal' : 'instant'
+        );
+        hoverPill.classList.add('is-visible');
+      });
+
+      link.addEventListener('focus', () => {
+        const isAlreadyVisible = hoverPill.classList.contains('is-visible');
+        lastHoverLeft = moveLiquidPill(
+          hoverPill,
+          link,
+          lastHoverLeft,
+          isAlreadyVisible ? 'normal' : 'instant'
+        );
+        hoverPill.classList.add('is-visible');
+      });
+
+      link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 960) {
+          links.forEach((l) => l.classList.remove('is-active', 'is-passing'));
+          link.classList.add('is-active');
+          return;
+        }
+
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault(); // Full control over sequential relay & synchronized scroll
+          const fromIndex = getActiveIndex();
+          runSequentialJourney(fromIndex, clickedIndex);
+        }
+      });
+    });
+
+    // 3. Hide hover shadow when cursor leaves the navigation bar
+    nav.addEventListener('mouseleave', () => {
+      hoverPill.classList.remove('is-visible');
+      const currentActive = links[getActiveIndex()];
+      lastHoverLeft = moveLiquidPill(hoverPill, currentActive, lastHoverLeft, 'instant');
+    });
+
+    // 4. Sync with existing IntersectionObserver scroll-spy during manual user scrolling
+    const observer = new MutationObserver(() => {
+      if (!isClickScrolling) {
+        const currentActive = links[getActiveIndex()];
+        lastActiveLeft = moveLiquidPill(activePill, currentActive, lastActiveLeft, 'normal');
+      }
+    });
+
+    links.forEach((link) => {
+      observer.observe(link, { attributes: true, attributeFilter: ['class'] });
+    });
+
+    // 5. Recalculate positions cleanly on window resize
+    window.addEventListener('resize', () => {
+      const currentActive = links[getActiveIndex()];
+      lastActiveLeft = moveLiquidPill(activePill, currentActive, lastActiveLeft, 'instant');
+      if (!hoverPill.classList.contains('is-visible')) {
+        lastHoverLeft = moveLiquidPill(hoverPill, currentActive, lastHoverLeft, 'instant');
+      }
+    });
+  }
+
+  const init = () => {
+    initMobileMenu();
+    initLiquidNav();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  document.addEventListener('astro:page-load', init);
 </script>

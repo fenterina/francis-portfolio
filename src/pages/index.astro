@@ -107,11 +107,12 @@ const personSchema = {
 				sections.forEach((section) => sectionObserver.observe(section));
 			}
 
-			const navigationLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.logo, .brand-pill, #primary-navigation a[href^="#"]'));
+			const navigationLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.logo, .brand-pill, #morphing-nav a[href^="#"], #primary-navigation a[href^="#"]'));
 			const navigationSections = navigationLinks
 				.map((link) => document.getElementById(link.getAttribute('href')?.slice(1) ?? ''))
 				.filter((section): section is HTMLElement => section instanceof HTMLElement);
 			const setActiveNavigation = (sectionId: string) => {
+				if ((window as any).__navScrollLocked) return;
 				navigationLinks.forEach((link) => {
 					const isActive = link.getAttribute('href') === `#${sectionId}`;
 					link.classList.toggle('is-active', isActive);
