@@ -29,6 +29,13 @@
   --shadow: 0 22px 60px rgba(2, 10, 24, 0.6);
   --radius-md: 20px;
   --container: 1160px;
+  --nav-container-bg: rgba(255, 255, 255, 0.88);
+  --nav-text-default: #1a2247;
+  --nav-text-active: #ffffff;
+  --nav-pill-blue: #121c45;
+  --nav-pill-hover-bg: rgba(18, 28, 69, 0.06);
+  --nav-pill-hover-shadow: 0 2px 10px rgba(18, 28, 69, 0.08);
+  --nav-morph-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 * {
   box-sizing: border-box;
@@ -2276,42 +2283,136 @@ button {
   pointer-events: auto;
 }
 
-/* Center Capsule Navigation */
+/* Center Capsule Navigation & Liquid Dual-Pill */
 .nav-pill-container {
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.38rem;
-  background: var(--glass-surface);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--pill-radius);
-  box-shadow: var(--pill-shadow);
+  gap: 0.25rem;
+  padding: 6px;
+  background: var(--nav-container-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 9999px;
+  box-shadow: 0 8px 28px -6px rgba(18, 28, 69, 0.08);
+  isolation: isolate;
 }
 
+/* Individual Tab Links */
 .nav-pill-link {
+  position: relative;
+  z-index: 3; /* Always above both background pills */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.52rem 1.25rem;
-  border-radius: var(--pill-radius);
-  font-size: 0.9rem;
+  padding: 0.55rem 1.35rem;
+  border-radius: 9999px;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: var(--night-blue);
+  color: var(--nav-text-default);
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+  background: transparent !important; /* CRITICAL: Prevents static active background from hiding the liquid pill */
+  transition: color 0.1s ease;
+  user-select: none;
 }
 
-.nav-pill-link:hover {
-  background: rgba(65, 105, 225, 0.1);
-  color: var(--royal-blue);
+/* Active link OR intermediate link currently being passed through turns white */
+.nav-pill-link.is-active,
+.nav-pill-link.is-passing {
+  color: var(--nav-text-active);
+  background: transparent !important;
 }
 
-.nav-pill-link.is-active {
-  background: var(--night-blue);
-  color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(21, 27, 84, 0.28);
+.nav-pill-link:focus-visible {
+  outline: 2px solid var(--nav-pill-blue);
+  outline-offset: 2px;
+}
+
+/* Shared Geometry for Both Liquid Pills */
+.nav-pill-bg {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 6px;
+  right: calc(100% - 6px);
+  border-radius: 9999px;
+  pointer-events: none;
+  will-change: left, right, transform, opacity;
+  transform-origin: center center;
+}
+
+/* Layer 2: Solid Blue Active Pill */
+.nav-active-pill {
+  z-index: 2;
+  background-color: var(--nav-pill-blue);
+  box-shadow: 0 4px 14px rgba(18, 28, 69, 0.25);
+}
+
+/* Layer 1: Light Hover Shadow Pill */
+.nav-hover-pill {
+  z-index: 1;
+  background-color: var(--nav-pill-hover-bg);
+  box-shadow: var(--nav-pill-hover-shadow);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.nav-hover-pill.is-visible {
+  opacity: 1;
+}
+
+/* --- FLUID LIQUID STRETCH PHYSICS (Single Hop / Final Arrival) --- */
+/* Moving Right: Right edge leads fast (0.18s), Left edge trails with elastic spring overshoot (0.32s) */
+.nav-pill-bg.liquid-right {
+  transition:
+    right 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.32s cubic-bezier(0.34, 1.45, 0.64, 1),
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease;
+}
+
+/* Moving Left: Left edge leads fast (0.18s), Right edge trails with elastic spring overshoot (0.32s) */
+.nav-pill-bg.liquid-left {
+  transition:
+    left 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    right 0.32s cubic-bezier(0.34, 1.45, 0.64, 1),
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease;
+}
+
+/* --- RAPID SEQUENTIAL PASS-THROUGH HOP (Intermediate Sections) --- */
+.nav-pill-bg.liquid-hop-right {
+  transition:
+    right 0.055s cubic-bezier(0.2, 0.9, 0.4, 1),
+    left 0.075s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.075s ease-out;
+}
+
+.nav-pill-bg.liquid-hop-left {
+  transition:
+    left 0.055s cubic-bezier(0.2, 0.9, 0.4, 1),
+    right 0.075s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.075s ease-out;
+}
+
+/* Mid-flight vertical squash for organic liquid surface tension */
+.nav-pill-bg.is-stretching {
+  transform: scaleY(0.91);
+}
+
+/* Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  .nav-pill-bg.liquid-right,
+  .nav-pill-bg.liquid-left,
+  .nav-pill-bg.liquid-hop-right,
+  .nav-pill-bg.liquid-hop-left {
+    transition: opacity 0.15s ease !important;
+  }
+  .nav-pill-bg.is-stretching {
+    transform: none;
+  }
 }
 
 /* Right Action Capsule */
@@ -2814,6 +2915,14 @@ button {
   }
   .nav-pill-container.is-open {
     display: flex;
+  }
+  .nav-pill-bg,
+  .nav-indicator {
+    display: none !important;
+  }
+  .nav-pill-link.is-active {
+    background: var(--nav-pill-blue) !important;
+    color: var(--nav-text-active);
   }
   .menu-toggle-pill {
     display: flex;
