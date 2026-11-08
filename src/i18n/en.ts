@@ -336,80 +336,9 @@ export const en = {
     ],
   },
   footer: {
-    brandName: "Francis Enterina",
-    brandLogo: "/images/Logo.png",
-    brandLogoAlt: "Francis Enterina logo mark",
-    tagline:
-      "Crafting thoughtful digital interfaces with clarity and feeling, from concept and code to every pixel.",
-    motto: "Francis © 2026 – Interfaces, beautifully crafted.",
-    location: "Iligan City, Philippines · GMT+8",
-    copyright: "Francis Ronald Borja Enterina © 2026",
-    backToTop: "Back to top",
-    columns: [
-      {
-        title: "Navigation",
-        links: [
-          { label: "About", href: "#about" },
-          { label: "Experience", href: "#experience" },
-          { label: "Skills", href: "#skills" },
-          { label: "Projects", href: "#projects" },
-          { label: "Contact", href: "#contact" },
-        ],
-      },
-      {
-        title: "Connect",
-        links: [
-          {
-            label: "LinkedIn",
-            href: "https://www.linkedin.com/in/fenterina/",
-            external: true,
-          },
-          {
-            label: "GitHub",
-            href: "https://github.com/fenterina",
-            external: true,
-          },
-          {
-            label: "Instagram",
-            href: "https://www.instagram.com/f.enterina/",
-            external: true,
-          },
-          {
-            label: "YouTube",
-            href: "https://www.youtube.com/@francisenterina4097",
-            external: true,
-          },
-          {
-            label: "Email",
-            href: "mailto:enterinaf@gmail.com",
-            external: false,
-          },
-        ],
-      },
-      {
-        title: "Resources",
-        links: [
-          {
-            label: "Download CV",
-            href: "/documents/ENTERINA_CV_PROF.pdf",
-            download: "ENTERINA_CV_PROF.pdf",
-          },
-          {
-            label: "Case Study",
-            href: "/projects/red-carpet",
-          },
-          {
-            label: "All Tools",
-            href: "#skills",
-            isToolsTrigger: true,
-          },
-          {
-            label: "Back to Top ↑",
-            href: "#top",
-          },
-        ],
-      },
-    ],
+    location: "ILIGAN CITY, PHILIPPINES - GMT+8",
+    copyright: "FRANCIS RONALD BORJA ENTERINA © 2026",
+    backToTop: "BACK TO TOP",
   },
 } as const;
 
