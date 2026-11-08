@@ -2039,17 +2039,56 @@ dialog::backdrop,
 }
 
 @media (max-width: 850px) {
+  /* 1. Protective gradient behind the text to fade out the busy mountain linework */
+  .footer-overlay-bar {
+    padding: 1.5rem 0 2.25rem;
+    background: linear-gradient(
+      to bottom,
+      rgba(250, 243, 227, 0.96) 0%,
+      rgba(250, 243, 227, 0.88) 55%,
+      rgba(250, 243, 227, 0.5) 82%,
+      transparent 100%
+    );
+  }
+
   .footer-bar {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
     text-align: center;
   }
+
+  /* 2. Improve typography spacing and add white text-glow */
+  .footer-item {
+    font-size: 0.72rem !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0.08em !important;
+    justify-self: center;
+    text-align: center;
+    text-shadow: 
+      0 1px 3px rgba(255, 255, 255, 0.95),
+      0 2px 8px rgba(255, 255, 255, 0.95),
+      0 0 12px rgba(255, 255, 255, 1);
+  }
+
   .footer-location,
   .footer-copyright,
   .footer-top {
     justify-self: center;
     margin-left: 0;
     text-align: center;
+  }
+
+  /* 3. Larger, prominent pill hit area for "Back to Top" */
+  .footer-top {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.45rem 1.1rem !important;
+    margin-top: 0.35rem !important;
+    border-radius: 99px !important;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(21, 27, 84, 0.16);
+    box-shadow: 0 2px 8px rgba(21, 27, 84, 0.08);
   }
 }
 @media (max-width: 850px) {
