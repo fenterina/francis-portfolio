@@ -121,8 +121,8 @@ const redcarpet = projectCaseStudies.redcarpet;
                 <span>{project.category}</span>
                 <a
                   href={project.href}
-                  target={project.href.startsWith('#') ? undefined : '_blank'}
-                  rel={project.href.startsWith('#') ? undefined : 'noreferrer'}
+                  target={project.href.startsWith('http') ? '_blank' : undefined}
+                  rel={project.href.startsWith('http') ? 'noreferrer' : undefined}
                 >
                   {project.linkLabel} <span aria-hidden="true">-&gt;</span>
                 </a>

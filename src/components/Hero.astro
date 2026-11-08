@@ -1,8 +1,21 @@
 ---
 import { en } from '../i18n/en';
+import { Image } from 'astro:assets';
+import heroCityscape from '../assets/images/hero-cityscape.webp';
 ---
 
 <section id="hero" class="hero-stage">
+  <Image
+    src={heroCityscape}
+    alt="Iligan Cityscape Illustration"
+    width={1920}
+    quality="high"
+    format="webp"
+    loading="eager"
+    class="hero-bg-image"
+  />
+  <div class="hero-bg-overlay" aria-hidden="true"></div>
+
   <span id="top" class="visually-hidden" aria-hidden="true"></span>
   <span id="home" class="visually-hidden" aria-hidden="true"></span>
 
