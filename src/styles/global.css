@@ -80,6 +80,10 @@ body.modal-open {
   overflow: hidden;
 }
 
+html.modal-open .tools-column-track {
+  animation-play-state: paused !important;
+}
+
 body {
   margin: 0;
   color: var(--ink);
@@ -114,7 +118,6 @@ button {
 
 .section-white :focus-visible,
 .contact :focus-visible,
-.tools-dialog :focus-visible,
 .case-study-page :focus-visible,
 .hero-stage :focus-visible {
   outline-color: var(--royal-tint);
@@ -226,9 +229,6 @@ button {
 .button,
 .explore-pill,
 .tools-view-all,
-.project-dialog-close,
-.certificate-preview-close,
-.credential-link,
 .success-primary,
 .success-secondary,
 .form-submit,
@@ -247,7 +247,6 @@ button {
 .button,
 .explore-pill,
 .tools-view-all,
-.credential-link,
 .success-primary,
 .success-secondary,
 .form-submit,
@@ -258,9 +257,6 @@ button {
 .button > *,
 .explore-pill > *,
 .tools-view-all > *,
-.project-dialog-close > *,
-.certificate-preview-close > *,
-.credential-link > *,
 .success-primary > *,
 .success-secondary > *,
 .form-submit > *,
@@ -272,9 +268,6 @@ button {
 .button::after,
 .explore-pill::after,
 .tools-view-all::after,
-.project-dialog-close::after,
-.certificate-preview-close::after,
-.credential-link::after,
 .success-primary::after,
 .success-secondary::after,
 .form-submit::after,
@@ -354,9 +347,6 @@ button {
   .button:hover:not(:disabled),
   .explore-pill:hover:not(:disabled),
   .tools-view-all:hover:not(:disabled),
-  .project-dialog-close:hover:not(:disabled),
-  .certificate-preview-close:hover:not(:disabled),
-  .credential-link:hover:not(:disabled),
   .success-primary:hover:not(:disabled),
   .success-secondary:hover:not(:disabled),
   .form-submit:hover:not(:disabled),
@@ -369,9 +359,6 @@ button {
   .button:hover:not(:disabled)::after,
   .explore-pill:hover:not(:disabled)::after,
   .tools-view-all:hover:not(:disabled)::after,
-  .project-dialog-close:hover:not(:disabled)::after,
-  .certificate-preview-close:hover:not(:disabled)::after,
-  .credential-link:hover:not(:disabled)::after,
   .success-primary:hover:not(:disabled)::after,
   .success-secondary:hover:not(:disabled)::after,
   .form-submit:hover:not(:disabled)::after,
@@ -383,9 +370,6 @@ button {
     .button,
     .explore-pill,
     .tools-view-all,
-    .project-dialog-close,
-    .certificate-preview-close,
-    .credential-link,
     .success-primary,
     .success-secondary,
     .form-submit,
@@ -399,9 +383,6 @@ button {
     .button,
     .explore-pill,
     .tools-view-all,
-    .project-dialog-close,
-    .certificate-preview-close,
-    .credential-link,
     .success-primary,
     .success-secondary,
     .form-submit,
@@ -415,9 +396,6 @@ button {
     .button,
     .explore-pill,
     .tools-view-all,
-    .project-dialog-close,
-    .certificate-preview-close,
-    .credential-link,
     .success-primary,
     .success-secondary,
     .form-submit,
@@ -431,9 +409,6 @@ button {
     .button,
     .explore-pill,
     .tools-view-all,
-    .project-dialog-close,
-    .certificate-preview-close,
-    .credential-link,
     .success-primary,
     .success-secondary,
     .form-submit,
@@ -447,9 +422,6 @@ button {
     .button,
     .explore-pill,
     .tools-view-all,
-    .project-dialog-close,
-    .certificate-preview-close,
-    .credential-link,
     .success-primary,
     .success-secondary,
     .form-submit,
@@ -463,9 +435,6 @@ button {
     .button,
     .explore-pill,
     .tools-view-all,
-    .project-dialog-close,
-    .certificate-preview-close,
-    .credential-link,
     .success-primary,
     .success-secondary,
     .form-submit,
@@ -479,9 +448,6 @@ button {
     .button,
     .explore-pill,
     .tools-view-all,
-    .project-dialog-close,
-    .certificate-preview-close,
-    .credential-link,
     .success-primary,
     .success-secondary,
     .form-submit,
@@ -1138,26 +1104,6 @@ button {
   color: #536985;
   font-size: 0.9rem;
 }
-/* 2. Optimize the Dialog Container & Fix Double Scrollbars */
-dialog,
-.portfolio-modal,
-.tools-dialog,
-.certificates-dialog,
-.certificate-dialog,
-.project-dialog {
-  /* Ensure ONLY the inner scroll container scrolls, never the outer dialog */
-  overflow: hidden !important;
-  will-change: transform, opacity;
-  contain: layout paint style;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  /* Replace expensive multi-layer shadows with a single crisp shadow */
-  box-shadow: 0 24px 48px -12px rgba(8, 13, 32, 0.45) !important;
-  /* Fast, hardware-accelerated entry animation */
-  transition:
-    opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
 
 /* ==========================================================================
    Skills Section (Midnight Navy + Dual Tool Rails + Certificates Showcase)
@@ -1685,105 +1631,8 @@ dialog,
 }
 
 /* ==========================================================================
-   Modals & Dialogs (MorphingNav Obsidian-Navy Glass + Zero Double Scrollbars)
+   Case Study Layout Tokens (Shared with /projects/red-carpet)
    ========================================================================== */
-dialog,
-.tools-dialog,
-.certificate-dialog,
-.project-dialog,
-.certificate-preview {
-  overflow: hidden !important;
-  contain: layout paint style;
-  transform-origin: center center;
-  color: #f5f8ff;
-  background-color: rgba(11, 17, 40, 0.94);
-  background-image: var(--glass-navy-gradient);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(169, 186, 242, 0.22);
-  border-radius: 26px;
-  box-shadow:
-    0 24px 64px -12px rgba(2, 6, 20, 0.72),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
-}
-
-dialog::backdrop,
-.project-dialog::backdrop,
-.tools-dialog::backdrop,
-.certificate-preview::backdrop {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  background: rgba(6, 10, 24, 0.76);
-}
-
-.project-dialog-inner,
-.tools-dialog-inner {
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 86dvh;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(169, 186, 242, 0.32) transparent;
-}
-
-.project-dialog {
-  width: min(900px, calc(100% - 32px));
-  max-height: 86dvh;
-  padding: 0;
-}
-
-.project-dialog-inner {
-  position: relative;
-  padding: clamp(28px, 5vw, 48px);
-}
-
-.project-dialog-close,
-.certificate-preview-close {
-  position: sticky;
-  top: 0;
-  z-index: 3;
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  gap: 6px;
-  margin: 0 0 8px auto;
-  padding: 8px 15px;
-  border: 1px solid transparent;
-  border-radius: 9999px;
-  color: #121c45;
-  background: #ffffff;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
-  --btn-fill-bg: #121c45;
-  --btn-fill-image: var(--glass-navy-gradient);
-  --btn-hover-color: #f5f8ff;
-  --btn-hover-border: rgba(169, 186, 242, 0.35);
-  --btn-hover-shadow: 0 8px 28px rgba(2, 6, 20, 0.45);
-}
-
-.project-dialog-close:active,
-.certificate-preview-close:active {
-  transform: scale(0.95);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .project-dialog-close:hover,
-  .certificate-preview-close:hover {
-    transform: scale(1.03);
-  }
-}
-
-.project-dialog h2 {
-  margin: 10px 0 10px;
-  color: #f5f8ff;
-  font: 600 clamp(2.2rem, 5.5vw, 4.2rem)/1.02 var(--font-heading);
-  letter-spacing: -0.04em;
-}
-
 .project-dialog-lede {
   max-width: 65ch;
   margin: 0;
@@ -1946,12 +1795,6 @@ dialog::backdrop,
   border-top: 1px solid rgba(169, 186, 242, 0.16);
 }
 
-.project-dialog .tag {
-  color: #dce6ff;
-  background: rgba(65, 105, 225, 0.22);
-  border-color: rgba(169, 186, 242, 0.28);
-}
-
 .case-study-links {
   display: flex;
   gap: 16px;
@@ -2068,224 +1911,7 @@ dialog::backdrop,
 }
 
 /* ==========================================================================
-   Tools Dialog (MorphingNav Navy Glass Surface)
-   ========================================================================== */
-.tools-dialog {
-  width: min(1040px, calc(100% - 32px));
-  max-height: 82dvh;
-}
-
-.tools-dialog-inner {
-  max-height: 82dvh;
-  padding: clamp(28px, 5vw, 48px);
-}
-
-.tools-dialog h2 {
-  color: #f5f8ff;
-}
-
-.tools-dialog .project-dialog-lede {
-  color: rgba(214, 226, 255, 0.8);
-}
-
-.tools-modal-groups {
-  display: grid;
-  gap: 28px;
-  margin-top: 32px;
-}
-
-.tools-modal-category h3 {
-  margin: 0 0 12px;
-  color: #a9baf2;
-  font-family: var(--font-sans);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-}
-
-.tools-modal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.tools-modal-grid .tool-chip {
-  min-height: 54px;
-  cursor: default;
-  content-visibility: auto;
-  contain-intrinsic-size: 0 54px;
-  background: rgba(16, 29, 58, 0.76);
-  border-color: rgba(169, 186, 242, 0.2);
-  box-shadow: var(--sheen-top);
-}
-
-.tools-modal-grid .tool-chip:active {
-  transform: none;
-}
-
-/* ==========================================================================
-   Certificates Dialog & Lightbox Preview
-   ========================================================================== */
-.certificate-dialog {
-  max-height: min(86dvh, 900px);
-}
-
-.certificate-dialog .project-dialog-inner {
-  max-height: min(86dvh, 900px);
-}
-
-.certificate-category + .certificate-category {
-  margin-top: 34px;
-}
-
-.certificate-category-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(169, 186, 242, 0.16);
-}
-
-.certificate-category-heading h3 {
-  margin: 0;
-  color: #f5f8ff;
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.certificate-category-heading span {
-  color: #a9baf2;
-  font-size: 0.76rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-.certificate-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.certificate-item {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 8px;
-  min-width: 0;
-  content-visibility: auto;
-  contain-intrinsic-size: 0 240px;
-}
-
-.certificate-title {
-  min-height: 2.3em;
-  display: flex;
-  align-items: flex-end;
-  color: #f5f8ff;
-  font-size: 0.78rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.certificate-preview-trigger {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border-radius: 10px;
-  transition: transform var(--dur-press) var(--ease-out);
-}
-
-.certificate-preview-trigger:active {
-  transform: scale(0.97);
-}
-
-.certificate-thumb,
-.certificate-preview-trigger img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 11;
-  object-fit: cover;
-  border: 1px solid rgba(169, 186, 242, 0.22);
-  border-radius: 10px;
-  background-color: rgba(16, 29, 58, 0.76);
-  transition:
-    transform var(--dur-ui) var(--ease-out),
-    box-shadow var(--dur-ui) var(--ease-out),
-    border-color var(--dur-ui) var(--ease-out);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .certificate-preview-trigger:hover img {
-    transform: translateY(-3px);
-    border-color: rgba(169, 186, 242, 0.45);
-    box-shadow: 0 12px 24px rgba(2, 6, 20, 0.55);
-  }
-}
-
-.credential-link {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  min-height: 26px;
-  gap: 5px;
-  padding: 4px 10px;
-  border: 1px solid rgba(169, 186, 242, 0.22);
-  border-radius: var(--pill-radius);
-  color: #d6e2ff;
-  background-color: var(--glass-navy);
-  background-image: var(--glass-navy-gradient);
-  box-shadow: var(--sheen-top);
-  font-size: 0.72rem;
-  font-weight: 600;
-  line-height: 1.2;
-  --btn-fill-bg: #f5f8ff;
-  --btn-hover-color: #121c45;
-  --btn-hover-border: #f5f8ff;
-  --btn-hover-shadow: 0 0 26px rgba(169, 186, 242, 0.30);
-}
-
-.credential-link:active {
-  transform: scale(0.97);
-}
-
-.certificate-preview {
-  position: relative;
-  width: min(760px, calc(100% - 36px));
-  max-height: 86dvh;
-  padding: 24px;
-}
-
-.certificate-preview-close {
-  margin: 0 0 12px auto;
-}
-
-.certificate-preview figure {
-  display: grid;
-  place-items: center;
-  gap: 12px;
-  max-height: calc(86dvh - 92px);
-  margin: 0;
-}
-
-.certificate-preview img {
-  width: auto;
-  max-width: 100%;
-  max-height: calc(86dvh - 148px);
-  object-fit: contain;
-  border-radius: 10px;
-  border: 1px solid rgba(169, 186, 242, 0.2);
-}
-
-.certificate-preview figcaption {
-  color: #f5f8ff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* ==========================================================================
-   Contact Section (Signature Night-Blue + Inverted Frost Form Card)
+   Contact Section (Signature Night-Blue + Uiverse Blue-Gradient Glass Card)
    ========================================================================== */
 .contact {
   position: relative;
@@ -2293,8 +1919,9 @@ dialog::backdrop,
   overflow: hidden;
   color: var(--white);
   background:
-    radial-gradient(90% 80% at 15% 100%, rgba(65, 105, 225, 0.2), transparent 55%),
-    var(--night-blue);
+    radial-gradient(90% 80% at 15% 100%, rgba(65, 105, 225, 0.22), transparent 55%),
+    radial-gradient(70% 65% at 85% 20%, rgba(65, 105, 225, 0.16), transparent 60%),
+    #070c1e;
 }
 
 .contact-grid {
@@ -2442,13 +2069,70 @@ dialog::backdrop,
 }
 
 .contact-form {
-  min-height: 510px;
-  padding: clamp(28px, 4vw, 40px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: var(--dialog-radius);
-  color: var(--night-blue);
-  background: #f1f5fb;
-  box-shadow: 0 24px 70px rgba(2, 10, 24, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --card-bg-color: #0b1128;
+  --card-bg-gradient: radial-gradient(
+    120% 110% at 30% 100%,
+    rgba(65, 105, 225, 0.26) 0%,
+    rgba(16, 25, 58, 0.92) 45%,
+    rgba(9, 14, 34, 0.98) 100%
+  );
+  --input-bg: rgba(22, 36, 82, 0.62);
+  --input-border: rgba(169, 186, 242, 0.18);
+  --footer-color: rgba(169, 186, 242, 0.68);
+  position: relative;
+  overflow: clip;
+  border-radius: 26px;
+  padding: 2px;
+  background: rgba(169, 186, 242, 0.14);
+  z-index: 8;
+  box-shadow:
+    0 24px 60px -12px rgba(2, 6, 20, 0.72),
+    0 8px 20px -4px rgba(2, 6, 20, 0.45),
+    0 0 18px rgba(65, 105, 225, 0.18),
+    0 0 32px rgba(169, 186, 242, 0.08);
+}
+
+.contact-form::before {
+  content: "";
+  position: absolute;
+  inset: -85%;
+  z-index: -2;
+  background: conic-gradient(
+    from 45deg,
+    transparent 70%,
+    rgba(65, 105, 225, 0.72) 80%,
+    #a9baf2 86%,
+    #ffffff 89%,
+    #a9baf2 92%,
+    rgba(65, 105, 225, 0.72) 96%,
+    transparent 100%
+  );
+  will-change: transform;
+  animation: contact-border-spin 4s linear infinite;
+}
+
+@keyframes contact-border-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.contact-form-box {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: clamp(24px, 3.4vw, 34px);
+  border-radius: 24px;
+  color: var(--frost-surface);
+  background-color: var(--card-bg-color);
+  background-image: var(--card-bg-gradient);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    inset 0 40px 60px -8px rgba(169, 186, 242, 0.16),
+    inset 4px 0 12px -6px rgba(169, 186, 242, 0.14),
+    inset 0 0 14px -4px rgba(65, 105, 225, 0.22),
+    inset 0 0 0 1px rgba(169, 186, 242, 0.08);
 }
 
 .form-fields {
@@ -2457,7 +2141,7 @@ dialog::backdrop,
 
 .form-success {
   display: none;
-  min-height: 430px;
+  min-height: 380px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
@@ -2490,8 +2174,10 @@ dialog::backdrop,
   height: 54px;
   margin-bottom: 20px;
   border-radius: 50%;
+  border: 1px solid rgba(169, 186, 242, 0.35);
   color: var(--white);
   background: var(--royal-blue);
+  box-shadow: 0 0 24px rgba(65, 105, 225, 0.45);
   font-size: 1.65rem;
   line-height: 1;
 }
@@ -2499,15 +2185,15 @@ dialog::backdrop,
 .form-success h3 {
   max-width: 430px;
   margin: 0;
-  color: var(--night-blue);
-  font: 600 clamp(1.9rem, 3.8vw, 3rem)/1.06 var(--font-heading);
+  color: var(--frost-surface);
+  font: 600 clamp(1.9rem, 3.8vw, 2.75rem)/1.06 var(--font-heading);
   letter-spacing: -0.03em;
 }
 
 .form-success p {
   max-width: 43ch;
   margin: 16px 0 24px;
-  color: var(--ink-muted-light);
+  color: var(--muted);
   font-size: 0.94rem;
 }
 
@@ -2530,31 +2216,32 @@ dialog::backdrop,
 }
 
 .success-primary {
-  border: 1px solid rgba(18, 28, 69, 0.2);
-  color: #f5f8ff;
-  background-color: #121c45;
-  background-image: var(--glass-navy-gradient);
-  --btn-fill-bg: #1f3374;
+  border: 1px solid rgba(245, 248, 255, 0.9);
+  color: #121c45;
+  background-color: #f5f8ff;
+  box-shadow: 0 6px 20px rgba(2, 6, 20, 0.32);
+  --btn-fill-bg: #162458;
   --btn-fill-image: radial-gradient(
     120% 110% at 30% 100%,
-    rgba(169, 186, 242, 0.22) 0%,
-    #1d3172 48%,
-    #111c47 100%
+    rgba(169, 186, 242, 0.28) 0%,
+    #25429e 48%,
+    #101b47 100%
   );
-  --btn-hover-color: #ffffff;
-  --btn-hover-border: #1d3172;
-  --btn-hover-shadow: 0 12px 34px rgba(11, 17, 40, 0.36);
+  --btn-hover-color: #f5f8ff;
+  --btn-hover-border: rgba(169, 186, 242, 0.5);
+  --btn-hover-shadow: 0 0 32px rgba(65, 105, 225, 0.45), 0 8px 22px rgba(2, 6, 20, 0.5);
 }
 
 .success-secondary {
-  border: 1px solid #c6d4ea;
-  color: var(--night-blue);
-  background: transparent;
-  --btn-fill-bg: #121c45;
-  --btn-fill-image: var(--glass-navy-gradient);
-  --btn-hover-color: #f5f8ff;
-  --btn-hover-border: #121c45;
-  --btn-hover-shadow: 0 10px 30px rgba(11, 17, 40, 0.28);
+  border: 1px solid rgba(169, 186, 242, 0.24);
+  color: var(--frost-surface);
+  background-color: var(--glass-navy);
+  background-image: var(--glass-navy-gradient);
+  box-shadow: var(--sheen-top);
+  --btn-fill-bg: #f5f8ff;
+  --btn-hover-color: #121c45;
+  --btn-hover-border: #f5f8ff;
+  --btn-hover-shadow: 0 0 34px rgba(169, 186, 242, 0.30), 0 8px 22px rgba(2, 6, 20, 0.45);
 }
 
 .success-primary:active,
@@ -2562,73 +2249,116 @@ dialog::backdrop,
   transform: scale(0.97);
 }
 
+.contact-form-top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.contact-form-logo {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  border: 2px solid rgba(245, 248, 255, 0.88);
+  background: linear-gradient(
+    135deg,
+    rgba(169, 186, 242, 0.24),
+    rgba(9, 14, 34, 0.42)
+  );
+  box-shadow:
+    8px 8px 18px rgba(2, 6, 20, 0.42),
+    -6px -6px 14px rgba(169, 186, 242, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  display: grid;
+  place-items: center;
+  color: #f5f8ff;
+}
+
 .contact-form-heading h3 {
   margin: 0;
+  color: var(--frost-surface);
   font-family: var(--font-heading);
   font-size: 1.55rem;
   font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .contact-form-heading p {
-  margin: 4px 0 24px;
-  color: var(--ink-muted-light);
+  margin: 4px 0 0;
+  color: rgba(169, 186, 242, 0.72);
   font-size: 0.8rem;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  gap: 16px;
 }
 
 .form-row + label {
-  margin-top: 22px;
+  margin-top: 18px;
 }
 
 .contact-form label {
   display: block;
-  color: var(--night-blue);
-  font-size: 0.8rem;
+  color: rgba(237, 244, 255, 0.88);
+  font-size: 0.78rem;
   font-weight: 600;
+  letter-spacing: -0.005em;
 }
 
 .contact-form input,
 .contact-form textarea {
   display: block;
   width: 100%;
-  margin-top: 8px;
-  padding: 12px 14px;
-  border: 1px solid #cddaf0;
+  margin-top: 7px;
+  padding: 11px 14px;
+  border: 1px solid var(--input-border);
   border-radius: 12px;
-  color: var(--night-blue);
-  background: var(--white);
+  color: var(--frost-surface);
+  background: var(--input-bg);
   font-family: var(--font-sans);
   font-size: 0.88rem;
-  transition: border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+  transition:
+    border-color var(--dur-ui) var(--ease-out),
+    background-color var(--dur-ui) var(--ease-out),
+    box-shadow var(--dur-ui) var(--ease-out);
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: var(--royal-blue);
-  box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.18);
+  border-color: rgba(245, 248, 255, 0.85);
+  background: rgba(26, 44, 98, 0.72);
+  box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.28);
   outline: none;
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-  color: #8293ad;
+  color: rgba(169, 186, 242, 0.5);
+}
+
+.contact-form input:-webkit-autofill,
+.contact-form textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--frost-surface);
+  caret-color: var(--frost-surface);
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .field-hint {
   display: block;
-  margin-top: 4px;
-  color: var(--ink-muted-light);
+  margin-top: 3px;
+  color: rgba(169, 186, 242, 0.66);
   font-weight: 400;
-  font-size: 0.74rem;
+  font-size: 0.73rem;
 }
 
 .contact-form textarea {
-  min-height: 128px;
+  min-height: 116px;
   resize: vertical;
 }
 
@@ -2639,24 +2369,24 @@ dialog::backdrop,
   gap: 8px;
   width: 100%;
   margin-top: 20px;
-  padding: 14px 20px;
-  border: 1px solid rgba(18, 28, 69, 0.2);
+  padding: 13px 20px;
+  border: 1px solid rgba(245, 248, 255, 0.9);
   border-radius: var(--pill-radius);
-  color: #f5f8ff;
-  background-color: #121c45;
-  background-image: var(--glass-navy-gradient);
+  color: #121c45;
+  background-color: #f5f8ff;
+  box-shadow: 0 6px 20px rgba(2, 6, 20, 0.32);
   font-weight: 600;
   font-size: 0.92rem;
-  --btn-fill-bg: #1f3374;
+  --btn-fill-bg: #162458;
   --btn-fill-image: radial-gradient(
     120% 110% at 30% 100%,
-    rgba(169, 186, 242, 0.22) 0%,
-    #1d3172 48%,
-    #111c47 100%
+    rgba(169, 186, 242, 0.28) 0%,
+    #25429e 48%,
+    #101b47 100%
   );
-  --btn-hover-color: #ffffff;
-  --btn-hover-border: #1d3172;
-  --btn-hover-shadow: 0 12px 34px rgba(11, 17, 40, 0.36);
+  --btn-hover-color: #f5f8ff;
+  --btn-hover-border: rgba(169, 186, 242, 0.5);
+  --btn-hover-shadow: 0 0 32px rgba(65, 105, 225, 0.45), 0 8px 22px rgba(2, 6, 20, 0.5);
 }
 
 .form-submit:active:not(:disabled) {
@@ -2670,19 +2400,57 @@ dialog::backdrop,
 }
 
 .form-status {
-  min-height: 1.3em;
-  margin: 12px 0 0;
-  color: var(--ink-muted-light);
+  min-height: 1.25em;
+  margin: 10px 0 0;
+  color: var(--muted);
   font-size: 0.8rem;
   text-align: center;
 }
 
 .form-status.is-success {
-  color: #16704d;
+  color: #6ee7b7;
 }
 
 .form-status.is-error {
-  color: #a13b42;
+  color: #fda4af;
+}
+
+.contact-form-footer {
+  width: 100%;
+  margin: 6px 0 0;
+  text-align: center;
+  color: var(--footer-color);
+  font-size: 0.76rem;
+}
+
+.contact-form-footer-link {
+  position: relative;
+  color: rgba(237, 244, 255, 0.88);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-form-footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  border-radius: 6px;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-form-footer-link:hover {
+    color: #ffffff;
+  }
+
+  .contact-form-footer-link:hover::after {
+    width: 100%;
+  }
 }
 
 /* ==========================================================================
@@ -2800,10 +2568,6 @@ dialog::backdrop,
    Responsive Breakpoints
    ========================================================================== */
 @media (max-width: 850px) {
-  .tools-modal-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .experience-heading {
     display: block;
   }
@@ -2993,10 +2757,6 @@ dialog::backdrop,
 }
 
 @media (max-width: 620px) {
-  .tools-modal-grid {
-    grid-template-columns: 1fr;
-  }
-
   .container {
     width: min(var(--container), calc(100% - 36px));
   }
@@ -3048,8 +2808,7 @@ dialog::backdrop,
     margin-top: 8px;
   }
 
-  .contact-form {
-    min-height: 540px;
+  .contact-form-box {
     padding: 24px 20px;
   }
 
@@ -3067,15 +2826,6 @@ dialog::backdrop,
   .case-study-feature-grid {
     grid-template-columns: 1fr;
     gap: 16px;
-  }
-
-  .certificate-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .certificate-preview {
-    width: min(92vw, 560px);
-    padding: 16px;
   }
 
   .project-grid {
@@ -3179,10 +2929,6 @@ dialog::backdrop,
   .tools-loop .tool-chip-badge img {
     width: 22px !important;
     height: 22px !important;
-  }
-
-  .tools-dialog .tool-chip-name {
-    display: inline-block !important;
   }
 
   .skills-copy .section-heading {
@@ -3329,9 +3075,6 @@ dialog::backdrop,
   .project-card,
   .project-meta a,
   .project-meta a .icon-svg,
-  .certificate-preview-trigger,
-  .certificate-thumb,
-  .certificate-preview-trigger img,
   .contact-email,
   .contact-details a,
   .contact-details a .icon-svg {

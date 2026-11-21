@@ -977,6 +977,7 @@ export function initPortraitMosaic(): void {
 	const heroRect = hero.getBoundingClientRect();
 	let isInView =
 		heroRect.height === 0 || (heroRect.bottom > 0 && heroRect.top < window.innerHeight);
+	let isModalOpen = document.documentElement.classList.contains('modal-open');
 	let elapsedMs = 0;
 	let lastTickMs = performance.now();
 
@@ -1118,7 +1119,7 @@ export function initPortraitMosaic(): void {
 
 	const tick = (now: number): void => {
 		rafId = null;
-		if (disposed || !scene || !isInView || document.hidden) return;
+		if (disposed || !scene || !isInView || document.hidden || isModalOpen) return;
 
 		const wallDtMs = Math.max(0, Math.min(now - lastTickMs, 250));
 		const springDtMs = Math.max(0, Math.min(now - lastTickMs, 64));
@@ -1134,7 +1135,7 @@ export function initPortraitMosaic(): void {
 	};
 
 	const wakeLoop = (): void => {
-		if (disposed || !scene || !isInView || document.hidden) return;
+		if (disposed || !scene || !isInView || document.hidden || isModalOpen) return;
 		if (rafId !== null) return;
 		lastTickMs = performance.now();
 		rafId = requestAnimationFrame(tick);
@@ -1183,6 +1184,21 @@ export function initPortraitMosaic(): void {
 		'visibilitychange',
 		() => {
 			if (document.hidden) {
+				stopLoop();
+			} else {
+				lastTickMs = performance.now();
+				wakeLoop();
+			}
+		},
+		{ signal: abortController.signal }
+	);
+
+	window.addEventListener(
+		'portfolio:modal-state',
+		(event: Event) => {
+			const open = Boolean((event as CustomEvent<{ open?: boolean }>).detail?.open);
+			isModalOpen = open;
+			if (open) {
 				stopLoop();
 			} else {
 				lastTickMs = performance.now();

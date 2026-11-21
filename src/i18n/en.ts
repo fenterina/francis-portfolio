@@ -2,6 +2,8 @@ export type Certificate = {
   title: string;
   file: string;
   image?: string;
+  thumb: string;
+  preview: string;
   credentialUrl?: string;
 };
 
@@ -48,7 +50,7 @@ export const en = {
     workHistoryIcon: "/images/work-history-icon.png",
     educationIcon: "/images/education-icon.png",
     recognitionIcon: "/images/leadership-recognition-icon.png",
-    aiMasteryCertImage: "/certificates/AI Mastery Cert.png",
+    aiMasteryCertImage: "/certificates/thumbs/AI Mastery Cert.webp",
     aiMasteryCertAlt: "AI Mastery certificate",
     footerWebp1x: "/images/footer-illustration.webp",
     footerWebp2x: "/images/footer-illustration@2x.webp",
@@ -266,6 +268,7 @@ export const en = {
       tagline:
         "An all-in-one wedding planning app that connects couples, wedding planners, and vendors, plus an admin analytics dashboard.",
       heroImage: "/Projects/redCarpetFrontPage.png",
+      heroImageWebp: "/Projects/redCarpetFrontPage.webp",
       heroAlt: "Red Carpet mobile app and admin dashboard interface",
       closeLabel: "Close",
       closeAriaLabel: "Close Red Carpet case study",
@@ -406,6 +409,8 @@ export const en = {
         title: "AI Mastery",
         file: "AI Mastery Cert.png",
         image: "/certificates/AI Mastery Cert.png",
+        thumb: "/certificates/thumbs/AI Mastery Cert.webp",
+        preview: "/certificates/preview/AI Mastery Cert.webp",
         credentialUrl:
           "https://tixu.ai/certificate/5d8df00b-2a960c-4f6b-40000005-7b57b76937ac?type=roadmap&name=AI+Mastery&fn=Francis+Ronald&ln=Enterina&date=6+October+2026&cl=17",
       },
@@ -413,6 +418,8 @@ export const en = {
         title: "Lovable",
         file: "Lovable Cert.png",
         image: "/certificates/Lovable Cert.png",
+        thumb: "/certificates/thumbs/Lovable Cert.webp",
+        preview: "/certificates/preview/Lovable Cert.webp",
         credentialUrl:
           "https://tixu.ai/certificate/fbfb99da-2a960c-bad0-53-00e203ac01ce",
       },
@@ -420,6 +427,8 @@ export const en = {
         title: "Kling",
         file: "Kling Cert.png",
         image: "/certificates/Kling Cert.png",
+        thumb: "/certificates/thumbs/Kling Cert.webp",
+        preview: "/certificates/preview/Kling Cert.webp",
         credentialUrl:
           "https://tixu.ai/certificate/f4baea88-2a960c-6cbb-54-86076a5d2be0",
       },
@@ -427,6 +436,8 @@ export const en = {
         title: "Nano Banana",
         file: "Nano Banana Cert.png",
         image: "/certificates/Nano Banana Cert.png",
+        thumb: "/certificates/thumbs/Nano Banana Cert.webp",
+        preview: "/certificates/preview/Nano Banana Cert.webp",
         credentialUrl:
           "https://tixu.ai/certificate/e4f70c15-2a960c-ef87-51-1077da3c8c8f",
       },
@@ -434,6 +445,8 @@ export const en = {
         title: "ChatGPT",
         file: "ChatGPT Cert.png",
         image: "/certificates/ChatGPT Cert.png",
+        thumb: "/certificates/thumbs/ChatGPT Cert.webp",
+        preview: "/certificates/preview/ChatGPT Cert.webp",
         credentialUrl:
           "https://tixu.ai/certificate/17bea2c7-2a960c-28ab-4f-9c942ca4a3f7",
       },
@@ -441,6 +454,8 @@ export const en = {
         title: "Claude",
         file: "Claude Cert.png",
         image: "/certificates/Claude Cert.png",
+        thumb: "/certificates/thumbs/Claude Cert.webp",
+        preview: "/certificates/preview/Claude Cert.webp",
         credentialUrl:
           "https://tixu.ai/certificate/15edc35d-2a960c-c8c2-50-74d73cd0bd31",
       },
@@ -448,26 +463,118 @@ export const en = {
         title: "Claude Advanced Workflows",
         file: "Claude Advanced Workflows Cert.png",
         image: "/certificates/Claude Advanced Workflows Cert.png",
+        thumb: "/certificates/thumbs/Claude Advanced Workflows Cert.webp",
+        preview: "/certificates/preview/Claude Advanced Workflows Cert.webp",
         credentialUrl:
           "https://tixu.ai/certificate/9765b494-2a960c-c076-55-0eb88f3d69b4",
       },
-      { title: "BSIS Diploma", file: "BSIS-Diploma.png", image: "/certificates/BSIS-Diploma.png" },
-      { title: "CCS Executive Council", file: "CCS-EC-Cert.png", image: "/certificates/CCS-EC-Cert.png" },
-      { title: "Anura Innovations", file: "AnuraInnovations-Cert.png", image: "/certificates/AnuraInnovations-Cert.png" },
-      { title: "Hues X Palette", file: "Hues X Palette-Cert.png", image: "/certificates/Hues X Palette-Cert.png" },
-      { title: "PPC Manager", file: "PPC Manager-Cert.png", image: "/certificates/PPC Manager-Cert.png" },
-      { title: "CCS Research Week", file: "CCS-ResearchWeek-Cert.png", image: "/certificates/CCS-ResearchWeek-Cert.png" },
-      { title: "Final Pitch", file: "FinalPitch-Cert.png", image: "/certificates/FinalPitch-Cert.png" },
+      {
+        title: "BSIS Diploma",
+        file: "BSIS-Diploma.png",
+        image: "/certificates/BSIS-Diploma.png",
+        thumb: "/certificates/thumbs/BSIS-Diploma.webp",
+        preview: "/certificates/preview/BSIS-Diploma.webp",
+      },
+      {
+        title: "CCS Executive Council",
+        file: "CCS-EC-Cert.png",
+        image: "/certificates/CCS-EC-Cert.png",
+        thumb: "/certificates/thumbs/CCS-EC-Cert.webp",
+        preview: "/certificates/preview/CCS-EC-Cert.webp",
+      },
+      {
+        title: "Anura Innovations",
+        file: "AnuraInnovations-Cert.png",
+        image: "/certificates/AnuraInnovations-Cert.png",
+        thumb: "/certificates/thumbs/AnuraInnovations-Cert.webp",
+        preview: "/certificates/preview/AnuraInnovations-Cert.webp",
+      },
+      {
+        title: "Hues X Palette",
+        file: "Hues X Palette-Cert.png",
+        image: "/certificates/Hues X Palette-Cert.png",
+        thumb: "/certificates/thumbs/Hues X Palette-Cert.webp",
+        preview: "/certificates/preview/Hues X Palette-Cert.webp",
+      },
+      {
+        title: "PPC Manager",
+        file: "PPC Manager-Cert.png",
+        image: "/certificates/PPC Manager-Cert.png",
+        thumb: "/certificates/thumbs/PPC Manager-Cert.webp",
+        preview: "/certificates/preview/PPC Manager-Cert.webp",
+      },
+      {
+        title: "CCS Research Week",
+        file: "CCS-ResearchWeek-Cert.png",
+        image: "/certificates/CCS-ResearchWeek-Cert.png",
+        thumb: "/certificates/thumbs/CCS-ResearchWeek-Cert.webp",
+        preview: "/certificates/preview/CCS-ResearchWeek-Cert.webp",
+      },
+      {
+        title: "Final Pitch",
+        file: "FinalPitch-Cert.png",
+        image: "/certificates/FinalPitch-Cert.png",
+        thumb: "/certificates/thumbs/FinalPitch-Cert.webp",
+        preview: "/certificates/preview/FinalPitch-Cert.webp",
+      },
     ] satisfies Certificate[],
     additionalCertificates: [
-      { title: "Elementary Diploma", file: "Elementary-Diploma.png", image: "/additionalCertificates/Elementary-Diploma.png" },
-      { title: "Football", file: "Football-Cert.png", image: "/additionalCertificates/Football-Cert.png" },
-      { title: "JHS Diploma", file: "JHS-Diploma.png", image: "/additionalCertificates/JHS-Diploma.png" },
-      { title: "Kiddie Crew", file: "KiddieCrew-Cert.png", image: "/additionalCertificates/KiddieCrew-Cert.png" },
-      { title: "Living Way Gospel", file: "LivingWayGospel-Cert.png", image: "/additionalCertificates/LivingWayGospel-Cert.png" },
-      { title: "SHS Diploma", file: "SHS-Diploma.png", image: "/additionalCertificates/SHS-Diploma.png" },
-      { title: "WASAR", file: "WASAR-Cert_1.png", image: "/additionalCertificates/WASAR-Cert_1.png" },
-      { title: "WASAR", file: "WASAR-Cert_2.png", image: "/additionalCertificates/WASAR-Cert_2.png" },
+      {
+        title: "Elementary Diploma",
+        file: "Elementary-Diploma.png",
+        image: "/additionalCertificates/Elementary-Diploma.png",
+        thumb: "/additionalCertificates/thumbs/Elementary-Diploma.webp",
+        preview: "/additionalCertificates/preview/Elementary-Diploma.webp",
+      },
+      {
+        title: "Football",
+        file: "Football-Cert.png",
+        image: "/additionalCertificates/Football-Cert.png",
+        thumb: "/additionalCertificates/thumbs/Football-Cert.webp",
+        preview: "/additionalCertificates/preview/Football-Cert.webp",
+      },
+      {
+        title: "JHS Diploma",
+        file: "JHS-Diploma.png",
+        image: "/additionalCertificates/JHS-Diploma.png",
+        thumb: "/additionalCertificates/thumbs/JHS-Diploma.webp",
+        preview: "/additionalCertificates/preview/JHS-Diploma.webp",
+      },
+      {
+        title: "Kiddie Crew",
+        file: "KiddieCrew-Cert.png",
+        image: "/additionalCertificates/KiddieCrew-Cert.png",
+        thumb: "/additionalCertificates/thumbs/KiddieCrew-Cert.webp",
+        preview: "/additionalCertificates/preview/KiddieCrew-Cert.webp",
+      },
+      {
+        title: "Living Way Gospel",
+        file: "LivingWayGospel-Cert.png",
+        image: "/additionalCertificates/LivingWayGospel-Cert.png",
+        thumb: "/additionalCertificates/thumbs/LivingWayGospel-Cert.webp",
+        preview: "/additionalCertificates/preview/LivingWayGospel-Cert.webp",
+      },
+      {
+        title: "SHS Diploma",
+        file: "SHS-Diploma.png",
+        image: "/additionalCertificates/SHS-Diploma.png",
+        thumb: "/additionalCertificates/thumbs/SHS-Diploma.webp",
+        preview: "/additionalCertificates/preview/SHS-Diploma.webp",
+      },
+      {
+        title: "WASAR",
+        file: "WASAR-Cert_1.png",
+        image: "/additionalCertificates/WASAR-Cert_1.png",
+        thumb: "/additionalCertificates/thumbs/WASAR-Cert_1.webp",
+        preview: "/additionalCertificates/preview/WASAR-Cert_1.webp",
+      },
+      {
+        title: "WASAR",
+        file: "WASAR-Cert_2.png",
+        image: "/additionalCertificates/WASAR-Cert_2.png",
+        thumb: "/additionalCertificates/thumbs/WASAR-Cert_2.webp",
+        preview: "/additionalCertificates/preview/WASAR-Cert_2.webp",
+      },
     ] satisfies Certificate[],
   },
   contact: {
