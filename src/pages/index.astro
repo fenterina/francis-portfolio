@@ -72,11 +72,18 @@ const personSchema = {
 		</main>
 		<Footer />
 		<script>
+			import { initFluidMotion, animateDialogOpen } from '../scripts/fluid-motion';
+
 			function setupIndexPage() {
 				if (!document.getElementById('hero')) return;
 
-				const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const sections = document.querySelectorAll<HTMLElement>('.section');
+			sections.forEach((section) => {
+				section.classList.remove('section-reveal', 'is-visible');
+				section.style.opacity = '1';
+			});
+			initFluidMotion();
+
 			const cards = document.querySelectorAll<HTMLElement>('[data-interactive-card]');
 			const lockPageScroll = () => {
 				document.documentElement.classList.add('modal-open');
@@ -97,76 +104,10 @@ const personSchema = {
 				lockPageScroll();
 				window.requestAnimationFrame(() => {
 					dialog.showModal();
+					animateDialogOpen(dialog);
 					onOpened?.();
 				});
 			};
-
-			if (!prefersReducedMotion) {
-				sections.forEach((section) => section.classList.add('section-reveal'));
-				const sectionObserver = new IntersectionObserver((entries, observer) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							entry.target.classList.add('is-visible');
-							observer.unobserve(entry.target);
-						}
-					});
-				}, { threshold: 0.12 });
-				sections.forEach((section) => sectionObserver.observe(section));
-			}
-
-			const navigationLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.logo, .brand-pill, #morphing-nav a[href^="#"], #primary-navigation a[href^="#"]'));
-			const navigationSections = navigationLinks
-				.map((link) => document.getElementById(link.getAttribute('href')?.slice(1) ?? ''))
-				.filter((section): section is HTMLElement => section instanceof HTMLElement);
-			const setActiveNavigation = (sectionId: string) => {
-				if ((window as any).__navScrollLocked) return;
-				navigationLinks.forEach((link) => {
-					const isActive = link.getAttribute('href') === `#${sectionId}`;
-					link.classList.toggle('is-active', isActive);
-					if (isActive) {
-						link.setAttribute('aria-current', 'true');
-					} else {
-						link.removeAttribute('aria-current');
-					}
-				});
-			};
-			const initialHash = window.location.hash.slice(1);
-			const initialSection = navigationSections.find((section) => section.id === initialHash);
-			if (initialSection) setActiveNavigation(initialSection.id);
-
-			const navigationHeader = document.querySelector<HTMLElement>('.site-nav, .site-header');
-			const headerHeight = navigationHeader?.getBoundingClientRect().height ?? 0;
-			const sectionVisibility = new Map<HTMLElement, IntersectionObserverEntry>();
-			const sectionSpy = new IntersectionObserver((entries) => {
-				entries.forEach((entry) => {
-					const section = entry.target instanceof HTMLElement ? entry.target : null;
-					if (!section) return;
-					if (entry.isIntersecting) {
-						sectionVisibility.set(section, entry);
-					} else {
-						sectionVisibility.delete(section);
-					}
-				});
-				const visibleSections = Array.from(sectionVisibility.values())
-					.sort((a, b) => Math.abs(a.boundingClientRect.top - window.innerHeight * 0.45) - Math.abs(b.boundingClientRect.top - window.innerHeight * 0.45));
-				const activeSection = visibleSections[0]?.target;
-				if (activeSection instanceof HTMLElement) setActiveNavigation(activeSection.id);
-			}, {
-				rootMargin: `-${Math.max(headerHeight, Math.round(window.innerHeight * 0.4))}px 0px -55% 0px`,
-				threshold: 0
-			});
-			navigationSections.forEach((section) => sectionSpy.observe(section));
-
-			const lastNavigationSection = navigationSections.at(-1);
-			if (lastNavigationSection) {
-				const bottomObserver = new IntersectionObserver((entries) => {
-					const atPageBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-					if (atPageBottom && entries.some((entry) => entry.isIntersecting)) {
-						setActiveNavigation(lastNavigationSection.id);
-					}
-				});
-				bottomObserver.observe(lastNavigationSection);
-			}
 
 			cards.forEach((card) => {
 				const press = () => {
@@ -245,7 +186,7 @@ const personSchema = {
 					const matchingChip = Array.from(toolsDialog.querySelectorAll<HTMLButtonElement>('.tool-chip')).find((chip) => chip.dataset.toolName === toolName);
 					if (!matchingChip) return;
 					matchingChip.classList.add('is-highlighted');
-					matchingChip.scrollIntoView({ block: 'center', behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+					matchingChip.scrollIntoView({ block: 'center', behavior: 'smooth' });
 					window.setTimeout(() => matchingChip.classList.remove('is-highlighted'), 1200);
 				});
 			};

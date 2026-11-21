@@ -36,6 +36,11 @@
   --nav-pill-hover-bg: rgba(18, 28, 69, 0.06);
   --nav-pill-hover-shadow: 0 2px 10px rgba(18, 28, 69, 0.08);
   --nav-morph-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-fluid: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --dur-fast: 220ms;
+  --dur-med: 380ms;
+  --dur-slow: 640ms;
 }
 * {
   box-sizing: border-box;
@@ -414,8 +419,8 @@ button {
   opacity: 0;
   transform: translateY(24px);
   transition:
-    opacity 700ms ease,
-    transform 700ms ease;
+    opacity var(--dur-slow) var(--ease-fluid),
+    transform var(--dur-slow) var(--ease-fluid);
 }
 .section-reveal.is-visible {
   opacity: 1;
@@ -506,6 +511,10 @@ button {
   border-radius: 22px;
   background: #f8fbff;
   box-shadow: 0 18px 42px rgba(21, 27, 84, 0.07);
+  transition:
+    transform var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid);
 }
 .work-card {
   padding: 32px;
@@ -729,8 +738,9 @@ button {
   background: #ffffff;
   box-shadow: 0 12px 34px rgba(21, 27, 84, 0.1);
   transition:
-    transform 200ms,
-    box-shadow 200ms;
+    transform var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid);
 }
 .project-card:first-child,
 .project-card:last-child {
@@ -743,9 +753,9 @@ button {
 .interactive-card {
   cursor: pointer;
   transition:
-    transform 220ms ease,
-    box-shadow 220ms ease,
-    border-color 220ms ease;
+    transform var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid);
 }
 .interactive-card:hover {
   border-color: rgba(65, 105, 225, 0.52);
@@ -935,7 +945,10 @@ dialog::backdrop,
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   box-shadow: none !important;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition:
+    transform var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid);
 }
 
 .certificate-card,
@@ -962,7 +975,7 @@ dialog::backdrop,
   border-radius: 22px;
   color: var(--night-blue);
   background: #f4f7fc;
-  animation: case-study-in 220ms ease both;
+  animation: case-study-in var(--dur-med) var(--ease-fluid) both;
 }
 .project-dialog-inner {
   position: relative;
@@ -986,6 +999,14 @@ dialog::backdrop,
   cursor: pointer;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+  transition:
+    transform var(--dur-med) var(--ease-fluid),
+    background var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid),
+    color var(--dur-med) var(--ease-fluid);
+}
+.project-dialog-close:active {
+  transform: scale(0.97);
 }
 .project-dialog .eyebrow {
   color: var(--royal-blue);
@@ -1165,16 +1186,11 @@ dialog::backdrop,
 @keyframes case-study-in {
   from {
     opacity: 0;
-    transform: translateY(14px) scale(0.985);
+    transform: translateY(16px) scale(0.975);
   }
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .project-dialog {
-    animation: none;
   }
 }
 .tag-row {
@@ -1265,15 +1281,18 @@ dialog::backdrop,
   text-align: left;
   cursor: pointer;
   transition:
-    transform 180ms,
-    border-color 180ms,
-    box-shadow 180ms;
+    transform var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid);
 }
 .tool-chip:hover,
 .tool-chip:focus-visible {
   border-color: rgba(137, 177, 255, 0.8);
   box-shadow: 0 12px 22px rgba(4, 13, 34, 0.28);
   transform: translateY(-2px);
+}
+.tool-chip:active {
+  transform: scale(0.97);
 }
 .tool-chip.is-highlighted {
   border-color: #9fc1ff;
@@ -1317,9 +1336,15 @@ dialog::backdrop,
   background: transparent;
   font: 700 0.78rem Poppins, sans-serif;
   cursor: pointer;
+  transition:
+    color var(--dur-med) var(--ease-fluid),
+    transform var(--dur-med) var(--ease-fluid);
 }
 .tools-view-all:hover {
   color: var(--night-blue);
+}
+.tools-view-all:active {
+  transform: scale(0.97);
 }
 .tools-dialog {
   width: min(1040px, calc(100% - 32px));
@@ -1517,6 +1542,9 @@ dialog::backdrop,
   grid-template-rows: auto 1fr auto;
   gap: 8px;
   min-width: 0;
+  transition:
+    transform var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid);
 }
 .certificate-title {
   min-height: 2.4em;
@@ -1529,6 +1557,10 @@ dialog::backdrop,
   display: flex;
   flex-direction: column;
   height: 100%;
+  transition: transform var(--dur-med) var(--ease-fluid);
+}
+.certificate-preview-trigger:active {
+  transform: scale(0.97);
 }
 .certificate-preview-trigger img {
   width: 100%;
@@ -1538,8 +1570,8 @@ dialog::backdrop,
   border-radius: 8px;
   background: #fff;
   transition:
-    transform 180ms,
-    box-shadow 180ms;
+    transform var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid);
 }
 .certificate-preview-trigger:hover img {
   transform: translateY(-3px);
@@ -1559,14 +1591,18 @@ dialog::backdrop,
   font-weight: 500;
   line-height: 1.2;
   transition:
-    color 180ms,
-    background 180ms,
-    border-color 180ms;
+    color var(--dur-med) var(--ease-fluid),
+    background var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid),
+    transform var(--dur-med) var(--ease-fluid);
 }
 .credential-link:hover {
   border-color: var(--royal-blue);
   color: var(--royal-blue);
   background: #eef2ff;
+}
+.credential-link:active {
+  transform: scale(0.97);
 }
 .certificate-preview {
   position: relative;
@@ -1685,6 +1721,10 @@ dialog::backdrop,
   justify-content: space-between;
   padding: 9px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  transition:
+    color var(--dur-med) var(--ease-fluid),
+    border-color var(--dur-med) var(--ease-fluid),
+    transform var(--dur-med) var(--ease-fluid);
 }
 .contact-details strong {
   color: var(--royal-tint);
@@ -1893,12 +1933,16 @@ dialog::backdrop,
   background: var(--royal-blue);
   font-weight: 700;
   transition:
-    transform 180ms,
-    background 180ms;
+    transform var(--dur-med) var(--ease-fluid),
+    background var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid);
 }
 .form-submit:hover {
   background: #5278e8;
   transform: translateY(-2px);
+}
+.form-submit:active:not(:disabled) {
+  transform: scale(0.97);
 }
 .form-submit:disabled {
   cursor: wait;
@@ -2018,11 +2062,17 @@ dialog::backdrop,
   padding: 4px 6px;
   border-radius: 4px;
   cursor: pointer;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color var(--dur-med) var(--ease-fluid),
+    transform var(--dur-med) var(--ease-fluid);
 }
 
 .footer-top:hover {
   color: #4169e1;
+}
+
+.footer-top:active {
+  transform: scale(0.97);
 }
 
 .footer-top span {
@@ -2030,7 +2080,7 @@ dialog::backdrop,
   margin-left: 0.5rem;
   font-size: 0.82rem;
   transform: translateY(-1px);
-  transition: transform 0.2s ease;
+  transition: transform var(--dur-med) var(--ease-spring);
   pointer-events: none;
 }
 
@@ -2301,28 +2351,6 @@ dialog::backdrop,
   }
   
 }
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .reveal {
-    animation: none;
-  }
-  .section-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .button,
-  .project-card,
-  .interactive-card,
-  .nav-links a {
-    transition: none;
-  }
-  .tools-column-track {
-    animation: none;
-  }
-}
 
 /* ==========================================================================
    SKILLS SECTION: RESPONSIVE 3-COLUMN LAYOUT (Side Icon Rails + Center Column)
@@ -2547,174 +2575,14 @@ dialog::backdrop,
    ========================================================================== */
 
 /* Floating Header Layout */
-.site-header {
-  position: fixed;
-  top: 1.25rem;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  pointer-events: none;
+/* Floating Header Wrapper */
+.site-header-wrapper {
+  display: contents;
 }
 
-.site-header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 1360px;
-  padding: 0 1.5rem;
-  position: relative;
-}
-
-.site-header-inner > * {
-  pointer-events: auto;
-}
-
-/* Center Capsule Navigation & Liquid Dual-Pill */
-.nav-pill-container {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 6px;
-  background: var(--nav-container-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  border-radius: 9999px;
-  box-shadow: 0 8px 28px -6px rgba(18, 28, 69, 0.08);
-  isolation: isolate;
-}
-
-/* Individual Tab Links */
-.nav-pill-link {
-  position: relative;
-  z-index: 3; /* Always above both background pills */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.55rem 1.35rem;
-  border-radius: 9999px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--nav-text-default);
-  text-decoration: none;
-  white-space: nowrap;
-  background: transparent !important; /* CRITICAL: Prevents static active background from hiding the liquid pill */
-  transition: color 0.1s ease;
-  user-select: none;
-}
-
-/* Active link OR intermediate link currently being passed through turns white */
-.nav-pill-link.is-active,
-.nav-pill-link.is-passing {
-  color: var(--nav-text-active);
-  background: transparent !important;
-}
-
-.nav-pill-link:focus-visible {
-  outline: 2px solid var(--nav-pill-blue);
-  outline-offset: 2px;
-}
-
-/* Shared Geometry for Both Liquid Pills */
-.nav-pill-bg {
-  position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 6px;
-  right: calc(100% - 6px);
-  border-radius: 9999px;
-  pointer-events: none;
-  will-change: left, right, transform, opacity;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  transform-origin: center center;
-}
-
-/* Layer 2: Solid Blue Active Pill */
-.nav-active-pill {
-  z-index: 2;
-  background-color: var(--nav-pill-blue);
-  box-shadow: 0 4px 14px rgba(18, 28, 69, 0.25);
-}
-
-/* Layer 1: Light Hover Shadow Pill */
-.nav-hover-pill {
-  z-index: 1;
-  background-color: var(--nav-pill-hover-bg);
-  box-shadow: var(--nav-pill-hover-shadow);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.nav-hover-pill.is-visible {
-  opacity: 1;
-}
-
-/* --- FLUID LIQUID STRETCH PHYSICS (Single Hop / Final Arrival) --- */
-/* Moving Right: Right edge leads fast (0.18s), Left edge trails with elastic spring overshoot (0.32s) */
-.nav-pill-bg.liquid-right {
-  transition:
-    right 0.18s cubic-bezier(0.22, 1, 0.36, 1),
-    left 0.32s cubic-bezier(0.34, 1.45, 0.64, 1),
-    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity 0.2s ease;
-}
-
-/* Moving Left: Left edge leads fast (0.18s), Right edge trails with elastic spring overshoot (0.32s) */
-.nav-pill-bg.liquid-left {
-  transition:
-    left 0.18s cubic-bezier(0.22, 1, 0.36, 1),
-    right 0.32s cubic-bezier(0.34, 1.45, 0.64, 1),
-    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity 0.2s ease;
-}
-
-/* --- RAPID SEQUENTIAL PASS-THROUGH HOP (Intermediate Sections) --- */
-.nav-pill-bg.liquid-hop-right {
-  transition:
-    right 0.055s cubic-bezier(0.2, 0.9, 0.4, 1),
-    left 0.075s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.075s ease-out;
-}
-
-.nav-pill-bg.liquid-hop-left {
-  transition:
-    left 0.055s cubic-bezier(0.2, 0.9, 0.4, 1),
-    right 0.075s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.075s ease-out;
-}
-
-/* Mid-flight vertical squash for organic liquid surface tension */
-.nav-pill-bg.is-stretching {
-  transform: scaleY(0.91) translateZ(0);
-}
-
-/* Respect Reduced Motion Preferences */
-@media (prefers-reduced-motion: reduce) {
-  .nav-pill-bg.liquid-right,
-  .nav-pill-bg.liquid-left,
-  .nav-pill-bg.liquid-hop-right,
-  .nav-pill-bg.liquid-hop-left {
-    transition: opacity 0.15s ease !important;
-  }
-  .nav-pill-bg.is-stretching {
-    transform: none;
-  }
-}
-
-/* Right Action Capsule */
-.header-actions {
-  position: absolute;
-  right: 1.5rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
+.case-study-page {
+  padding-top: 6rem;
+  padding-bottom: 4rem;
 }
 
 .cta-pill-button {
@@ -2729,12 +2597,19 @@ dialog::backdrop,
   font-size: 0.9rem;
   font-weight: 500;
   box-shadow: var(--pill-shadow);
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform var(--dur-med) var(--ease-fluid),
+    background var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid);
 }
 
 .cta-pill-button:hover {
   transform: translateY(-1px);
   background: #1d3970;
+}
+
+.cta-pill-button:active {
+  transform: scale(0.97);
 }
 
 .cta-pill-icon {
@@ -2746,44 +2621,11 @@ dialog::backdrop,
   color: var(--night-blue);
   border-radius: 50%;
   font-size: 1rem;
-  transition: transform 0.2s ease;
+  transition: transform var(--dur-med) var(--ease-spring);
 }
 
 .cta-pill-button:hover .cta-pill-icon {
-  transform: translateX(2px);
-}
-
-.menu-toggle-pill {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  width: 44px;
-  height: 44px;
-  background: var(--glass-surface-strong);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: 50%;
-  box-shadow: var(--pill-shadow);
-  cursor: pointer;
-  padding: 0;
-}
-
-.menu-toggle-bar {
-  width: 18px;
-  height: 2px;
-  background: var(--night-blue);
-  border-radius: 2px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.menu-toggle-pill.is-open .menu-toggle-bar:first-child {
-  transform: translateY(3.5px) rotate(45deg);
-}
-
-.menu-toggle-pill.is-open .menu-toggle-bar:last-child {
-  transform: translateY(-3.5px) rotate(-45deg);
+  transform: translateX(3px);
 }
 
 /* ==========================================================================
@@ -2792,11 +2634,10 @@ dialog::backdrop,
 .hero-stage {
   position: relative;
   min-height: 100dvh;
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.5rem 1.5rem 2.25rem;
+  padding: 1.5rem 1.5rem 3.5rem;
   background-color: #faf3e3;
   overflow: hidden;
 }
@@ -2957,12 +2798,19 @@ dialog::backdrop,
   font-size: 0.9rem;
   font-weight: 500;
   box-shadow: var(--pill-shadow);
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform var(--dur-med) var(--ease-fluid),
+    background var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid);
 }
 
 .secondary-glass-pill:hover {
   transform: translateY(-1px);
   background: #ffffff;
+}
+
+.secondary-glass-pill:active {
+  transform: scale(0.97);
 }
 
 .secondary-pill-icon {
@@ -2974,6 +2822,11 @@ dialog::backdrop,
   border: 1px solid rgba(21, 27, 84, 0.22);
   color: var(--night-blue);
   font-size: 0.95rem;
+  transition: transform var(--dur-med) var(--ease-spring);
+}
+
+.secondary-glass-pill:hover .secondary-pill-icon {
+  transform: translateY(2px);
 }
 
 /* Bottom Translucent Bento Grid */
@@ -2995,7 +2848,10 @@ dialog::backdrop,
   border-radius: var(--bento-radius);
   padding: 1.25rem;
   box-shadow: var(--pill-shadow);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  transition:
+    transform var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid),
+    background var(--dur-med) var(--ease-fluid);
 }
 
 .bento-card-glass:hover {
@@ -3017,13 +2873,20 @@ dialog::backdrop,
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 16px 36px -8px rgba(21, 27, 84, 0.28);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  transition:
+    transform var(--dur-med) var(--ease-fluid),
+    box-shadow var(--dur-med) var(--ease-fluid),
+    background var(--dur-med) var(--ease-fluid);
 }
 
 .bento-card-dark:hover {
   transform: translateY(-2px);
   background: linear-gradient(145deg, #172366, #214385);
   box-shadow: 0 20px 42px -8px rgba(21, 27, 84, 0.4);
+}
+
+.bento-card-dark:hover .cta-pill-icon {
+  transform: translate(2px, -2px);
 }
 
 /* Featured Project Card Internals */
@@ -3195,55 +3058,13 @@ dialog::backdrop,
 }
 
 @media (max-width: 960px) {
-  .site-header {
-    top: 1rem;
-  }
-  .site-header-inner {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 1rem;
-  }
-  .header-actions {
-    position: static;
-  }
   .hero-stage {
-    padding: 1.25rem 1rem 2rem;
+    padding: 1.25rem 1rem 3.5rem;
     background-size: auto, auto, max(100%, 820px) auto;
     background-position: center, center, 50% bottom;
   }
   .hero-brand-bar {
     min-height: 40px;
-  }
-  .nav-pill-container {
-    position: fixed;
-    top: 4.5rem;
-    left: 1rem;
-    right: 1rem;
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0.85rem;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 18px 45px rgba(18, 38, 70, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    z-index: 100;
-  }
-  .nav-pill-container.is-open {
-    display: flex;
-  }
-  .nav-pill-bg,
-  .nav-indicator {
-    display: none !important;
-  }
-  .nav-pill-link.is-active {
-    background: var(--nav-pill-blue) !important;
-    color: var(--nav-text-active);
-  }
-  .menu-toggle-pill {
-    display: flex;
   }
   .hero-main-grid {
     flex-direction: column;
@@ -3261,12 +3082,6 @@ dialog::backdrop,
 }
 
 @media (max-width: 640px) {
-  .site-header {
-    top: 0.75rem;
-  }
-  .site-header-inner {
-    padding: 0 0.85rem;
-  }
   .hero-brand {
     gap: 0.65rem;
   }
@@ -3280,7 +3095,7 @@ dialog::backdrop,
   }
   
   .hero-stage {
-    padding: 1rem 0.85rem 2rem;
+    padding: 1rem 0.85rem 3.5rem;
     background-image: none;
   }
   .hero-bg-overlay {
@@ -3308,7 +3123,6 @@ dialog::backdrop,
 }
 
 @supports not (backdrop-filter: blur(1px)) {
-  .nav-pill-container,
   .bento-card-glass,
   .secondary-glass-pill {
     background: rgba(255, 255, 255, 0.96);

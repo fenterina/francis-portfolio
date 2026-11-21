@@ -1,5 +1,6 @@
 ---
 import '../../styles/global.css';
+import Navigation from '../../components/Navigation.astro';
 import { ClientRouter } from 'astro:transitions';
 
 const title = 'Red Carpet | Wedding Planning App Case Study';
@@ -31,6 +32,7 @@ const image = '/Projects/redCarpetFrontPage.png';
 		<title>{title}</title>
 	</head>
 	<body>
+		<Navigation />
 		<main class="case-study-page">
 			<div class="container case-study-content">
 				<a class="button button-ghost" href="/#projects">← Back to projects</a>
@@ -75,5 +77,15 @@ const image = '/Projects/redCarpetFrontPage.png';
 				<div class="tag-row"><span class="tag">React Native</span><span class="tag">TypeScript</span><span class="tag">Supabase</span></div>
 			</div>
 		</main>
+		<script>
+			import { initFluidMotion } from '../../scripts/fluid-motion';
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initFluidMotion);
+			} else {
+				initFluidMotion();
+			}
+			document.addEventListener('astro:page-load', initFluidMotion);
+		</script>
 	</body>
 </html>
