@@ -991,21 +991,39 @@ export function initPortraitMosaic(): void {
 	let lastCanvasH = 0;
 	let lastCanvasDpr = 0;
 	let lastFittedWidth = -1;
+	let lastFittedHeight = -1;
 
 	const fitDisplayName = (force = false): void => {
 		if (disposed || !frameEl || !titleEl) return;
 		const targetWidth = frameEl.clientWidth;
-		if (targetWidth <= 0) return;
-		if (!force && Math.abs(targetWidth - lastFittedWidth) < 0.5) return;
+		const heroHeight = hero.clientHeight;
+		if (targetWidth <= 0 || heroHeight <= 0) return;
+		if (
+			!force &&
+			Math.abs(targetWidth - lastFittedWidth) < 0.5 &&
+			Math.abs(heroHeight - lastFittedHeight) < 0.5
+		) {
+			return;
+		}
 
-		titleEl.style.transform = 'none';
+		titleEl.style.transform = '';
 		titleEl.style.fontSize = '100px';
 		const rectWidth = titleEl.getBoundingClientRect().width;
 		if (rectWidth > 0) {
 			lastFittedWidth = targetWidth;
-			const fittedFontSize = (targetWidth / rectWidth) * 100 * 0.996;
+			lastFittedHeight = heroHeight;
+			const isDesktop = hero.clientWidth >= 768;
+			let fittedFontSize: number;
+			if (isDesktop) {
+				const desiredWidth = Math.min(targetWidth * 0.74, 980);
+				const rawFontSize = (desiredWidth / rectWidth) * 100;
+				const maxFontSize = Math.min(168, Math.max(84, heroHeight * 0.21));
+				fittedFontSize = Math.min(rawFontSize, maxFontSize);
+			} else {
+				const desiredWidth = targetWidth * 0.88;
+				fittedFontSize = Math.min((desiredWidth / rectWidth) * 100, 96);
+			}
 			titleEl.style.fontSize = `${fittedFontSize.toFixed(2)}px`;
-			titleEl.style.transform = 'translateX(-2px) scaleY(1.10)';
 		}
 	};
 

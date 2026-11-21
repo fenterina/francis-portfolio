@@ -16,32 +16,37 @@ import { en } from '../i18n/en';
   ></canvas>
 
   <div class="hero-frame">
-    <div class="hero-meta-row">
+    <div class="hero-top-row">
       <p class="hero-bio-snippet">
         {en.hero.fusedBio}
       </p>
-      <a
-        href={en.hero.secondaryCta.href}
-        class="explore-pill"
-        download={en.hero.secondaryCta.downloadName}
-      >
-        <span class="btn-roll-mask">
-          <span class="btn-roll-primary">{en.hero.secondaryCta.label}</span>
-          <span class="btn-roll-clone" aria-hidden="true">{en.hero.secondaryCta.label}</span>
-        </span>
-        <span class="explore-pill-icon btn-icon-roll btn-icon-roll--down" aria-hidden="true">
-          <svg class="icon-svg btn-icon-primary" width="12" height="12" viewBox="0 0 16 16" fill="none">
-            <path d="M8 2.75v7.75m0 0-3-3M8 10.5l3-3M3.25 13.25h9.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <svg class="icon-svg btn-icon-clone" width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M8 2.75v7.75m0 0-3-3M8 10.5l3-3M3.25 13.25h9.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </span>
-      </a>
     </div>
 
-    <div class="display-name-wrap">
-      <h1 id="hero-display-name" class="hero-display-name">{en.hero.displayName}</h1>
+    <div class="hero-bottom-group">
+      <div class="hero-meta-row">
+        <a
+          href={en.hero.secondaryCta.href}
+          class="explore-pill"
+          download={en.hero.secondaryCta.downloadName}
+        >
+          <span class="btn-roll-mask">
+            <span class="btn-roll-primary">{en.hero.secondaryCta.label}</span>
+            <span class="btn-roll-clone" aria-hidden="true">{en.hero.secondaryCta.label}</span>
+          </span>
+          <span class="explore-pill-icon btn-icon-roll btn-icon-roll--down" aria-hidden="true">
+            <svg class="icon-svg btn-icon-primary" width="12" height="12" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2.75v7.75m0 0-3-3M8 10.5l3-3M3.25 13.25h9.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <svg class="icon-svg btn-icon-clone" width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2.75v7.75m0 0-3-3M8 10.5l3-3M3.25 13.25h9.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <div class="display-name-wrap">
+        <h1 id="hero-display-name" class="hero-display-name">{en.hero.displayName}</h1>
+      </div>
     </div>
   </div>
 </section>
