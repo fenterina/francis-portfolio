@@ -38,7 +38,7 @@
 /* Fixed Bottom-Center Anchor (Docked Island) */
 .morph-nav-anchor {
   position: fixed;
-  bottom: 1.5rem;
+  bottom: max(0.9rem, calc(env(safe-area-inset-bottom, 0px) + 0.75rem));
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -121,6 +121,8 @@
 /* White "Menu" / "Close" Pill Trigger */
 .morph-nav-toggle {
   position: relative;
+  isolation: isolate;
+  background-clip: padding-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -138,13 +140,51 @@
   cursor: pointer;
   overflow: hidden;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-  transition: background-color 0.2s ease;
+  transition:
+    color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.morph-nav-toggle:hover {
-  background-color: #f0f4fc;
+.morph-nav-toggle > * {
+  position: relative;
+  z-index: 1;
+}
+
+.morph-nav-toggle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 235%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: #162458;
+  background-image: radial-gradient(
+    120% 110% at 30% 100%,
+    rgba(169, 186, 242, 0.24) 0%,
+    #1b2d6b 48%,
+    #0f183d 100%
+  );
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center center;
+  will-change: transform;
+  z-index: -1;
+  pointer-events: none;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .morph-nav-toggle:hover {
+    color: #f5f8ff;
+    box-shadow: 0 0 26px rgba(169, 186, 242, 0.28), 0 6px 18px rgba(2, 6, 20, 0.45);
+  }
+
+  .morph-nav-toggle:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 .morph-nav-toggle:focus-visible {
@@ -286,7 +326,6 @@
 /* Mobile spacing adjustments */
 @media (max-width: 480px) {
   .morph-nav-anchor {
-    bottom: 1rem;
     max-width: calc(100vw - 1.25rem);
   }
 

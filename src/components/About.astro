@@ -4,7 +4,15 @@ import { en } from '../i18n/en';
 
 <section class="section section-white" id="about">
   <div class="container about-grid">
-    <div class="about-visual reveal"><div class="about-portrait"><img src={en.images.aboutPortrait} alt={en.about.portraitAlt} loading="lazy" /></div></div>
-    <div class="about-copy reveal delay-1"><span class="eyebrow">{en.about.eyebrow}</span><h2 class="section-heading">{en.about.title}</h2>{en.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</div>
+    <div class="about-visual">
+      <div class="about-portrait">
+        <img src={en.images.aboutPortrait} alt={en.about.portraitAlt} loading="lazy" />
+      </div>
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow">{en.about.eyebrow}</span>
+      <h2 class="section-heading">{en.about.title}</h2>
+      {en.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
   </div>
 </section>

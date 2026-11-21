@@ -3,76 +3,164 @@ import { en } from '../i18n/en';
 ---
 
 <section class="contact" id="contact">
-	<div class="container section contact-grid">
-		<div class="contact-copy">
-			<h2 class="section-heading">{en.contact.title}</h2>
-			<p class="section-intro">{en.contact.intro}</p>
-			<p class="contact-label">Email</p>
-			<a class="contact-email" href={en.contact.emailHref}>{en.contact.email}</a>
-			<div class="contact-details">{en.contact.social.map((social) => <a href={social.href} target="_blank" rel="noreferrer"><span class="contact-social-name"><strong>{social.label}</strong> <span class="contact-handle">{social.handle}</span></span><span aria-hidden="true">-></span></a>)}</div>
-			<p class="contact-location">{en.contact.location}</p>
-		</div>
-		<form class="contact-form" id="contact-form" action={en.contact.form.endpoint} method="POST" aria-describedby="form-status" data-submit-label={en.contact.form.submitLabel} data-sending-label={en.contact.form.sendingLabel} data-success-message={en.contact.form.successMessage} data-error-message={en.contact.form.errorMessage}>
-			<div class="form-fields">
-			<div class="contact-form-heading"><h3>{en.contact.form.title}</h3><p>{en.contact.form.requiredNote}</p></div>
-			<div class="form-row">
-				<label>{en.contact.form.nameLabel}<input name="name" type="text" placeholder={en.contact.form.namePlaceholder} required /></label>
-				<label>{en.contact.form.emailLabel}<input name="email" type="email" placeholder={en.contact.form.emailPlaceholder} required /></label>
-			</div>
-			<label>{en.contact.form.messageLabel}<span class="field-hint">{en.contact.form.messageHint}</span><textarea name="message" placeholder={en.contact.form.messagePlaceholder} required></textarea></label>
-			<button class="form-submit" type="submit">{en.contact.form.submitLabel} <span aria-hidden="true">-></span></button>
-			<p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-			</div>
-			<div class="form-success" aria-live="polite">
-				<div class="success-check" aria-hidden="true">✓</div>
-				<h3>{en.contact.form.successTitle}</h3>
-				<p>{en.contact.form.successBody}</p>
-				<div class="success-actions"><a class="success-primary" href="#projects">{en.contact.form.backToWorkLabel}</a><button class="success-secondary" type="button">{en.contact.form.anotherMessageLabel}</button></div>
-			</div>
-		</form>
-	</div>
+  <div class="container section contact-grid">
+    <div class="contact-copy">
+      <h2 class="section-heading">{en.contact.title}</h2>
+      <p class="section-intro">{en.contact.intro}</p>
+      <p class="contact-label">{en.contact.emailLabel}</p>
+      <a class="contact-email" href={en.contact.emailHref}>{en.contact.email}</a>
+      <div class="contact-details">
+        {en.contact.social.map((social) => (
+          <a href={social.href} target="_blank" rel="noreferrer">
+            <span class="contact-social-name">
+              <strong>{social.label}</strong>
+              <span class="contact-handle">{social.handle}</span>
+            </span>
+            <svg class="icon-svg" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3.5 8h9m0 0-3.5-3.5M12.5 8 9 11.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        ))}
+      </div>
+      <p class="contact-location">{en.contact.location}</p>
+    </div>
+    <form
+      class="contact-form"
+      id="contact-form"
+      action={en.contact.form.endpoint}
+      method="POST"
+      aria-describedby="form-status"
+      data-submit-label={en.contact.form.submitLabel}
+      data-sending-label={en.contact.form.sendingLabel}
+      data-success-message={en.contact.form.successMessage}
+      data-error-message={en.contact.form.errorMessage}
+    >
+      <div class="form-fields">
+        <div class="contact-form-heading">
+          <h3>{en.contact.form.title}</h3>
+          <p>{en.contact.form.requiredNote}</p>
+        </div>
+        <div class="form-row">
+          <label>
+            {en.contact.form.nameLabel}
+            <input name="name" type="text" placeholder={en.contact.form.namePlaceholder} required />
+          </label>
+          <label>
+            {en.contact.form.emailLabel}
+            <input name="email" type="email" placeholder={en.contact.form.emailPlaceholder} required />
+          </label>
+        </div>
+        <label>
+          {en.contact.form.messageLabel}
+          <span class="field-hint">{en.contact.form.messageHint}</span>
+          <textarea name="message" placeholder={en.contact.form.messagePlaceholder} required></textarea>
+        </label>
+        <button class="form-submit" type="submit">
+          <span class="btn-roll-mask">
+            <span class="btn-roll-primary form-submit-label">{en.contact.form.submitLabel}</span>
+            <span class="btn-roll-clone form-submit-label" aria-hidden="true">{en.contact.form.submitLabel}</span>
+          </span>
+          <span class="btn-icon-roll btn-icon-roll--right" aria-hidden="true">
+            <svg class="icon-svg btn-icon-primary" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3.5 8h9m0 0-3.5-3.5M12.5 8 9 11.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <svg class="icon-svg btn-icon-clone" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3.5 8h9m0 0-3.5-3.5M12.5 8 9 11.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="form-success" aria-live="polite">
+        <div class="success-check" aria-hidden="true">
+          <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5.5 12.5 10 17l8.5-9.5" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <h3>{en.contact.form.successTitle}</h3>
+        <p>{en.contact.form.successBody}</p>
+        <div class="success-actions">
+          <a class="success-primary" href="#projects">
+            <span class="btn-roll-mask">
+              <span class="btn-roll-primary">{en.contact.form.backToWorkLabel}</span>
+              <span class="btn-roll-clone" aria-hidden="true">{en.contact.form.backToWorkLabel}</span>
+            </span>
+          </a>
+          <button class="success-secondary" type="button">
+            <span class="btn-roll-mask">
+              <span class="btn-roll-primary">{en.contact.form.anotherMessageLabel}</span>
+              <span class="btn-roll-clone" aria-hidden="true">{en.contact.form.anotherMessageLabel}</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </section>
 
 <script>
-	const form = document.querySelector<HTMLFormElement>('#contact-form');
+  function setupContactForm() {
+    const form = document.querySelector<HTMLFormElement>('#contact-form');
+    if (!form || form.dataset.bound === '1') return;
+    form.dataset.bound = '1';
 
-	const submitButton = form?.querySelector<HTMLButtonElement>('.form-submit');
-	const status = form?.querySelector<HTMLElement>('#form-status');
-	const anotherMessageButton = form?.querySelector<HTMLButtonElement>('.success-secondary');
-	const submitLabel = form?.dataset.submitLabel ?? 'Send message';
-	const sendingLabel = form?.dataset.sendingLabel ?? 'Sending...';
-	const successMessage = form?.dataset.successMessage ?? 'Thanks - your message has been sent.';
-	const errorMessage = form?.dataset.errorMessage ?? 'Something went wrong. Please try again.';
+    const submitButton = form.querySelector<HTMLButtonElement>('.form-submit');
+    const submitLabelEls = form.querySelectorAll<HTMLElement>('.form-submit-label');
+    const status = form.querySelector<HTMLElement>('#form-status');
+    const anotherMessageButton = form.querySelector<HTMLButtonElement>('.success-secondary');
+    const submitLabel = form.dataset.submitLabel ?? 'Send message';
+    const sendingLabel = form.dataset.sendingLabel ?? 'Sending...';
+    const successMessage = form.dataset.successMessage ?? 'Thanks - your message has been sent.';
+    const errorMessage = form.dataset.errorMessage ?? 'Something went wrong. Please try again.';
 
-	form?.addEventListener('submit', async (event) => {
-		event.preventDefault();
-		if (!form.reportValidity() || !submitButton || !status) return;
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity() || !submitButton || !status) return;
 
-		const data = new FormData(form);
-		submitButton.disabled = true;
-		submitButton.firstChild!.textContent = sendingLabel;
-		status.textContent = '';
-		status.className = 'form-status';
+      const data = new FormData(form);
+      submitButton.disabled = true;
+      submitLabelEls.forEach((el) => {
+        el.textContent = sendingLabel;
+      });
+      status.textContent = '';
+      status.className = 'form-status';
 
-		try {
-			const response = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
-			if (!response.ok) throw new Error('Formspree submission failed');
-			form.reset();
-			status.textContent = successMessage;
-			status.classList.add('is-success');
-			form.classList.add('is-success');
-		} catch {
-			status.textContent = errorMessage;
-			status.classList.add('is-error');
-		} finally {
-			submitButton.disabled = false;
-			submitButton.firstChild!.textContent = submitLabel;
-		}
-	});
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (!response.ok) throw new Error('Formspree submission failed');
+        form.reset();
+        status.textContent = successMessage;
+        status.classList.add('is-success');
+        form.classList.add('is-success');
+      } catch {
+        status.textContent = errorMessage;
+        status.classList.add('is-error');
+      } finally {
+        submitButton.disabled = false;
+        submitLabelEls.forEach((el) => {
+          el.textContent = submitLabel;
+        });
+      }
+    });
 
-	anotherMessageButton?.addEventListener('click', () => {
-		form?.classList.remove('is-success');
-		status && (status.textContent = '');
-		form?.querySelector<HTMLInputElement>('input[name="name"]')?.focus();
-	});
+    anotherMessageButton?.addEventListener('click', () => {
+      form.classList.remove('is-success');
+      if (status) {
+        status.textContent = '';
+        status.className = 'form-status';
+      }
+      form.querySelector<HTMLInputElement>('input[name="name"]')?.focus();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupContactForm);
+  } else {
+    setupContactForm();
+  }
+  document.addEventListener('astro:page-load', setupContactForm);
 </script>

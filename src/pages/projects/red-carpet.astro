@@ -1,15 +1,13 @@
 ---
 import '../../styles/global.css';
 import Navigation from '../../components/Navigation.astro';
+import { en } from '../../i18n/en';
 import { ClientRouter } from 'astro:transitions';
 
-const title = 'Red Carpet | Wedding Planning App Case Study';
-const description =
-	'Red Carpet is a multi-role wedding planning marketplace built with React Native, TypeScript and Supabase by Francis Enterina.';
-const image = '/Projects/redCarpetFrontPage.png';
+const caseStudy = en.projects.redCarpetCaseStudy;
 ---
 
-<html lang="en">
+<html lang={en.language}>
 	<head>
 		<meta charset="utf-8" />
 		<ClientRouter />
@@ -22,59 +20,83 @@ const image = '/Projects/redCarpetFrontPage.png';
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="viewport" content="width=device-width" />
-		<meta name="description" content={description} />
-		<link rel="canonical" href="https://francisenterina.work/projects/red-carpet" />
+		<meta name="description" content={caseStudy.pageDescription} />
+		<link rel="canonical" href={caseStudy.canonicalUrl} />
 		<meta property="og:type" content="article" />
-		<meta property="og:url" content="https://francisenterina.work/projects/red-carpet" />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={`https://francisenterina.work${image}`} />
-		<title>{title}</title>
+		<meta property="og:url" content={caseStudy.canonicalUrl} />
+		<meta property="og:title" content={caseStudy.pageTitle} />
+		<meta property="og:description" content={caseStudy.pageDescription} />
+		<meta property="og:image" content={`${en.site.url}${caseStudy.heroImage}`} />
+		<meta name="theme-color" content={en.metadata.themeColor} />
+		<title>{caseStudy.pageTitle}</title>
 	</head>
 	<body>
 		<Navigation />
 		<main class="case-study-page">
 			<div class="container case-study-content">
-				<a class="button button-ghost" href="/#projects">← Back to projects</a>
-				<p class="eyebrow">01 / Case study</p>
-				<h1>Red Carpet</h1>
-				<p class="project-dialog-lede">
-					An all-in-one wedding planning app that connects couples, wedding planners,
-					and vendors, plus an admin analytics dashboard.
-				</p>
+				<a class="button button-ghost case-study-back" href="/#projects">
+					<span class="btn-icon-roll btn-icon-roll--left" aria-hidden="true">
+						<svg class="icon-svg btn-icon-primary" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+							<path d="M12.5 8h-9m0 0L7 4.5M3.5 8 7 11.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+						<svg class="icon-svg btn-icon-clone" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+							<path d="M12.5 8h-9m0 0L7 4.5M3.5 8 7 11.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</span>
+					<span class="btn-roll-mask">
+						<span class="btn-roll-primary">{caseStudy.backLabel}</span>
+						<span class="btn-roll-clone" aria-hidden="true">{caseStudy.backLabel}</span>
+					</span>
+				</a>
+				<p class="eyebrow">{caseStudy.eyebrow}</p>
+				<h1>{caseStudy.title}</h1>
+				<p class="project-dialog-lede">{caseStudy.tagline}</p>
 				<div class="project-dialog-facts">
-					<div><span>Company</span><strong>Anura Innovations</strong></div>
-					<div><span>Role</span><strong>Frontend &amp; Backend Developer Intern</strong></div>
-					<div><span>Year</span><strong>2026</strong></div>
-					<div><span>Focus</span><strong>Mobile product, marketplace, and dashboard</strong></div>
+					{caseStudy.meta.map((item) => (
+						<div><span>{item.label}</span><strong>{item.value}</strong></div>
+					))}
 				</div>
-				<img class="case-study-hero" src={image} alt="Red Carpet mobile app and admin dashboard interface" />
+				<img class="case-study-hero" src={caseStudy.heroImage} alt={caseStudy.heroAlt} />
 				<div class="project-dialog-columns">
-					<div>
-						<span>The brief</span>
-						<p>Wedding planning is spread across many people and tools. Red Carpet brings couples, planners, and vendors into one marketplace for tasks, vendor booking, guests, and event coordination.</p>
-					</div>
-					<div>
-						<span>What I did</span>
-						<p>I created frontend and backend components for the couple dashboard, vendor marketplace, activity planner, bookings, guests, and payments. I also worked with developers on implementation and ran UI/UX testing and QA.</p>
-					</div>
-					<div>
-						<span>The result</span>
-						<p>A mobile app for three roles and a companion web dashboard showing real-time app status, user messaging, and metrics such as revenue, retention, and monthly active users.</p>
-					</div>
+					{caseStudy.columns.map((col) => (
+						<div>
+							<span>{col.label}</span>
+							<p>{col.text}</p>
+						</div>
+					))}
 				</div>
 				<section class="case-study-section">
-					<div class="case-study-section-heading"><h2>Key features</h2></div>
-					<div class="case-study-feature-grid">
-						<article><b>01</b><div><h3>Centralized Wedding Dashboard</h3><p>Set preferences, view curated vendors, and request quotations.</p></div></article>
-						<article><b>02</b><div><h3>Integrated Vendor Marketplace</h3><p>Search, filter, compare, and book vendors.</p></div></article>
-						<article><b>03</b><div><h3>Activity Planner</h3><p>Shared tasks, assignments, and deadline tracking.</p></div></article>
-						<article><b>04</b><div><h3>Booking &amp; Project Management</h3><p>Confirmations, workflows, and leads.</p></div></article>
-						<article><b>05</b><div><h3>Guest &amp; Invitation Management</h3><p>Guest lists, roles, and RSVP tracking.</p></div></article>
-						<article><b>06</b><div><h3>Profile, Notifications &amp; Payments</h3><p>Real-time alerts, payouts, and security controls.</p></div></article>
+					<div class="case-study-section-heading">
+						<h2>{caseStudy.rolesHeading}</h2>
+					</div>
+					<div class="case-study-role-grid">
+						{caseStudy.roles.map((role) => (
+							<article>
+								<h3>{role.title}</h3>
+								<p>{role.description}</p>
+							</article>
+						))}
 					</div>
 				</section>
-				<div class="tag-row"><span class="tag">React Native</span><span class="tag">TypeScript</span><span class="tag">Supabase</span></div>
+				<section class="case-study-section">
+					<div class="case-study-section-heading">
+						<h2>{caseStudy.featuresHeading}</h2>
+					</div>
+					<div class="case-study-feature-grid">
+						{caseStudy.features.map((feat) => (
+							<article>
+								<b>{feat.number}</b>
+								<div>
+									<h3>{feat.title}</h3>
+									<p>{feat.description}</p>
+								</div>
+							</article>
+						))}
+					</div>
+				</section>
+				<div class="tag-row">
+					{caseStudy.tags.map((tag) => <span class="tag">{tag}</span>)}
+				</div>
 			</div>
 		</main>
 		<script>
