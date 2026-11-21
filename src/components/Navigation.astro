@@ -6,16 +6,21 @@ const isHomePage = Astro.url.pathname === '/' || Astro.url.pathname === '';
 
 const primaryLinks = [
   { label: 'Home', href: '#hero' },
-  { label: en.nav.about, href: '#about' },
   { label: 'Experience', href: '#experience' },
   { label: en.nav.skills, href: '#skills' },
   { label: en.nav.projects, href: '#projects' },
   { label: 'Contact', href: '#contact' },
 ];
 
+const cvLabel =
+  (en.nav as unknown as { downloadCv?: string }).downloadCv ?? 'Download CV';
+const cvHref =
+  (en.hero as unknown as { secondaryCta?: { href?: string } }).secondaryCta?.href ??
+  '/documents/ENTERINA_CV_PROF.pdf';
+
 const secondaryLinks = [
   ...en.contact.social.map((s) => ({ label: s.label, href: s.href, external: true })),
-  { label: en.nav.downloadCv ?? 'Download CV', href: en.hero.secondaryCta.href ?? '/documents/ENTERINA_CV_PROF.pdf', external: true },
+  { label: cvLabel, href: cvHref, external: true },
 ];
 ---
 

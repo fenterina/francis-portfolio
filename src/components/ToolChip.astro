@@ -1,22 +1,33 @@
 ---
 import type { Tool } from '../data/tools';
+import { en } from '../i18n/en';
 
 interface Props {
   tool: Tool;
+  asStatic?: boolean;
 }
 
-const { tool } = Astro.props;
+const { tool, asStatic = false } = Astro.props;
 ---
 
-<button
-  class="tool-chip"
-  type="button"
-  data-tool-name={tool.name}
-  aria-label={`View ${tool.name} details`}
-  title={tool.name}
->
-  <span class="tool-chip-badge" style={`--tool-color: ${tool.color}`}>
-    {tool.logo ? <img src={tool.logo} alt="" /> : <span>{tool.short}</span>}
-  </span>
-  <span class="tool-chip-name">{tool.name}</span>
-</button>
+{asStatic ? (
+  <div class="tool-chip" data-tool-name={tool.name}>
+    <span class="tool-chip-badge" style={`--tool-color: ${tool.color}`}>
+      {tool.logo ? <img src={tool.logo} alt="" /> : <span>{tool.short}</span>}
+    </span>
+    <span class="tool-chip-name">{tool.name}</span>
+  </div>
+) : (
+  <button
+    class="tool-chip"
+    type="button"
+    data-tool-name={tool.name}
+    aria-label={`${en.skills.toolsDialog.chipAriaPrefix} ${tool.name} ${en.skills.toolsDialog.chipAriaSuffix}`}
+    title={tool.name}
+  >
+    <span class="tool-chip-badge" style={`--tool-color: ${tool.color}`}>
+      {tool.logo ? <img src={tool.logo} alt="" /> : <span>{tool.short}</span>}
+    </span>
+    <span class="tool-chip-name">{tool.name}</span>
+  </button>
+)}

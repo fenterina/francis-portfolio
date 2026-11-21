@@ -1,7 +1,6 @@
 ---
 import Navigation from '../components/Navigation.astro';
 import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
 import Experience from '../components/Experience.astro';
 import Projects from '../components/Projects.astro';
 import Skills from '../components/Skills.astro';
@@ -14,22 +13,17 @@ import '../styles/global.css';
 const personSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'Person',
-	name: 'Francis Enterina',
-	alternateName: 'Francis Ronald Borja Enterina',
-	url: 'https://francisenterina.work/',
-	jobTitle: 'Software Developer',
-	alumniOf: 'Mindanao State University - Iligan Institute of Technology',
+	name: en.site.personSchema.name,
+	alternateName: en.site.personSchema.alternateName,
+	url: en.site.canonicalHome,
+	jobTitle: en.site.personSchema.jobTitle,
+	alumniOf: en.site.personSchema.alumniOf,
 	address: {
 		'@type': 'PostalAddress',
-		addressLocality: 'Iligan City',
-		addressCountry: 'PH'
+		addressLocality: en.site.personSchema.addressLocality,
+		addressCountry: en.site.personSchema.addressCountry,
 	},
-	sameAs: [
-		'https://www.linkedin.com/in/fenterina/',
-		'https://github.com/fenterina',
-		'https://www.youtube.com/@francisenterina4097',
-		'https://www.instagram.com/f.enterina/'
-	]
+	sameAs: [...en.site.personSchema.sameAs],
 };
 ---
 
@@ -47,15 +41,15 @@ const personSchema = {
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="description" content={en.metadata.description} />
-		<link rel="canonical" href="https://francisenterina.work/" />
+		<link rel="canonical" href={en.site.canonicalHome} />
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://francisenterina.work/" />
+		<meta property="og:url" content={en.site.canonicalHome} />
 		<meta property="og:title" content={en.metadata.title} />
 		<meta property="og:description" content={en.metadata.description} />
-		<meta property="og:image" content="https://francisenterina.work/images/Logo_with_name.png" />
-		<meta property="og:image:alt" content="Francis Enterina logo" />
+		<meta property="og:image" content={en.site.ogImage} />
+		<meta property="og:image:alt" content={en.site.ogImageAlt} />
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="google-site-verification" content="M2nUoE72IQRMfIMna9vfpk-IdyZtdXDjzvl3WGyyCuA" />
+		<meta name="google-site-verification" content={en.site.googleSiteVerification} />
 		<meta name="theme-color" content={en.metadata.themeColor} />
 		<title>{en.metadata.title}</title>
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
@@ -64,7 +58,6 @@ const personSchema = {
 		<Navigation />
 		<main>
 			<Hero />
-			<About />
 			<Experience />
 			<Skills />
 			<Projects />
@@ -73,196 +66,320 @@ const personSchema = {
 		<Footer />
 		<script>
 			import { initFluidMotion, animateDialogOpen } from '../scripts/fluid-motion';
+			import { initPortraitMosaic } from '../scripts/portrait-mosaic';
 
 			function setupIndexPage() {
-				if (!document.getElementById('hero')) return;
+				const hero = document.getElementById('hero');
+				if (!hero) return;
 
-			const sections = document.querySelectorAll<HTMLElement>('.section');
-			sections.forEach((section) => {
-				section.classList.remove('section-reveal', 'is-visible');
-				section.style.opacity = '1';
-			});
-			initFluidMotion();
-
-			const cards = document.querySelectorAll<HTMLElement>('[data-interactive-card]');
-			const lockPageScroll = () => {
-				document.documentElement.classList.add('modal-open');
-				document.body.classList.add('modal-open');
-			};
-			const unlockPageScroll = () => {
-				const anyOpen = document.querySelectorAll('dialog[open]').length > 0;
-				if (!anyOpen) {
-					document.documentElement.classList.remove('modal-open');
-					document.body.classList.remove('modal-open');
-				}
-			};
-			const openDialog = (dialog: HTMLDialogElement, onOpened?: () => void) => {
-				if (dialog.open) {
-					onOpened?.();
-					return;
-				}
-				lockPageScroll();
-				window.requestAnimationFrame(() => {
-					dialog.showModal();
-					animateDialogOpen(dialog);
-					onOpened?.();
+				const sections = document.querySelectorAll<HTMLElement>('.section');
+				sections.forEach((section) => {
+					section.classList.remove('section-reveal', 'is-visible');
+					section.style.opacity = '1';
 				});
-			};
+				initFluidMotion();
+				initPortraitMosaic();
 
-			cards.forEach((card) => {
-				const press = () => {
-					card.classList.add('is-pressed');
-					window.setTimeout(() => card.classList.remove('is-pressed'), 220);
+				const prefersReduced = () =>
+					window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+				const lockPageScroll = () => {
+					document.documentElement.classList.add('modal-open');
+					document.body.classList.add('modal-open');
 				};
-				const dialogId = card.dataset.projectTrigger ?? card.dataset.dialogTrigger;
-				const dialogElement = dialogId
-					? (document.getElementById(dialogId) || (dialogId === 'redcarpet-dialog' ? document.getElementById('redcarpet-case-study') : null))
-					: null;
-				const projectDialog = dialogElement instanceof HTMLDialogElement ? dialogElement : null;
-				const openProject = (event: Event) => {
-					event.preventDefault();
-					if (projectDialog) openDialog(projectDialog);
+
+				const unlockPageScroll = () => {
+					const anyOpen = document.querySelectorAll('dialog[open]').length > 0;
+					if (!anyOpen) {
+						document.documentElement.classList.remove('modal-open');
+						document.body.classList.remove('modal-open');
+					}
 				};
-				if (projectDialog) {
-					card.addEventListener('click', openProject);
-					card.querySelector('a')?.addEventListener('click', (event) => {
-						const href = (event.currentTarget as HTMLAnchorElement)?.getAttribute('href');
-						if (href && !href.startsWith('#')) {
-							event.stopPropagation();
+
+				const openDialog = (dialog: HTMLDialogElement, onOpened?: () => void) => {
+					if (dialog.open) {
+						onOpened?.();
+						return;
+					}
+					lockPageScroll();
+					window.requestAnimationFrame(() => {
+						if (dialog.open) {
+							onOpened?.();
 							return;
 						}
+						dialog.showModal();
+						animateDialogOpen(dialog);
+						onOpened?.();
+					});
+				};
+
+				const resolveProjectDialog = (
+					dialogId: string | null | undefined
+				): HTMLDialogElement | null => {
+					if (!dialogId) return null;
+					const dialogElement =
+						document.getElementById(dialogId) ||
+						(dialogId === 'redcarpet-dialog'
+							? document.getElementById('redcarpet-case-study')
+							: null);
+					return dialogElement instanceof HTMLDialogElement ? dialogElement : null;
+				};
+
+				const isModifiedClick = (event: MouseEvent) =>
+					event.button !== 0 ||
+					event.metaKey ||
+					event.ctrlKey ||
+					event.shiftKey ||
+					event.altKey;
+
+				unlockPageScroll();
+
+				const cards = document.querySelectorAll<HTMLElement>('[data-interactive-card]');
+				cards.forEach((card) => {
+					if (card.dataset.cardBound === '1') return;
+					card.dataset.cardBound = '1';
+
+					const press = () => {
+						card.classList.add('is-pressed');
+						window.setTimeout(() => card.classList.remove('is-pressed'), 160);
+					};
+					const dialogId = card.dataset.projectTrigger ?? card.dataset.dialogTrigger;
+					const projectDialog = resolveProjectDialog(dialogId);
+
+					const openProject = (event: MouseEvent) => {
+						if (isModifiedClick(event)) return;
 						event.preventDefault();
-						event.stopPropagation();
-						openDialog(projectDialog);
+						if (projectDialog) openDialog(projectDialog);
+					};
+
+					if (projectDialog) {
+						card.addEventListener('click', openProject);
+						card.querySelectorAll<HTMLAnchorElement>('a').forEach((anchor) => {
+							anchor.addEventListener('click', (event) => {
+								if (isModifiedClick(event)) {
+									event.stopPropagation();
+									return;
+								}
+								event.preventDefault();
+								event.stopPropagation();
+								press();
+								openDialog(projectDialog);
+							});
+						});
+					}
+
+					card.addEventListener('click', press);
+					card.addEventListener('keydown', (event) => {
+						if (event.key === 'Enter' || event.key === ' ') {
+							event.preventDefault();
+							press();
+							if (projectDialog) {
+								openDialog(projectDialog);
+							}
+						}
+					});
+				});
+
+				document
+					.querySelectorAll<HTMLElement>('[data-project-trigger]')
+					.forEach((trigger) => {
+						const parentCard = trigger.closest<HTMLElement>('[data-interactive-card]');
+						if (
+							parentCard &&
+							(parentCard === trigger ||
+								resolveProjectDialog(
+									parentCard.dataset.projectTrigger ?? parentCard.dataset.dialogTrigger
+								))
+						) {
+							return;
+						}
+						if (trigger.dataset.projectTriggerBound === '1') return;
+						trigger.dataset.projectTriggerBound = '1';
+
+						const dialog = resolveProjectDialog(trigger.dataset.projectTrigger);
+						if (!dialog) return;
+
+						trigger.addEventListener('click', (event) => {
+							if (event instanceof MouseEvent && isModifiedClick(event)) {
+								return;
+							}
+							event.preventDefault();
+							openDialog(dialog);
+						});
+					});
+
+				document
+					.querySelectorAll<HTMLDialogElement>('.project-dialog, .certificate-preview')
+					.forEach((dialog) => {
+						if (dialog.dataset.dialogBound === '1') return;
+						dialog.dataset.dialogBound = '1';
+
+						dialog
+							.querySelector<HTMLButtonElement>('.project-dialog-close, .certificate-preview-close')
+							?.addEventListener('click', () => {
+								dialog.close();
+							});
+
+						dialog.addEventListener('click', (event) => {
+							if (event.target === dialog) {
+								dialog.close();
+							}
+						});
+
+						dialog.addEventListener('close', unlockPageScroll);
+
+						dialog.addEventListener('keydown', (event) => {
+							if (event.key !== 'Tab') return;
+							const focusable = Array.from(
+								dialog.querySelectorAll<HTMLElement>(
+									'button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+								)
+							).filter((element) => !element.hasAttribute('disabled'));
+							if (!focusable.length) return;
+							const first = focusable[0];
+							const last = focusable[focusable.length - 1];
+							if (event.shiftKey && document.activeElement === first) {
+								event.preventDefault();
+								last.focus();
+							} else if (!event.shiftKey && document.activeElement === last) {
+								event.preventDefault();
+								first.focus();
+							}
+						});
+					});
+
+				const toolsDialog = document.querySelector<HTMLDialogElement>('#tools-dialog');
+				const toolsDialogClose = toolsDialog?.querySelector<HTMLButtonElement>('.tools-dialog-close');
+				let toolsDialogTrigger: HTMLElement | null = null;
+
+				const openToolsDialog = (trigger: HTMLElement, toolName?: string) => {
+					if (!toolsDialog) return;
+					toolsDialogTrigger = trigger;
+					openDialog(toolsDialog, () => {
+						toolsDialogClose?.focus();
+						if (!toolName) return;
+						const matchingChip = Array.from(
+							toolsDialog.querySelectorAll<HTMLElement>('.tool-chip')
+						).find((chip) => chip.dataset.toolName === toolName);
+						if (!matchingChip) return;
+						matchingChip.classList.add('is-highlighted');
+						matchingChip.scrollIntoView({
+							block: 'center',
+							behavior: prefersReduced() ? 'auto' : 'smooth',
+						});
+						window.setTimeout(() => matchingChip.classList.remove('is-highlighted'), 1200);
+					});
+				};
+
+				document
+					.querySelectorAll<HTMLButtonElement>('.tools-column .tool-chip')
+					.forEach((chip) => {
+						if (chip.dataset.chipBound === '1') return;
+						chip.dataset.chipBound = '1';
+						chip.addEventListener('click', () =>
+							openToolsDialog(chip, chip.dataset.toolName)
+						);
+					});
+
+				document
+					.querySelectorAll<HTMLButtonElement>('[data-tools-dialog-trigger]')
+					.forEach((trigger) => {
+						if (trigger.dataset.triggerBound === '1') return;
+						trigger.dataset.triggerBound = '1';
+						trigger.addEventListener('click', (event) => {
+							openToolsDialog(event.currentTarget as HTMLElement);
+						});
+					});
+
+				if (toolsDialog && toolsDialog.dataset.focusBound !== '1') {
+					toolsDialog.dataset.focusBound = '1';
+					toolsDialog.addEventListener('close', () => {
+						toolsDialogTrigger?.focus();
+						toolsDialogTrigger = null;
 					});
 				}
-				card.addEventListener('click', press);
-				card.addEventListener('keydown', (event) => {
-					if (event.key === 'Enter' || event.key === ' ') {
-						event.preventDefault();
-						press();
-						if (projectDialog) {
-							openDialog(projectDialog);
-						}
-					}
-				});
-			});
 
-			document.querySelectorAll<HTMLDialogElement>('.project-dialog, .certificate-preview').forEach((dialog) => {
-				dialog.querySelector<HTMLButtonElement>('.project-dialog-close, .certificate-preview-close')?.addEventListener('click', () => {
-					dialog.close();
-				});
-				dialog.addEventListener('click', (event) => {
-					if (event.target === dialog) {
-						dialog.close();
-					}
-				});
-				dialog.addEventListener('close', unlockPageScroll);
-				dialog.addEventListener('keydown', (event) => {
-					if (event.key !== 'Tab') return;
-					const focusable = Array.from(dialog.querySelectorAll<HTMLElement>('button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((element) => !element.hasAttribute('disabled'));
-					if (!focusable.length) return;
-					const first = focusable[0];
-					const last = focusable[focusable.length - 1];
-					if (event.shiftKey && document.activeElement === first) {
-						event.preventDefault();
-						last.focus();
-					} else if (!event.shiftKey && document.activeElement === last) {
-						event.preventDefault();
-						first.focus();
-					}
-				});
-			});
+				const certificatePreview = document.querySelector<HTMLDialogElement>('#certificate-preview');
+				const certificatePreviewImage = document.querySelector<HTMLImageElement>(
+					'#certificate-preview-image'
+				);
+				const certificatePreviewTitle = document.querySelector<HTMLElement>(
+					'#certificate-preview-title'
+				);
 
-			const toolsDialog = document.querySelector<HTMLDialogElement>('#tools-dialog');
-			const toolsDialogClose = toolsDialog?.querySelector<HTMLButtonElement>('.tools-dialog-close');
-			let toolsDialogTrigger: HTMLElement | null = null;
-			const openToolsDialog = (trigger: HTMLElement, toolName?: string) => {
-				if (!toolsDialog) return;
-				toolsDialogTrigger = trigger;
-				openDialog(toolsDialog, () => {
-					toolsDialogClose?.focus();
-					if (!toolName) return;
-					const matchingChip = Array.from(toolsDialog.querySelectorAll<HTMLButtonElement>('.tool-chip')).find((chip) => chip.dataset.toolName === toolName);
-					if (!matchingChip) return;
-					matchingChip.classList.add('is-highlighted');
-					matchingChip.scrollIntoView({ block: 'center', behavior: 'smooth' });
-					window.setTimeout(() => matchingChip.classList.remove('is-highlighted'), 1200);
-				});
-			};
-			document.querySelectorAll<HTMLButtonElement>('.tools-column .tool-chip').forEach((chip) => {
-				chip.addEventListener('click', () => openToolsDialog(chip, chip.dataset.toolName));
-			});
-			document.querySelectorAll<HTMLButtonElement>('[data-tools-dialog-trigger]').forEach((trigger) => {
-				trigger.addEventListener('click', (event) => {
-					openToolsDialog(event.currentTarget as HTMLElement);
-				});
-			});
-			toolsDialog?.addEventListener('close', () => {
-				toolsDialogTrigger?.focus();
-				toolsDialogTrigger = null;
-			});
+				document
+					.querySelectorAll<HTMLAnchorElement>('.certificate-preview-trigger')
+					.forEach((certificate) => {
+						if (certificate.dataset.previewBound === '1') return;
+						certificate.dataset.previewBound = '1';
+						certificate.addEventListener('click', (event) => {
+							event.preventDefault();
+							if (
+								!certificatePreview ||
+								!certificatePreviewImage ||
+								!certificatePreviewTitle
+							)
+								return;
+							certificatePreviewImage.src =
+								certificate.dataset.previewSrc ?? certificate.href;
+							certificatePreviewImage.alt =
+								certificate.dataset.previewTitle ??
+								certificatePreview.dataset.fallbackAlt ??
+								'Certificate preview';
+							certificatePreviewTitle.textContent =
+								certificate.dataset.previewTitle ?? '';
+							openDialog(certificatePreview);
+						});
+					});
 
-			const certificatePreview = document.querySelector<HTMLDialogElement>('#certificate-preview');
-			const certificatePreviewImage = document.querySelector<HTMLImageElement>('#certificate-preview-image');
-			const certificatePreviewTitle = document.querySelector<HTMLElement>('#certificate-preview-title');
-			document.querySelectorAll<HTMLAnchorElement>('.certificate-preview-trigger').forEach((certificate) => {
-				certificate.addEventListener('click', (event) => {
-					event.preventDefault();
-					if (!certificatePreview || !certificatePreviewImage || !certificatePreviewTitle) return;
-					certificatePreviewImage.src = certificate.dataset.previewSrc ?? certificate.href;
-					certificatePreviewImage.alt = certificate.dataset.previewTitle ?? 'Certificate preview';
-					certificatePreviewTitle.textContent = certificate.dataset.previewTitle ?? '';
-					openDialog(certificatePreview);
-				});
-			});
-			certificatePreview?.querySelector<HTMLButtonElement>('.certificate-preview-close')?.addEventListener('click', () => {
-				certificatePreview.close();
-			});
-			certificatePreview?.addEventListener('click', (event) => {
-				if (event.target === certificatePreview) {
-					certificatePreview.close();
-				}
-			});
-			certificatePreview?.addEventListener('close', unlockPageScroll);
-
-			function initFastModals() {
 				const triggers = document.querySelectorAll<HTMLElement>(
 					'[data-dialog-target], [data-modal-target], [data-dialog-trigger], [data-project-trigger], [data-tools-dialog-trigger], .tools-view-all, .certificate-card'
 				);
 
 				triggers.forEach((btn) => {
-					btn.addEventListener('mouseenter', () => {
-						let targetId = btn.getAttribute('data-dialog-target') ||
-							btn.getAttribute('data-modal-target') ||
-							btn.getAttribute('data-dialog-trigger') ||
-							btn.getAttribute('data-project-trigger');
-						if (!targetId && (btn.hasAttribute('data-tools-dialog-trigger') || btn.classList.contains('tools-view-all'))) {
-							targetId = 'tools-dialog';
-						}
-						if (!targetId && btn.classList.contains('certificate-card')) {
-							targetId = 'certificates-dialog';
-						}
-						if (!targetId) return;
-						const dialog = document.getElementById(targetId) || (targetId === 'redcarpet-dialog' ? document.getElementById('redcarpet-case-study') : null);
-						if (!dialog || dialog.dataset.prewarmed === 'true') return;
-
-						// Switch first 8 images to eager decoding while hovering so they are ready before click
-						const firstImages = dialog.querySelectorAll<HTMLImageElement>('img[loading="lazy"]');
-						firstImages.forEach((img, idx) => {
-							if (idx < 8) {
-								img.loading = 'eager';
-								if ('decode' in img) {
-									img.decode().catch(() => {});
-								}
+					if (btn.dataset.prewarmBound === '1') return;
+					btn.dataset.prewarmBound = '1';
+					btn.addEventListener(
+						'mouseenter',
+						() => {
+							let targetId =
+								btn.getAttribute('data-dialog-target') ||
+								btn.getAttribute('data-modal-target') ||
+								btn.getAttribute('data-dialog-trigger') ||
+								btn.getAttribute('data-project-trigger');
+							if (
+								!targetId &&
+								(btn.hasAttribute('data-tools-dialog-trigger') ||
+									btn.classList.contains('tools-view-all'))
+							) {
+								targetId = 'tools-dialog';
 							}
-						});
-						dialog.dataset.prewarmed = 'true';
-					}, { passive: true });
-				});
-			}
+							if (!targetId && btn.classList.contains('certificate-card')) {
+								targetId = 'certificates-dialog';
+							}
+							if (!targetId) return;
+							const dialog =
+								document.getElementById(targetId) ||
+								(targetId === 'redcarpet-dialog'
+									? document.getElementById('redcarpet-case-study')
+									: null);
+							if (!dialog || dialog.dataset.prewarmed === 'true') return;
 
-				initFastModals();
+							const firstImages =
+								dialog.querySelectorAll<HTMLImageElement>('img[loading="lazy"]');
+							firstImages.forEach((img, idx) => {
+								if (idx < 8) {
+									img.loading = 'eager';
+									if ('decode' in img) {
+										img.decode().catch(() => {});
+									}
+								}
+							});
+							dialog.dataset.prewarmed = 'true';
+						},
+						{ passive: true }
+					);
+				});
 			}
 
 			if (document.readyState === 'loading') {

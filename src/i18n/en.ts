@@ -7,6 +7,27 @@ export type Certificate = {
 
 export const en = {
   language: "en",
+  site: {
+    url: "https://francisenterina.work",
+    canonicalHome: "https://francisenterina.work/",
+    ogImage: "https://francisenterina.work/images/Logo_with_name.png",
+    ogImageAlt: "Francis Enterina logo",
+    googleSiteVerification: "M2nUoE72IQRMfIMna9vfpk-IdyZtdXDjzvl3WGyyCuA",
+    personSchema: {
+      name: "Francis Enterina",
+      alternateName: "Francis Ronald Borja Enterina",
+      jobTitle: "Software Developer",
+      alumniOf: "Mindanao State University - Iligan Institute of Technology",
+      addressLocality: "Iligan City",
+      addressCountry: "PH",
+      sameAs: [
+        "https://www.linkedin.com/in/fenterina/",
+        "https://github.com/fenterina",
+        "https://www.youtube.com/@francisenterina4097",
+        "https://www.instagram.com/f.enterina/",
+      ],
+    },
+  },
   metadata: {
     title: "Francis Enterina | Information Systems Graduate & Software Developer",
     description:
@@ -18,23 +39,52 @@ export const en = {
     brandMarkAlt: "Francis Enterina logo mark",
     brandLogo: "/images/Logo_with_name.png",
     brandLogoAlt: "Francis Enterina logo",
-    heroPortrait: "/images/picture%20bilyard.png",
-    aboutPortrait: "/images/picture%20bilyard.png",
+    navLogo: "/images/logo-white.png",
+    heroPortrait: "/images/francis-portrait.jpg",
+    aboutPortrait: "/images/francis-portrait.jpg",
+    heroCityscapeAlt: "Iligan Cityscape illustration",
+    featuredThumbAlt: "Red Carpet marketplace interface preview",
+    contactAvatarAlt: "Francis Enterina",
+    workHistoryIcon: "/images/work-history-icon.png",
+    educationIcon: "/images/education-icon.png",
+    recognitionIcon: "/images/leadership-recognition-icon.png",
+    aiMasteryCertImage: "/certificates/AI Mastery Cert.png",
+    aiMasteryCertAlt: "AI Mastery certificate",
+    footerWebp1x: "/images/footer-illustration.webp",
+    footerWebp2x: "/images/footer-illustration@2x.webp",
+    footerPng1x: "/images/footer-illustration.png",
+    footerPng2x: "/images/footer-illustration@2x.png",
   },
   nav: {
+    brandName: "Francis",
+    homeHref: "/",
+    primaryAriaLabel: "Primary navigation",
     homeLabel: "Francis home",
     openLabel: "Open navigation",
     closeLabel: "Close navigation",
+    home: "Home",
     about: "About",
+    experience: "Experience",
     projects: "Projects",
     skills: "Skills",
     contact: "Let's Connect!",
+    contactShort: "Contact",
     downloadCv: "Download CV",
+    menuLabel: "Menu",
+    closeShortLabel: "Close",
   },
   hero: {
+    displayName: "Francis Enterina",
+    fusedBio:
+      "Information Systems graduate and software developer building thoughtful web applications, multi-role platforms, and reliable digital workflows.",
+    exploreCta: {
+      label: "Explore the work",
+      href: "#projects",
+    },
     brandTitle: "FRANCIS ENTERINA",
     brandPhrase: "Welcome to the portfolio of Francis Enterina.",
     eyebrow: "Software development / Product work / Digital operations",
+    roleLine: "Software development, product work, and digital operations",
     eyebrowSegments: [
       "SOFTWARE DEVELOPMENT",
       "PRODUCT WORK",
@@ -55,6 +105,7 @@ export const en = {
     secondaryCta: {
       label: "Download CV",
       href: "/documents/ENTERINA_CV_PROF.pdf",
+      downloadName: "ENTERINA_CV_PROF.pdf",
     },
     dockLinks: [
       { id: "top", label: "Home", href: "#top", icon: "⌂" },
@@ -71,8 +122,9 @@ export const en = {
         "Multi-role wedding planning marketplace & admin dashboard built with React Native, TypeScript, and Supabase.",
       image: "/Projects/redCarpetFrontPage.png",
       href: "/projects/red-carpet",
-      dialogTrigger: "redcarpet-dialog",
-      linkText: "View Case Study →",
+      dialogTrigger: "redcarpet-case-study",
+      linkText: "View case study",
+      ariaLabel: "Open Red Carpet case study",
     },
     metrics: [
       { value: "4+", label: "Roles & Internships" },
@@ -109,6 +161,7 @@ export const en = {
     intro:
       "Marketing, product work, and systems thinking shaped by hands-on roles across digital operations and technology.",
     workLabel: "Work history",
+    rolesCountUnit: "roles",
     educationLabel: "Education",
     recognitionLabel: "Recognition & leadership",
     work: [
@@ -199,15 +252,133 @@ export const en = {
         preview: "preview-red-carpet",
         year: "2026",
         href: "/projects/red-carpet",
-        linkLabel: "View more details",
+        linkLabel: "View case study",
       },
     ],
+    redCarpetCaseStudy: {
+      pageTitle: "Red Carpet | Wedding Planning App Case Study",
+      pageDescription:
+        "Red Carpet is a multi-role wedding planning marketplace built with React Native, TypeScript and Supabase by Francis Enterina.",
+      canonicalUrl: "https://francisenterina.work/projects/red-carpet",
+      backLabel: "Back to projects",
+      eyebrow: "Case study",
+      title: "Red Carpet",
+      tagline:
+        "An all-in-one wedding planning app that connects couples, wedding planners, and vendors, plus an admin analytics dashboard.",
+      heroImage: "/Projects/redCarpetFrontPage.png",
+      heroAlt: "Red Carpet mobile app and admin dashboard interface",
+      closeLabel: "Close",
+      closeAriaLabel: "Close Red Carpet case study",
+      meta: [
+        { label: "Company", value: "Anura Innovations" },
+        { label: "Role", value: "Frontend & Backend Developer Intern" },
+        { label: "Year", value: "2026" },
+        { label: "Focus", value: "Mobile product, Marketplace, and Dashboard" },
+      ],
+      columns: [
+        {
+          label: "The brief",
+          text: "Wedding planning is spread across many people and tools. Red Carpet brings couples, planners, and vendors into one marketplace for tasks, vendor booking, guests, and event coordination.",
+        },
+        {
+          label: "What I did",
+          text: "I created the app's frontend and backend components following user experience principles: the couple dashboard, vendor marketplace, activity planner, bookings, guests, and payments. I worked with developers to implement features and ran UI/UX testing and QA on the flows.",
+        },
+        {
+          label: "The result",
+          text: "A mobile app for three roles, plus a companion web dashboard showing real-time app status, an end-to-end user messaging feature, and metrics such as revenue, retention, and monthly active users.",
+        },
+      ],
+      rolesHeading: "Three roles, one platform",
+      roles: [
+        {
+          title: "Couple / Client",
+          description:
+            "Plans and organizes their wedding, books vendors, manages guests, and tracks progress.",
+        },
+        {
+          title: "Wedding Planner",
+          description:
+            "Oversees wedding projects, coordinates vendors, and manages execution.",
+        },
+        {
+          title: "Vendor",
+          description:
+            "Offers wedding services, manages bookings, and fulfills assigned tasks.",
+        },
+      ],
+      featuresHeading: "Key features",
+      features: [
+        {
+          number: "01",
+          title: "Centralized Wedding Dashboard",
+          description:
+            "Set preferences, view curated vendors, and request quotations.",
+        },
+        {
+          number: "02",
+          title: "Integrated Vendor Marketplace",
+          description: "Search, filter, compare, and book vendors.",
+        },
+        {
+          number: "03",
+          title: "Activity Planner",
+          description: "Shared tasks, assignments, and deadline tracking.",
+        },
+        {
+          number: "04",
+          title: "Booking & Project Management",
+          description: "Confirmations, workflows, and leads.",
+        },
+        {
+          number: "05",
+          title: "Guest & Invitation Management",
+          description: "Guest lists, roles, and RSVP tracking.",
+        },
+        {
+          number: "06",
+          title: "Profile, Notifications & Payments",
+          description: "Real-time alerts, payouts, and security controls.",
+        },
+      ],
+      tags: ["React Native", "TypeScript", "Supabase"],
+      githubLabel: "View GitHub",
+      demoLabel: "Live demo",
+      links: { github: "", demo: "" },
+    },
   },
   skills: {
     eyebrow: "How I work",
     title: "Tools I use.",
     intro:
       "The tools change. The intention doesn't: make it clear, make it useful, make it feel like someone cared.",
+    toolsLoopAriaLabel: "Tools I use",
+    viewAllToolsLabel: "View all tools",
+    certificatesCardTitle: "Certificates",
+    certificatesCardSubtitle:
+      "Certificates, diplomas, and additional training",
+    certificatesCardLink: "View all certificates",
+    certificatesDialog: {
+      title: "Certificates",
+      lede: "A collection of certificates and milestones from professional work, learning, and community involvement.",
+      closeLabel: "Close",
+      closeAriaLabel: "Close certificates",
+      primaryCategoryTitle: "Certificates",
+      additionalCategoryTitle: "Additional certificates",
+      itemsUnit: "items",
+      showCredentialLabel: "Show credential",
+      previewAriaLabel: "Certificate preview",
+      previewCloseAriaLabel: "Close certificate preview",
+      previewFallbackAlt: "Certificate preview",
+    },
+    toolsDialog: {
+      title: "Everything I work with",
+      lede: "A complete look at the tools, platforms, and technologies I use to bring ideas to life.",
+      closeLabel: "Close",
+      closeAriaLabel: "Close tools dialog",
+      chipAriaPrefix: "View",
+      chipAriaSuffix: "details",
+    },
     groups: [
       {
         title: "Frontend craft",
@@ -304,6 +475,7 @@ export const en = {
     title: "Have a vision? Let’s make it happen!",
     intro:
       "Looking to collaborate, hire, or ask a question? Send me a message or reach out via email.",
+    emailLabel: "Email",
     email: "enterinaf@gmail.com",
     emailHref: "mailto:enterinaf@gmail.com",
     form: {

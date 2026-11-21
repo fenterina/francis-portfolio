@@ -6,11 +6,11 @@ import { en } from '../i18n/en';
   <div class="footer-stage">
     <!-- 4K Blue Ink Landscape Cityscape Art: Full Width -->
     <picture>
-      <source srcset="/images/footer-illustration.webp 1x, /images/footer-illustration@2x.webp 2x" type="image/webp" />
+      <source srcset={`${en.images.footerWebp1x} 1x, ${en.images.footerWebp2x} 2x`} type="image/webp" />
       <img
         class="footer-art-image"
-        src="/images/footer-illustration.png"
-        srcset="/images/footer-illustration.png 1x, /images/footer-illustration@2x.png 2x"
+        src={en.images.footerPng1x}
+        srcset={`${en.images.footerPng1x} 1x, ${en.images.footerPng2x} 2x`}
         alt=""
         width="3072"
         height="1302"
@@ -19,12 +19,25 @@ import { en } from '../i18n/en';
       />
     </picture>
 
-    <!-- Original Footer Text Overlaid Directly on Top of the Image -->
+    <!-- Footer Text Overlaid Directly on Top of the Image -->
     <div class="footer-overlay-bar">
       <div class="container footer-bar">
         <span class="footer-item footer-location">{en.footer.location}</span>
         <span class="footer-item footer-copyright">{en.footer.copyright}</span>
-        <a class="footer-item footer-top" href="#top">{en.footer.backToTop} <span aria-hidden="true">↑</span></a>
+        <a class="footer-item footer-top" href="#top">
+          <span class="btn-roll-mask">
+            <span class="btn-roll-primary">{en.footer.backToTop}</span>
+            <span class="btn-roll-clone" aria-hidden="true">{en.footer.backToTop}</span>
+          </span>
+          <span class="btn-icon-roll btn-icon-roll--up" aria-hidden="true">
+            <svg class="icon-svg btn-icon-primary" width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 12.5v-9m0 0L4.5 7M8 3.5 11.5 7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <svg class="icon-svg btn-icon-clone" width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 12.5v-9m0 0L4.5 7M8 3.5 11.5 7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
       </div>
     </div>
   </div>
