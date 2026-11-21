@@ -796,6 +796,15 @@ button {
 .preview-coral {
   background: #ffd1c7;
 }
+.preview-infinite-towers {
+  background: #d8b4fe;
+}
+.preview-portfolio {
+  background: #bae6fd;
+}
+.preview-academic {
+  background: #a7f3d0;
+}
 .preview-red-carpet {
   min-height: 350px;
   padding: 0;

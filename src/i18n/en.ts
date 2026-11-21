@@ -65,7 +65,7 @@ export const en = {
     keywords: ["SCALABLE", "USER-CENTRIC", "FUNCTIONAL", "RELIABLE"],
     featuredCard: {
       badge: "FEATURED PROJECT",
-      count: "01 / 01",
+      count: "01 / 04",
       title: "Red Carpet",
       summary:
         "Multi-role wedding planning marketplace & admin dashboard built with React Native, TypeScript, and Supabase.",
@@ -124,30 +124,29 @@ export const en = {
         ],
       },
       {
-        period: "Sep 2023 - Apr 2026 · 2 yrs 8 mos",
-        role: "Social Media Manager",
+        period: "2023 - 2026",
+        role: "Social Media Management",
         organization: "Hues X Palette",
         employmentType: "Part-time",
-        location: "Remote",
+        location: "Cebu City, PH",
         details: [
           "Managed end-to-end social media operations across Facebook and Instagram, overseeing customer engagement, appointment coordination, and promotional campaigns.",
           "Handled high-volume customer inquiries via Meta Business Suite, ensuring timely responses and converting inquiries into confirmed bookings.",
-          "Designed and executed targeted ad campaigns using audience segmentation, optimizing delivery through strategic scheduling and budget allocation.",
-          "Coordinated appointment bookings using integrated platform tools and a manual Google Sheets tracking system after feature deprecation.",
+          "Designed and executed targeted ad campaigns using audience segmentation (interests, location, age), optimizing delivery through strategic scheduling and budget allocation.",
+          "Coordinated appointment bookings using integrated platform tools; transitioned operations to a manual tracking system using Google Sheets after feature deprecation, ensuring continuity of scheduling and customer records.",
         ],
       },
       {
-        period: "Jan 2021 - Jan 2024 · 3 yrs 1 mo",
-        role: "Assistant PPC and BSR Manager",
+        period: "2020 - 2023",
+        role: "Amazon PPC and BSR Assistant Manager",
         organization: "Maven Agency",
         employmentType: "Freelance",
         location: "Remote",
         details: [
-          "Managed and optimized Amazon PPC campaigns across multiple client accounts, improving ad efficiency and contributing to increased product visibility and sales performance.",
+          "Managed and optimized Amazon PPC campaigns across 16 client accounts, improving ad efficiency and contributing to increased product visibility and sales performance.",
           "Analyzed keyword performance, bid strategies, and conversion data to refine targeting and maximize return on ad spend (ROAS).",
           "Assisted in boosting Best Seller Rank (BSR) through data-driven campaign adjustments and competitive market analysis.",
           "Assisted in implementing campaign improvements, reducing wasted ad spend and improving click-through rates.",
-          "Handled 16 client accounts.",
         ],
       },
     ],
@@ -174,13 +173,13 @@ export const en = {
         title: "College of Computer Studies Executive Council",
         period: "2023 - 2024",
         description:
-          "Managed organizational assets, inventory records, equipment lending, and resource allocation for council initiatives.",
+          "Managed organizational assets and inventory records, coordinated inter-college equipment lending, and supported resource allocation for council events and initiatives.",
       },
       {
-        title: "Philippine Red Cross, WASAR Trainee",
+        title: "Philippine Red Cross, WASAR Trainee (Bronze Member)",
         period: "2020",
         description:
-          "Bronze member trained in survival techniques, CPR, rescue knot-tying, and aquatic emergency response.",
+          "Completed WASAR training covering survival techniques, CPR, rescue knot-tying, and aquatic emergency response; earned Bronze-level certification.",
       },
     ],
   },
@@ -201,6 +200,39 @@ export const en = {
         href: "/projects/red-carpet",
         linkLabel: "View more details",
       },
+      {
+        title: "Infinite Towers",
+        category: "Roblox RPG & 3D Environment",
+        description:
+          "A dark gothic anime squad-command gacha RPG on Roblox using Luau and Blender, featuring custom 3D castle environments, portals, biome relics, hero synthesis, and UI systems.",
+        tags: ["Luau", "Blender", "Roblox Studio"],
+        preview: "preview-infinite-towers",
+        year: "2026",
+        href: "#projects",
+        linkLabel: "In active co-development",
+      },
+      {
+        title: "Personal Developer Portfolio",
+        category: "Web portfolio & motion system",
+        description:
+          "Responsive portfolio website built with Astro, React, and custom Figma SVG icons, featuring translucent glassmorphism navigation, fluid tab transitions, and mobile-first layouts.",
+        tags: ["Astro", "React", "TypeScript", "Figma"],
+        preview: "preview-portfolio",
+        year: "2026",
+        href: "https://github.com/fenterina/francis-portfolio",
+        linkLabel: "View GitHub",
+      },
+      {
+        title: "MSU-IIT Academic Software & UI/UX Projects",
+        category: "Mobile & academic prototypes",
+        description:
+          "Cross-platform apps and prototypes: FitTian (gamified health tracker), Lokalista (campus commerce UI), and Aidlink (student donation platform, 88.5 SUS score).",
+        tags: ["Flutter", "Firebase", "Figma"],
+        preview: "preview-academic",
+        year: "2023 - 2025",
+        href: "#projects",
+        linkLabel: "Academic prototypes",
+      },
     ],
   },
   skills: {
@@ -210,24 +242,24 @@ export const en = {
       "The tools change. The intention doesn't: make it clear, make it useful, make it feel like someone cared.",
     groups: [
       {
-        title: "Frontend craft",
+        title: "Technical Skills",
         description:
-          "Astro, React, TypeScript, semantic HTML, accessible CSS, performance.",
+          "Languages & Frameworks: JavaScript, TypeScript, Luau, React Native, React, Astro, Flutter, Supabase",
       },
       {
-        title: "Visual systems",
+        title: "Creative, Design & 3D",
         description:
-          "Design tokens, responsive layouts, interaction patterns, motion, prototyping.",
+          "Blender 3D Modeling, Figma UI/UX & Custom SVGs, Canva Brand Assets, CapCut Video Editing",
       },
       {
-        title: "Product thinking",
+        title: "Marketing & Analytics",
         description:
-          "Information architecture, user flows, content strategy, product direction.",
+          "Amazon PPC Campaign Management, ROAS & BSR Optimization, Meta Ads & Audience Segmentation",
       },
       {
-        title: "Good collaboration",
+        title: "Operations & General",
         description:
-          "Clear communication, kind critique, documentation, and calm momentum.",
+          "Triage Decision, Project Management, Customer Relationship Management",
       },
     ],
     certificates: [
