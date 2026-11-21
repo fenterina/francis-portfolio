@@ -1,0 +1,313 @@
+/* ==========================================================================
+   Morphing Pill-to-Card Navigation (Bottom-Center Floating Island)
+   Matches reference motion design & Francis Enterina's signature palette
+   ========================================================================== */
+
+:root {
+  /* Infused with Francis Enterina's night-blue, royal-blue, and ink palette */
+  --morph-surface: rgba(11, 17, 40, 0.90);
+  --morph-surface-gradient: radial-gradient(
+    120% 110% at 30% 100%,
+    rgba(65, 105, 225, 0.22) 0%,
+    rgba(16, 25, 58, 0.88) 45%,
+    rgba(9, 14, 34, 0.96) 100%
+  );
+  --morph-border: rgba(169, 186, 242, 0.20);
+  --morph-divider: rgba(169, 186, 242, 0.15);
+  --morph-text-primary: #f5f8ff;
+  --morph-text-secondary: rgba(169, 186, 242, 0.68);
+  --morph-text-dimmed: rgba(245, 248, 255, 0.28);
+  --morph-btn-bg: #ffffff;
+  --morph-btn-text: #121c45;
+  --morph-shadow:
+    0 24px 60px -12px rgba(2, 6, 20, 0.65),
+    0 4px 18px -4px rgba(2, 6, 20, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Invisible backdrop to capture outside clicks when open */
+.morph-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 990;
+  background: rgba(6, 10, 24, 0.42);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Fixed Bottom-Center Anchor (Docked Island) */
+.morph-nav-anchor {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  pointer-events: none;
+}
+
+/* The Morphing Capsule / Card Shell */
+.morph-nav-shell {
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--morph-surface);
+  background-image: var(--morph-surface-gradient);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--morph-border);
+  box-shadow: var(--morph-shadow);
+  color: var(--morph-text-primary);
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 3rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transform-origin: center bottom;
+  will-change: width, height, border-radius;
+}
+
+/* Persistent Bottom Capsule Bar (Anchored at the bottom so Menu/Close never jumps) */
+.morph-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 6px 7px 6px 12px;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Left Brand Mark */
+.morph-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--morph-text-primary);
+  text-decoration: none;
+  border-radius: 9999px;
+  padding: 4px;
+  outline: none;
+  transition: opacity 0.2s ease;
+}
+
+.morph-nav-brand:hover {
+  opacity: 0.9;
+}
+
+.morph-nav-brand:focus-visible {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.75);
+}
+
+.morph-nav-icon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.morph-nav-logo-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+/* White "Menu" / "Close" Pill Trigger */
+.morph-nav-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  min-width: 82px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 9999px;
+  background-color: var(--morph-btn-bg);
+  color: var(--morph-btn-text);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.morph-nav-toggle:hover {
+  background-color: #f0f4fc;
+}
+
+.morph-nav-toggle:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.morph-nav-toggle-mask {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 1.25em;
+}
+
+.morph-nav-toggle-text {
+  display: inline-block;
+  line-height: 1;
+}
+
+/* Expanded Card Body (Above bottom bar) */
+.morph-nav-content {
+  padding: 28px 30px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Primary Navigation Links */
+.morph-nav-primary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.morph-nav-line-mask {
+  overflow: hidden;
+  padding: 2px 0;
+}
+
+.morph-nav-primary-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 4px 0;
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: clamp(1.55rem, 3.6vw, 2.05rem);
+  font-weight: 350;
+  line-height: 1.24;
+  letter-spacing: -0.025em;
+  color: var(--morph-text-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  outline: none;
+  cursor: pointer;
+}
+
+.morph-nav-primary-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* Dim non-hovered sibling links when hovering any item (fallback + CSS inspectability) */
+.morph-nav-primary-link.is-dimmed {
+  opacity: 0.28;
+}
+
+.morph-nav-link-label {
+  display: inline-block;
+}
+
+/* Active section subtle indicator dot (when not hovered) */
+.morph-nav-active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: var(--royal-tint, #a9baf2);
+  margin-left: auto;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+/* Leading Animated Dash (—) on Hover */
+.morph-nav-dash {
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* Subtle Horizontal Hairline Divider */
+.morph-nav-divider {
+  height: 1px;
+  width: 100%;
+  background-color: var(--morph-divider);
+  margin: 20px 0 16px;
+  transform-origin: left center;
+}
+
+/* Secondary / Social Links (LinkedIn, GitHub, Resume, etc.) */
+.morph-nav-secondary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.morph-nav-secondary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: 0.96rem;
+  font-weight: 400;
+  color: var(--morph-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.morph-nav-secondary-link.is-dimmed {
+  opacity: 0.38;
+}
+
+.morph-nav-secondary-link:hover,
+.morph-nav-secondary-link:focus-visible {
+  color: #ffffff;
+  outline: none;
+}
+
+/* Mobile spacing adjustments */
+@media (max-width: 480px) {
+  .morph-nav-anchor {
+    bottom: 1rem;
+    max-width: calc(100vw - 1.25rem);
+  }
+
+  .morph-nav-shell {
+    max-height: calc(100dvh - 2rem);
+  }
+
+  .morph-nav-content {
+    padding: 20px 22px 10px;
+  }
+
+  .morph-nav-primary-link {
+    font-size: clamp(1.45rem, 5.2vw, 1.8rem);
+    padding: 3px 0;
+  }
+
+  .morph-nav-divider {
+    margin: 16px 0 12px;
+  }
+
+  .morph-nav-secondary-list {
+    gap: 6px;
+  }
+}
