@@ -6,6 +6,7 @@ import Projects from '../components/Projects.astro';
 import Skills from '../components/Skills.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import PortfolioModals from '../components/PortfolioModals';
 import { en } from '../i18n/en';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
@@ -64,9 +65,39 @@ const personSchema = {
 			<Contact />
 		</main>
 		<Footer />
+		<PortfolioModals client:load />
 		<script>
-			import { initFluidMotion, animateDialogOpen } from '../scripts/fluid-motion';
+			import { initFluidMotion } from '../scripts/fluid-motion';
 			import { initPortraitMosaic } from '../scripts/portrait-mosaic';
+			import { en } from '../i18n/en';
+			import type { ModalRequestDetail } from '../components/PortfolioModals';
+
+			let certsPrewarmed = false;
+			let redCarpetPrewarmed = false;
+
+			function openPortfolioModal(detail: ModalRequestDetail) {
+				window.dispatchEvent(new CustomEvent<ModalRequestDetail>('portfolio:open-modal', { detail }));
+			}
+
+			function prewarmImages(urls: string[]) {
+				urls.forEach((url) => {
+					const img = new Image();
+					img.decoding = 'async';
+					img.src = encodeURI(url);
+					if ('decode' in img) {
+						img.decode().catch(() => {});
+					}
+				});
+			}
+
+			function resolveModalType(triggerId: string | null | undefined): 'certificates' | 'redcarpet' | null {
+				if (!triggerId) return null;
+				if (triggerId === 'certificates-dialog') return 'certificates';
+				if (triggerId === 'redcarpet-case-study' || triggerId === 'redcarpet-dialog') {
+					return 'redcarpet';
+				}
+				return null;
+			}
 
 			function setupIndexPage() {
 				const hero = document.getElementById('hero');
@@ -80,50 +111,8 @@ const personSchema = {
 				initFluidMotion();
 				initPortraitMosaic();
 
-				const prefersReduced = () =>
-					window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-				const lockPageScroll = () => {
-					document.documentElement.classList.add('modal-open');
-					document.body.classList.add('modal-open');
-				};
-
-				const unlockPageScroll = () => {
-					const anyOpen = document.querySelectorAll('dialog[open]').length > 0;
-					if (!anyOpen) {
-						document.documentElement.classList.remove('modal-open');
-						document.body.classList.remove('modal-open');
-					}
-				};
-
-				const openDialog = (dialog: HTMLDialogElement, onOpened?: () => void) => {
-					if (dialog.open) {
-						onOpened?.();
-						return;
-					}
-					lockPageScroll();
-					window.requestAnimationFrame(() => {
-						if (dialog.open) {
-							onOpened?.();
-							return;
-						}
-						dialog.showModal();
-						animateDialogOpen(dialog);
-						onOpened?.();
-					});
-				};
-
-				const resolveProjectDialog = (
-					dialogId: string | null | undefined
-				): HTMLDialogElement | null => {
-					if (!dialogId) return null;
-					const dialogElement =
-						document.getElementById(dialogId) ||
-						(dialogId === 'redcarpet-dialog'
-							? document.getElementById('redcarpet-case-study')
-							: null);
-					return dialogElement instanceof HTMLDialogElement ? dialogElement : null;
-				};
+				document.documentElement.classList.remove('modal-open');
+				document.body.classList.remove('modal-open');
 
 				const isModifiedClick = (event: MouseEvent) =>
 					event.button !== 0 ||
@@ -131,8 +120,6 @@ const personSchema = {
 					event.ctrlKey ||
 					event.shiftKey ||
 					event.altKey;
-
-				unlockPageScroll();
 
 				const cards = document.querySelectorAll<HTMLElement>('[data-interactive-card]');
 				cards.forEach((card) => {
@@ -143,17 +130,16 @@ const personSchema = {
 						card.classList.add('is-pressed');
 						window.setTimeout(() => card.classList.remove('is-pressed'), 160);
 					};
-					const dialogId = card.dataset.projectTrigger ?? card.dataset.dialogTrigger;
-					const projectDialog = resolveProjectDialog(dialogId);
+					const triggerId = card.dataset.projectTrigger ?? card.dataset.dialogTrigger;
+					const modalType = resolveModalType(triggerId);
 
-					const openProject = (event: MouseEvent) => {
-						if (isModifiedClick(event)) return;
-						event.preventDefault();
-						if (projectDialog) openDialog(projectDialog);
-					};
+					if (modalType) {
+						card.addEventListener('click', (event: MouseEvent) => {
+							if (isModifiedClick(event)) return;
+							event.preventDefault();
+							openPortfolioModal({ type: modalType });
+						});
 
-					if (projectDialog) {
-						card.addEventListener('click', openProject);
 						card.querySelectorAll<HTMLAnchorElement>('a').forEach((anchor) => {
 							anchor.addEventListener('click', (event) => {
 								if (isModifiedClick(event)) {
@@ -163,7 +149,7 @@ const personSchema = {
 								event.preventDefault();
 								event.stopPropagation();
 								press();
-								openDialog(projectDialog);
+								openPortfolioModal({ type: modalType });
 							});
 						});
 					}
@@ -173,8 +159,8 @@ const personSchema = {
 						if (event.key === 'Enter' || event.key === ' ') {
 							event.preventDefault();
 							press();
-							if (projectDialog) {
-								openDialog(projectDialog);
+							if (modalType) {
+								openPortfolioModal({ type: modalType });
 							}
 						}
 					});
@@ -187,7 +173,7 @@ const personSchema = {
 						if (
 							parentCard &&
 							(parentCard === trigger ||
-								resolveProjectDialog(
+								resolveModalType(
 									parentCard.dataset.projectTrigger ?? parentCard.dataset.dialogTrigger
 								))
 						) {
@@ -196,89 +182,26 @@ const personSchema = {
 						if (trigger.dataset.projectTriggerBound === '1') return;
 						trigger.dataset.projectTriggerBound = '1';
 
-						const dialog = resolveProjectDialog(trigger.dataset.projectTrigger);
-						if (!dialog) return;
+						const modalType = resolveModalType(trigger.dataset.projectTrigger);
+						if (!modalType) return;
 
 						trigger.addEventListener('click', (event) => {
 							if (event instanceof MouseEvent && isModifiedClick(event)) {
 								return;
 							}
 							event.preventDefault();
-							openDialog(dialog);
+							openPortfolioModal({ type: modalType });
 						});
 					});
-
-				document
-					.querySelectorAll<HTMLDialogElement>('.project-dialog, .certificate-preview')
-					.forEach((dialog) => {
-						if (dialog.dataset.dialogBound === '1') return;
-						dialog.dataset.dialogBound = '1';
-
-						dialog
-							.querySelector<HTMLButtonElement>('.project-dialog-close, .certificate-preview-close')
-							?.addEventListener('click', () => {
-								dialog.close();
-							});
-
-						dialog.addEventListener('click', (event) => {
-							if (event.target === dialog) {
-								dialog.close();
-							}
-						});
-
-						dialog.addEventListener('close', unlockPageScroll);
-
-						dialog.addEventListener('keydown', (event) => {
-							if (event.key !== 'Tab') return;
-							const focusable = Array.from(
-								dialog.querySelectorAll<HTMLElement>(
-									'button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-								)
-							).filter((element) => !element.hasAttribute('disabled'));
-							if (!focusable.length) return;
-							const first = focusable[0];
-							const last = focusable[focusable.length - 1];
-							if (event.shiftKey && document.activeElement === first) {
-								event.preventDefault();
-								last.focus();
-							} else if (!event.shiftKey && document.activeElement === last) {
-								event.preventDefault();
-								first.focus();
-							}
-						});
-					});
-
-				const toolsDialog = document.querySelector<HTMLDialogElement>('#tools-dialog');
-				const toolsDialogClose = toolsDialog?.querySelector<HTMLButtonElement>('.tools-dialog-close');
-				let toolsDialogTrigger: HTMLElement | null = null;
-
-				const openToolsDialog = (trigger: HTMLElement, toolName?: string) => {
-					if (!toolsDialog) return;
-					toolsDialogTrigger = trigger;
-					openDialog(toolsDialog, () => {
-						toolsDialogClose?.focus();
-						if (!toolName) return;
-						const matchingChip = Array.from(
-							toolsDialog.querySelectorAll<HTMLElement>('.tool-chip')
-						).find((chip) => chip.dataset.toolName === toolName);
-						if (!matchingChip) return;
-						matchingChip.classList.add('is-highlighted');
-						matchingChip.scrollIntoView({
-							block: 'center',
-							behavior: prefersReduced() ? 'auto' : 'smooth',
-						});
-						window.setTimeout(() => matchingChip.classList.remove('is-highlighted'), 1200);
-					});
-				};
 
 				document
 					.querySelectorAll<HTMLButtonElement>('.tools-column .tool-chip')
 					.forEach((chip) => {
 						if (chip.dataset.chipBound === '1') return;
 						chip.dataset.chipBound = '1';
-						chip.addEventListener('click', () =>
-							openToolsDialog(chip, chip.dataset.toolName)
-						);
+						chip.addEventListener('click', () => {
+							openPortfolioModal({ type: 'tools', toolName: chip.dataset.toolName });
+						});
 					});
 
 				document
@@ -286,100 +209,31 @@ const personSchema = {
 					.forEach((trigger) => {
 						if (trigger.dataset.triggerBound === '1') return;
 						trigger.dataset.triggerBound = '1';
-						trigger.addEventListener('click', (event) => {
-							openToolsDialog(event.currentTarget as HTMLElement);
+						trigger.addEventListener('click', () => {
+							openPortfolioModal({ type: 'tools' });
 						});
 					});
-
-				if (toolsDialog && toolsDialog.dataset.focusBound !== '1') {
-					toolsDialog.dataset.focusBound = '1';
-					toolsDialog.addEventListener('close', () => {
-						toolsDialogTrigger?.focus();
-						toolsDialogTrigger = null;
-					});
-				}
-
-				const certificatePreview = document.querySelector<HTMLDialogElement>('#certificate-preview');
-				const certificatePreviewImage = document.querySelector<HTMLImageElement>(
-					'#certificate-preview-image'
-				);
-				const certificatePreviewTitle = document.querySelector<HTMLElement>(
-					'#certificate-preview-title'
-				);
 
 				document
-					.querySelectorAll<HTMLAnchorElement>('.certificate-preview-trigger')
-					.forEach((certificate) => {
-						if (certificate.dataset.previewBound === '1') return;
-						certificate.dataset.previewBound = '1';
-						certificate.addEventListener('click', (event) => {
-							event.preventDefault();
-							if (
-								!certificatePreview ||
-								!certificatePreviewImage ||
-								!certificatePreviewTitle
-							)
-								return;
-							certificatePreviewImage.src =
-								certificate.dataset.previewSrc ?? certificate.href;
-							certificatePreviewImage.alt =
-								certificate.dataset.previewTitle ??
-								certificatePreview.dataset.fallbackAlt ??
-								'Certificate preview';
-							certificatePreviewTitle.textContent =
-								certificate.dataset.previewTitle ?? '';
-							openDialog(certificatePreview);
-						});
-					});
-
-				const triggers = document.querySelectorAll<HTMLElement>(
-					'[data-dialog-target], [data-modal-target], [data-dialog-trigger], [data-project-trigger], [data-tools-dialog-trigger], .tools-view-all, .certificate-card'
-				);
-
-				triggers.forEach((btn) => {
-					if (btn.dataset.prewarmBound === '1') return;
-					btn.dataset.prewarmBound = '1';
-					btn.addEventListener(
-						'mouseenter',
-						() => {
-							let targetId =
-								btn.getAttribute('data-dialog-target') ||
-								btn.getAttribute('data-modal-target') ||
-								btn.getAttribute('data-dialog-trigger') ||
-								btn.getAttribute('data-project-trigger');
-							if (
-								!targetId &&
-								(btn.hasAttribute('data-tools-dialog-trigger') ||
-									btn.classList.contains('tools-view-all'))
-							) {
-								targetId = 'tools-dialog';
-							}
-							if (!targetId && btn.classList.contains('certificate-card')) {
-								targetId = 'certificates-dialog';
-							}
-							if (!targetId) return;
-							const dialog =
-								document.getElementById(targetId) ||
-								(targetId === 'redcarpet-dialog'
-									? document.getElementById('redcarpet-case-study')
-									: null);
-							if (!dialog || dialog.dataset.prewarmed === 'true') return;
-
-							const firstImages =
-								dialog.querySelectorAll<HTMLImageElement>('img[loading="lazy"]');
-							firstImages.forEach((img, idx) => {
-								if (idx < 8) {
-									img.loading = 'eager';
-									if ('decode' in img) {
-										img.decode().catch(() => {});
-									}
+					.querySelectorAll<HTMLElement>('.certificate-card, [data-project-trigger]')
+					.forEach((btn) => {
+						if (btn.dataset.prewarmBound === '1') return;
+						btn.dataset.prewarmBound = '1';
+						btn.addEventListener(
+							'mouseenter',
+							() => {
+								if (btn.classList.contains('certificate-card') && !certsPrewarmed) {
+									certsPrewarmed = true;
+									prewarmImages(en.skills.certificates.slice(0, 8).map((c) => c.thumb));
 								}
-							});
-							dialog.dataset.prewarmed = 'true';
-						},
-						{ passive: true }
-					);
-				});
+								if (btn.hasAttribute('data-project-trigger') && !redCarpetPrewarmed) {
+									redCarpetPrewarmed = true;
+									prewarmImages([en.projects.redCarpetCaseStudy.heroImageWebp]);
+								}
+							},
+							{ passive: true }
+						);
+					});
 			}
 
 			if (document.readyState === 'loading') {

@@ -1,12 +1,10 @@
 ---
 import { en } from '../i18n/en';
 import ToolChip from './ToolChip.astro';
-import ToolsDialog from './ToolsDialog.astro';
 import { tools } from '../data/tools';
 
 const leftTools = tools.filter((_, index) => index % 2 === 0);
 const rightTools = tools.filter((_, index) => index % 2 === 1);
-const certsCopy = en.skills.certificatesDialog;
 ---
 
 <section class="section section-white" id="skills">
@@ -85,107 +83,3 @@ const certsCopy = en.skills.certificatesDialog;
     </div>
   </div>
 </section>
-<dialog class="certificate-dialog project-dialog" id="certificates-dialog" aria-labelledby="certificates-dialog-title">
-  <div class="project-dialog-inner">
-    <button class="project-dialog-close" type="button" aria-label={certsCopy.closeAriaLabel}>
-      <span>{certsCopy.closeLabel}</span>
-      <svg class="icon-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
-      </svg>
-    </button>
-    <h2 id="certificates-dialog-title">{certsCopy.title}</h2>
-    <p class="project-dialog-lede">{certsCopy.lede}</p>
-    <div class="certificate-category">
-      <div class="certificate-category-heading">
-        <h3>{certsCopy.primaryCategoryTitle}</h3>
-        <span>{en.skills.certificates.length} {certsCopy.itemsUnit}</span>
-      </div>
-      <div class="certificate-grid">
-        {en.skills.certificates.map((certificate) => {
-          const imgUrl = encodeURI(certificate.image || `/certificates/${certificate.file}`);
-          return (
-            <div class="certificate-item">
-              <span class="certificate-title">{certificate.title}</span>
-              <a
-                class="certificate-preview-trigger"
-                href={imgUrl}
-                data-preview-src={imgUrl}
-                data-preview-title={certificate.title}
-              >
-                <img
-                  src={imgUrl}
-                  alt={certificate.title}
-                  width="400"
-                  height="280"
-                  loading="lazy"
-                  decoding="async"
-                  fetchpriority="low"
-                  class="certificate-thumb"
-                />
-              </a>
-              {certificate.credentialUrl && (
-                <a class="credential-link" href={certificate.credentialUrl} target="_blank" rel="noreferrer">
-                  <span>{certsCopy.showCredentialLabel}</span>
-                  <svg class="icon-svg" width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <path d="M4.75 11.25 11.25 4.75m0 0H5.75m5.5 0v5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </a>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-    <div class="certificate-category">
-      <div class="certificate-category-heading">
-        <h3>{certsCopy.additionalCategoryTitle}</h3>
-        <span>{en.skills.additionalCertificates.length} {certsCopy.itemsUnit}</span>
-      </div>
-      <div class="certificate-grid">
-        {en.skills.additionalCertificates.map((certificate) => {
-          const imgUrl = encodeURI(certificate.image || `/additionalCertificates/${certificate.file}`);
-          return (
-            <div class="certificate-item">
-              <span class="certificate-title">{certificate.title}</span>
-              <a
-                class="certificate-preview-trigger"
-                href={imgUrl}
-                data-preview-src={imgUrl}
-                data-preview-title={certificate.title}
-              >
-                <img
-                  src={imgUrl}
-                  alt={certificate.title}
-                  width="400"
-                  height="280"
-                  loading="lazy"
-                  decoding="async"
-                  fetchpriority="low"
-                  class="certificate-thumb"
-                />
-              </a>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  </div>
-</dialog>
-<dialog
-  class="certificate-preview"
-  id="certificate-preview"
-  aria-label={certsCopy.previewAriaLabel}
-  data-fallback-alt={certsCopy.previewFallbackAlt}
->
-  <button class="certificate-preview-close" type="button" aria-label={certsCopy.previewCloseAriaLabel}>
-    <span>{certsCopy.closeLabel}</span>
-    <svg class="icon-svg" width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
-    </svg>
-  </button>
-  <figure>
-    <img id="certificate-preview-image" src="" alt="" />
-    <figcaption id="certificate-preview-title"></figcaption>
-  </figure>
-</dialog>
-<ToolsDialog />

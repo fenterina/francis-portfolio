@@ -34,8 +34,6 @@ const HERO_BEATS: readonly HeroBeat[] = [
 	{ selector: '.explore-pill', delay: 0.06, y: 10, duration: 0.28 },
 ];
 
-const DIALOG_CHILD_DELAYS = [0, 0.03, 0.054, 0.072, 0.084, 0.092] as const;
-
 const activeAnimations = new WeakMap<HTMLElement, AnimationPlaybackControls>();
 
 const getNonUniformDelay = (index: number, overrides?: number[]): number => {
@@ -45,9 +43,6 @@ const getNonUniformDelay = (index: number, overrides?: number[]): number => {
 	const clamped = Math.min(index, 5);
 	return Number((clamped * 0.045 * (1 - clamped * 0.06)).toFixed(3));
 };
-
-const getDialogChildDelay = (index: number): number =>
-	DIALOG_CHILD_DELAYS[Math.min(index, DIALOG_CHILD_DELAYS.length - 1)];
 
 function runMotion(
 	element: HTMLElement,
@@ -193,47 +188,9 @@ export function initFluidMotion(): void {
 		delays: [0, 0.07],
 	});
 
-	// Dedicated Red Carpet case study route only (never pre-animating closed dialogs)
+	// Dedicated Red Carpet case study route only
 	revealGroup(
 		'.case-study-page .case-study-content',
 		'.case-study-back, .eyebrow, h1, .project-dialog-lede, .project-dialog-facts, .case-study-hero, .project-dialog-columns, .case-study-section, .tag-row'
 	);
-}
-
-/**
- * Spring-driven modal entrance matching MorphingNav's shell physics,
- * followed by a crisp < 280ms decelerating overlap on primary inner blocks.
- */
-export function animateDialogOpen(dialog: HTMLDialogElement): void {
-	dialog.style.opacity = '0';
-	dialog.style.transform = 'translateY(14px) scale(0.95)';
-	runMotion(
-		dialog,
-		{ opacity: [0, 1], scale: [0.95, 1], y: [14, 0] },
-		{
-			...SPRING_SHELL,
-			opacity: { duration: 0.2, ease: FLUID_EASE },
-		}
-	);
-
-	const children = Array.from(
-		dialog.querySelectorAll<HTMLElement>(
-			'.case-study-content > *, .tools-modal-category, .certificate-category, figure'
-		)
-	);
-
-	children.forEach((child, index) => {
-		const delay = getDialogChildDelay(index);
-		child.style.opacity = '0';
-		child.style.transform = 'translateY(10px)';
-		runMotion(
-			child,
-			{ opacity: [0, 1], y: [10, 0] },
-			{
-				duration: 0.18,
-				delay,
-				ease: FLUID_EASE,
-			}
-		);
-	});
 }
