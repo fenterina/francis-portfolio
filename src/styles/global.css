@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 :root {
   /* Preserved Signature Blue Palette */
@@ -51,6 +51,7 @@
   --font-serif: "Fraunces", Georgia, serif;
   --font-heading: "Fraunces", Georgia, serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Layout */
   --container: 1160px;
@@ -523,34 +524,51 @@ button {
 
 .hero-frame {
   position: absolute;
-  left: clamp(18px, 2vw, 32px);
-  right: clamp(18px, 2vw, 32px);
-  bottom: clamp(76px, 8.2vh, 92px);
+  top: clamp(76px, 17.5vh, 168px);
+  left: clamp(22px, 4.5vw, 64px);
+  right: clamp(22px, 4.5vw, 64px);
+  bottom: clamp(78px, 8.6vh, 96px);
   z-index: 4;
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 3.4vh, 38px);
+  justify-content: space-between;
   pointer-events: none;
+}
+
+.hero-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.hero-bottom-group {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2vh, 22px);
+  width: 100%;
 }
 
 .hero-meta-row {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 20px;
   width: 100%;
 }
 
 .hero-bio-snippet {
-  max-width: min(440px, 100%);
+  max-width: min(350px, 27vw);
   margin: 0;
-  font-family: "Instrument Serif", "Cormorant Garamond", var(--font-heading);
-  font-style: italic;
+  padding-left: 14px;
+  border-left: 1px solid rgba(169, 186, 242, 0.28);
+  font-family: var(--font-mono);
+  font-style: normal;
   font-weight: 400;
-  font-size: clamp(1.04rem, 1.32vw, 1.24rem);
-  line-height: 1.26;
-  letter-spacing: 0.005em;
-  color: rgba(237, 244, 255, 0.88);
+  font-size: clamp(0.76rem, 0.88vw, 0.86rem);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: rgba(237, 244, 255, 0.82);
   text-shadow: 0 2px 14px rgba(2, 5, 13, 0.98);
 }
 
@@ -613,8 +631,9 @@ button {
 .display-name-wrap {
   width: 100%;
   overflow: visible;
-  line-height: 0.78;
-  padding-top: 0.08em;
+  text-align: center;
+  line-height: 0.84;
+  padding-top: 0.06em;
 }
 
 .hero-display-name {
@@ -623,12 +642,12 @@ button {
   font-family: "Instrument Serif", "Cormorant Garamond", var(--font-heading);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(3.2rem, 13.5vw, 220px);
-  line-height: 0.78;
+  font-size: clamp(2.8rem, 10.2vw, 168px);
+  line-height: 0.84;
   letter-spacing: -0.02em;
   color: #f4f8ff;
   white-space: nowrap;
-  transform-origin: left bottom;
+  transform-origin: center bottom;
   text-shadow: 0 12px 44px rgba(2, 5, 13, 0.94);
 }
 
@@ -2895,6 +2914,20 @@ dialog::backdrop,
   }
 }
 
+@media (max-width: 960px) {
+  .hero-frame {
+    top: clamp(64px, 14vh, 118px);
+    left: clamp(18px, 3vw, 32px);
+    right: clamp(18px, 3vw, 32px);
+    bottom: max(5.5rem, calc(env(safe-area-inset-bottom, 0px) + 5rem));
+  }
+
+  .hero-bio-snippet {
+    max-width: min(260px, 29vw);
+    font-size: clamp(0.74rem, 1.35vw, 0.82rem);
+  }
+}
+
 @media (max-width: 768px) {
   .hero-stage {
     height: 100dvh;
@@ -2903,12 +2936,20 @@ dialog::backdrop,
   }
 
   .hero-frame {
+    top: auto;
+    justify-content: flex-end;
+    gap: 18px;
     bottom: max(5.5rem, calc(env(safe-area-inset-bottom, 0px) + 5rem));
   }
 
+  .hero-meta-row {
+    justify-content: flex-start;
+  }
+
   .hero-bio-snippet {
-    max-width: min(390px, 100%);
-    font-size: clamp(1rem, 2.2vw, 1.08rem);
+    max-width: min(440px, 100%);
+    font-size: clamp(0.78rem, 2.2vw, 0.86rem);
+    line-height: 1.52;
   }
 }
 
@@ -2919,9 +2960,13 @@ dialog::backdrop,
     gap: 14px;
   }
 
+  .hero-bottom-group {
+    gap: 14px;
+  }
+
   .hero-bio-snippet {
-    max-width: min(440px, 100%);
-    font-size: clamp(1rem, 2.8vw, 1.08rem);
+    max-width: min(480px, 100%);
+    font-size: clamp(0.78rem, 2.3vw, 0.86rem);
   }
 }
 
@@ -2930,16 +2975,20 @@ dialog::backdrop,
     left: 16px;
     right: 16px;
     bottom: max(5.25rem, calc(env(safe-area-inset-bottom, 0px) + 4.9rem));
-    gap: 16px;
+    gap: 14px;
+  }
+
+  .hero-bottom-group {
+    gap: 14px;
   }
 
   .hero-bio-snippet {
-    font-size: 1rem;
-    line-height: 1.24;
+    font-size: 0.78rem;
+    line-height: 1.48;
   }
 
   .hero-display-name {
-    font-size: clamp(2.65rem, 13.5vw, 3.9rem);
+    font-size: clamp(2.4rem, 11.5vw, 3.6rem);
   }
 }
 
