@@ -15,7 +15,7 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react-dom/client', 'motion', 'motion/react']
+      include: ['react', 'react-dom', 'react-dom/client', 'react/jsx-dev-runtime', 'react/jsx-runtime', 'motion', 'motion/react']
     }
   }
 });
