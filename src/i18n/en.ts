@@ -469,6 +469,15 @@ export const en = {
           "https://tixu.ai/certificate/9765b494-2a960c-c076-55-0eb88f3d69b4",
       },
       {
+        title: "Attention to Detail",
+        file: "Attention to Detail Cert.png",
+        image: "/certificates/Attention to Detail Cert.png",
+        thumb: "/certificates/thumbs/Attention to Detail Cert.webp",
+        preview: "/certificates/preview/Attention to Detail Cert.webp",
+        credentialUrl:
+          "https://www.testdome.com/certificates/e6c4c8d7fd974a12a0a0adeaf21c0902",
+      },
+      {
         title: "BSIS Diploma",
         file: "BSIS-Diploma.png",
         image: "/certificates/BSIS-Diploma.png",
