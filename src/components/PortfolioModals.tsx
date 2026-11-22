@@ -177,7 +177,12 @@ function WhiteModalShell({
               aria-label={closeAriaLabel}
               onClick={onClose}
             >
-              <span>{closeLabel}</span>
+              <span className="btn-roll-mask">
+                <span className="btn-roll-primary">{closeLabel}</span>
+                <span className="btn-roll-clone" aria-hidden="true">
+                  {closeLabel}
+                </span>
+              </span>
               <span className="pm-close-well" aria-hidden="true">
                 <CloseIcon size={12} />
               </span>
@@ -230,9 +235,21 @@ function CertificateCard({
           target="_blank"
           rel="noreferrer"
         >
-          <span>{credentialLabel}</span>
+          <span className="btn-roll-mask">
+            <span className="btn-roll-primary">{credentialLabel}</span>
+            <span className="btn-roll-clone" aria-hidden="true">
+              {credentialLabel}
+            </span>
+          </span>
           <span className="pm-credential-arrow" aria-hidden="true">
-            <ExternalArrowIcon size={10} />
+            <span className="btn-icon-roll btn-icon-roll--right">
+              <span className="btn-icon-primary">
+                <ExternalArrowIcon size={10} />
+              </span>
+              <span className="btn-icon-clone">
+                <ExternalArrowIcon size={10} />
+              </span>
+            </span>
           </span>
         </a>
       )}
