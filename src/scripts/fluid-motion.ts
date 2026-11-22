@@ -183,11 +183,6 @@ export function initFluidMotion(): void {
 		delays: [0, 0.05, 0.09, 0.12, 0.145],
 	});
 
-	// Contact: left contact details + right Formspree card
-	revealGroup('#contact', '.contact-copy, .contact-form', {
-		delays: [0, 0.07],
-	});
-
 	// Dedicated Red Carpet case study route only
 	revealGroup(
 		'.case-study-page .case-study-content',
